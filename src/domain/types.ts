@@ -1,0 +1,40 @@
+export type IsoDate = string;
+
+export type ContentKind = 'movie' | 'series';
+
+export type ContentTier = 'essential' | 'recommended';
+
+export interface Episode {
+  readonly number: number;
+  readonly title: string;
+}
+
+export interface Session {
+  readonly id: string;
+  readonly date: IsoDate;
+}
+
+export interface SeriesSession extends Session {
+  readonly episodes: readonly Episode[];
+}
+
+interface BaseRoadItem {
+  readonly id: string;
+  readonly title: string;
+  readonly releaseDate: IsoDate;
+  readonly tier: ContentTier;
+  readonly relevance: string;
+}
+
+export interface MovieItem extends BaseRoadItem {
+  readonly kind: 'movie';
+  readonly session: Session;
+}
+
+export interface SeriesItem extends BaseRoadItem {
+  readonly kind: 'series';
+  readonly season: number;
+  readonly sessions: readonly SeriesSession[];
+}
+
+export type RoadItem = MovieItem | SeriesItem;
