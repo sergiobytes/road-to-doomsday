@@ -38,3 +38,9 @@ export interface SeriesItem extends BaseRoadItem {
 }
 
 export type RoadItem = MovieItem | SeriesItem;
+
+export type SessionEntry =
+  | { readonly kind: 'movie'; readonly item: MovieItem; readonly session: Session }
+  | { readonly kind: 'series'; readonly item: SeriesItem; readonly session: SeriesSession };
+
+export type WatchedSessionIds = ReadonlySet<string>;
