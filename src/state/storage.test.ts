@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+  BACKUP_STORAGE_KEY,
+  clearProgress,
   loadProgress,
   parseProgress,
   saveProgress,
@@ -11,19 +13,18 @@ import type { UserProgress } from './types';
 function createMemoryStorage(initial: Record<string, string> = {}) {
   const data = new Map(Object.entries(initial));
   return {
+    data,
     getItem: (key: string) => data.get(key) ?? null,
     setItem: (key: string, value: string) => void data.set(key, value),
+    removeItem: (key: string) => void data.delete(key),
   };
 }
 
-const failingStorage = {
-  getItem: (): string | null => {
-    throw new Error('SecurityError');
-  },
-  setItem: (): void => {
-    throw new Error('QuotaExceededError');
-  },
-};
+function fail(): never {
+  throw new Error('SecurityError');
+}
+
+const failingStorage = { getItem: fail, setItem: fail, removeItem: fail };
 
 const SAMPLE_PROGRESS: UserProgress = {
   watched: new Map([
@@ -91,17 +92,24 @@ describe('loadProgress', () => {
     expect(loadProgress(storage)).toEqual({ status: 'loaded', progress: SAMPLE_PROGRESS });
   });
 
-  it('con JSON corrupto devuelve progreso vacío', () => {
-    const result = loadProgress(createMemoryStorage({ [STORAGE_KEY]: '{no es json' }));
+  it.each([
+    ['JSON corrupto', '{no es json'],
+    ['estructura inválida', '{"version":1}'],
+    ['una versión futura', '{"version":2,"watched":{}}'],
+  ])('con %s devuelve progreso vacío y guarda un respaldo', (_, raw) => {
+    const storage = createMemoryStorage({ [STORAGE_KEY]: raw });
+    const result = loadProgress(storage);
 
     expect(result.status).toBe('invalid');
     expect(result.progress.watched.size).toBe(0);
+    expect(storage.data.get(BACKUP_STORAGE_KEY)).toBe(raw);
   });
 
-  it('con estructura inválida devuelve progreso vacío', () => {
-    const result = loadProgress(createMemoryStorage({ [STORAGE_KEY]: '{"version":1}' }));
+  it('no crea respaldo cuando los datos son válidos', () => {
+    const storage = createMemoryStorage({ [STORAGE_KEY]: serializeProgress(SAMPLE_PROGRESS) });
+    loadProgress(storage);
 
-    expect(result.status).toBe('invalid');
+    expect(storage.data.has(BACKUP_STORAGE_KEY)).toBe(false);
   });
 
   it('si el navegador bloquea el almacenamiento, no lanza error', () => {
@@ -119,5 +127,22 @@ describe('saveProgress', () => {
 
   it('devuelve false si no se pudo guardar, sin lanzar error', () => {
     expect(saveProgress(failingStorage, SAMPLE_PROGRESS)).toBe(false);
+  });
+});
+
+describe('clearProgress', () => {
+  it('borra el progreso y deja el respaldo intacto', () => {
+    const storage = createMemoryStorage({
+      [STORAGE_KEY]: serializeProgress(SAMPLE_PROGRESS),
+      [BACKUP_STORAGE_KEY]: 'respaldo',
+    });
+
+    expect(clearProgress(storage)).toBe(true);
+    expect(loadProgress(storage).status).toBe('empty');
+    expect(storage.data.get(BACKUP_STORAGE_KEY)).toBe('respaldo');
+  });
+
+  it('devuelve false si no se pudo borrar, sin lanzar error', () => {
+    expect(clearProgress(failingStorage)).toBe(false);
   });
 });

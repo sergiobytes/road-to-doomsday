@@ -1,8 +1,11 @@
 import { isIsoDate } from '../domain/dates';
 import type { IsoDate } from '../domain/types';
+import { migrate } from './migrations';
 import { EMPTY_PROGRESS, type UserProgress } from './types';
 
 export const STORAGE_KEY = 'road-to-doomsday:progress';
+/** Copia de datos que no se pudieron leer, para poder recuperarlos a mano. */
+export const BACKUP_STORAGE_KEY = `${STORAGE_KEY}:backup`;
 export const STORAGE_VERSION = 1;
 
 interface PersistedProgress {
@@ -10,7 +13,7 @@ interface PersistedProgress {
   watched: Record<string, IsoDate>;
 }
 
-export type LoadStatus = 'empty' | 'loaded' | 'invalid' | 'unavailable';
+export type LoadStatus = 'empty' | 'loaded' | 'migrated' | 'invalid' | 'unavailable';
 
 export interface LoadResult {
   readonly status: LoadStatus;
@@ -42,7 +45,32 @@ export function serializeProgress(progress: UserProgress): string {
   return JSON.stringify(persisted);
 }
 
-export function loadProgress(storage: Pick<Storage, 'getItem'>): LoadResult {
+function readProgress(raw: string): { progress: UserProgress; migrated: boolean } | null {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+
+  if (!isRecord(parsed)) return null;
+
+  const migration = migrate(parsed, STORAGE_VERSION);
+  if (!migration) return null;
+
+  const progress = parseProgress(migration.data);
+  return progress ? { progress, migrated: migration.migrated } : null;
+}
+
+function backupRawData(storage: Pick<Storage, 'setItem'>, raw: string): void {
+  try {
+    storage.setItem(BACKUP_STORAGE_KEY, raw);
+  } catch {
+    // Si tampoco se puede respaldar, no hay nada más que hacer.
+  }
+}
+
+export function loadProgress(storage: Pick<Storage, 'getItem' | 'setItem'>): LoadResult {
   let raw: string | null;
   try {
     raw = storage.getItem(STORAGE_KEY);
@@ -52,22 +80,27 @@ export function loadProgress(storage: Pick<Storage, 'getItem'>): LoadResult {
 
   if (raw === null) return { status: 'empty', progress: EMPTY_PROGRESS };
 
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(raw);
-  } catch {
+  const result = readProgress(raw);
+  if (!result) {
+    backupRawData(storage, raw);
     return { status: 'invalid', progress: EMPTY_PROGRESS };
   }
 
-  const progress = parseProgress(parsed);
-  return progress
-    ? { status: 'loaded', progress }
-    : { status: 'invalid', progress: EMPTY_PROGRESS };
+  return { status: result.migrated ? 'migrated' : 'loaded', progress: result.progress };
 }
 
 export function saveProgress(storage: Pick<Storage, 'setItem'>, progress: UserProgress): boolean {
   try {
     storage.setItem(STORAGE_KEY, serializeProgress(progress));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function clearProgress(storage: Pick<Storage, 'removeItem'>): boolean {
+  try {
+    storage.removeItem(STORAGE_KEY);
     return true;
   } catch {
     return false;
