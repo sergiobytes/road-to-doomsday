@@ -11,4 +11,8 @@ export const ROAD_DEADLINE: IsoDate = '2026-12-16';
  * PROVISIONAL: medianoche del miércoles 16 al jueves 17 de diciembre.
  * Actualizar cuando se compren los boletos.
  */
+export const DAILY_MINUTES_LIMIT = 240;
+
+export const MAX_MOVIES_PER_DAY = 2;
+
 export const PREMIERE_SHOWTIME = '2026-12-17T00:00:00-06:00';

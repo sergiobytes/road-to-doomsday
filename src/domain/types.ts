@@ -2,16 +2,17 @@ export type IsoDate = string;
 
 export type ContentKind = 'movie' | 'series';
 
-export type ContentTier = 'essential' | 'recommended';
+export type ContentTier = 'essential' | 'recommended' | 'extra';
 
 export interface Episode {
   readonly number: number;
-  readonly title: string;
+  readonly title?: string;
 }
 
 export interface Session {
   readonly id: string;
   readonly date: IsoDate;
+  readonly minutes: number;
 }
 
 export interface SeriesSession extends Session {

@@ -1,6 +1,7 @@
 import type { IsoDate, SessionEntry } from '../../domain/types';
 import {
   escapeHtml,
+  formatEpisodeRange,
   formatSessionDate,
   getItemDisplayTitle,
   getSessionTiming,
@@ -31,18 +32,24 @@ const TIMING_STYLES: Record<SessionTiming, string> = {
 function renderEpisodes(entry: SessionEntry): string {
   if (entry.kind === 'movie') return '';
 
-  const episodes = entry.session.episodes
+  const { episodes } = entry.session;
+  const hasTitles = episodes.every((episode) => episode.title);
+  if (!hasTitles) {
+    return `<p class="text-sm text-ink-muted">${formatEpisodeRange(episodes)}</p>`;
+  }
+
+  const items = episodes
     .map(
       (episode) => `
         <li class="flex gap-2">
           <span class="shrink-0 text-ink-subtle tabular-nums">Ep. ${episode.number}</span>
-          <span>${escapeHtml(episode.title)}</span>
+          <span>${escapeHtml(episode.title ?? '')}</span>
         </li>
       `,
     )
     .join('');
 
-  return `<ul class="flex flex-col gap-1 text-sm text-ink-muted">${episodes}</ul>`;
+  return `<ul class="flex flex-col gap-1 text-sm text-ink-muted">${items}</ul>`;
 }
 
 function renderCompleted(): string {

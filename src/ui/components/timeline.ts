@@ -1,6 +1,7 @@
 import { parseIsoDate } from '../../domain/dates';
 import type { TimelineWeek } from '../../domain/timeline';
 import type {
+  ContentTier,
   IsoDate,
   MovieItem,
   RoadItem,
@@ -30,16 +31,20 @@ function formatDateRange(start: IsoDate, end: IsoDate): string {
   return WEEK_RANGE_FORMAT.formatRange(parseIsoDate(start), parseIsoDate(end));
 }
 
+const TIER_BADGES: Record<
+  Exclude<ContentTier, 'essential'>,
+  { label: string; className: string }
+> = {
+  recommended: { label: 'Recomendado', className: 'border-recommended/30 text-recommended' },
+  extra: { label: 'Extra', className: 'border-line-strong text-ink-subtle' },
+};
+
 function renderTierBadge(item: RoadItem): string {
   if (item.tier === 'essential') return '';
-  return `
-    <span class="rounded-full border border-recommended/30 px-2 py-0.5 text-[11px] text-recommended">
-      Recomendado
-    </span>
-  `;
+  const { label, className } = TIER_BADGES[item.tier];
+  return `<span class="rounded-full border px-2 py-0.5 text-[11px] ${className}">${label}</span>`;
 }
 
-/** Etiqueta de "Hoy" o "Pendiente" para una sesión sin ver; vacía en otro caso. */
 function renderTimingLabel(date: IsoDate, isWatched: boolean, today: IsoDate): string {
   if (isWatched) return '';
 
@@ -110,7 +115,9 @@ function renderEpisodeBlock(
   const isWatched = watched.has(session.id);
   const isToday = getSessionTiming(session.date, today) === 'today';
   const range = formatEpisodeRange(session.episodes);
-  const titles = session.episodes.map((episode) => escapeHtml(episode.title)).join(' · ');
+  const titles = session.episodes
+    .flatMap((episode) => (episode.title ? [escapeHtml(episode.title)] : []))
+    .join(' · ');
   const label = `Marcar ${range} de ${getItemDisplayTitle(item)} como vistos`;
 
   return `
@@ -130,7 +137,7 @@ function renderEpisodeBlock(
             <span class="font-medium">${range}</span>
             <span class="text-ink-subtle">· ${formatSessionDate(session.date)}</span>
           </span>
-          <span class="block truncate text-xs text-ink-subtle">${titles}</span>
+          ${titles ? `<span class="block truncate text-xs text-ink-subtle">${titles}</span>` : ''}
         </span>
         <span class="shrink-0 pt-0.5">
           ${isWatched ? '<span class="text-xs text-progress">Visto</span>' : renderTimingLabel(session.date, false, today)}

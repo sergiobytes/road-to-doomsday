@@ -8,7 +8,7 @@ const movie: MovieItem = {
   releaseDate: '2000-07-14',
   tier: 'essential',
   relevance: 'Regresa el reparto original.',
-  session: { id: 'x-men', date: '2026-09-29' },
+  session: { id: 'x-men', date: '2026-09-29', minutes: 104 },
 };
 
 const series: SeriesItem = {
@@ -23,6 +23,7 @@ const series: SeriesItem = {
     {
       id: 'loki-s1-e1-2',
       date: '2026-10-27',
+      minutes: 96,
       episodes: [
         { number: 1, title: 'Glorious Purpose' },
         { number: 2, title: 'The Variant' },
