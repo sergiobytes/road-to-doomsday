@@ -6,7 +6,7 @@ import { mountApp } from './ui/mount';
 
 /**
  * En desarrollo se puede simular la fecha con `?today=YYYY-MM-DD`
- * o el instante exacto con `?now=2026-12-16T23:59:50-06:00`.
+ * o el instante exacto con `?now=2026-12-16T17:54:50-06:00`.
  */
 const devParams = import.meta.env.DEV ? new URLSearchParams(window.location.search) : null;
 

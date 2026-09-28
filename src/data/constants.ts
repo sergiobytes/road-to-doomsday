@@ -10,9 +10,5 @@ export const DAILY_MINUTES_LIMIT = 240;
 
 export const MAX_MOVIES_PER_DAY = 2;
 
-/**
- * Instante de la función de estreno, con zona horaria explícita.
- * PROVISIONAL: medianoche del miércoles 16 al jueves 17 de diciembre.
- * Actualizar cuando se compren los boletos.
- */
-export const PREMIERE_SHOWTIME = '2026-12-17T00:00:00-06:00';
+/** Instante de la función de estreno, con zona horaria explícita: miércoles 16 de diciembre, 5:55 p. m. */
+export const PREMIERE_SHOWTIME = '2026-12-16T17:55:00-06:00';

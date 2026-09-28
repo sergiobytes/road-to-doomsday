@@ -6,8 +6,7 @@ muestra si voy al día, adelantado o atrasado.
 
 - **Inicio del Road:** 28 de septiembre de 2026
 - **Última sesión:** 14 de diciembre de 2026 (colchón del 15 al 16)
-- **Función objetivo:** medianoche del 16 al 17 de diciembre de 2026 (provisional
-  hasta confirmar boletos)
+- **Función:** miércoles 16 de diciembre de 2026 a las 5:55 p. m. (boleto comprado)
 
 **App:** https://sergiobytes.github.io/road-to-doomsday/
 
@@ -115,7 +114,7 @@ Cada push a `main` ejecuta `npm run check` en GitHub Actions y, si todo pasa, pu
 En modo desarrollo se puede simular la fecha para probar el calendario:
 
 - `?today=2026-10-10` simula el día.
-- `?now=2026-12-16T23:59:50-06:00` simula el instante exacto (útil para la cuenta regresiva).
+- `?now=2026-12-16T17:54:50-06:00` simula el instante exacto (útil para la cuenta regresiva).
 
 Estos parámetros se ignoran en producción.
 
