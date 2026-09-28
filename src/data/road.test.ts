@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { compareIsoDates, isIsoDate } from '../domain/dates';
+import { compareIsoDates, getWeekStart, isIsoDate } from '../domain/dates';
 import { getAllSessions } from '../domain/road';
 import { ROAD_DEADLINE, ROAD_START_DATE } from './constants';
 import { ROAD } from './road';
+import { groupItemsByWeek } from '../domain/timeline';
 
 const ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
@@ -108,12 +109,28 @@ describe('series', () => {
     },
   );
 
+  it('cada serie se ve dentro de una misma semana', () => {
+    const splitSeries = seriesItems.filter(
+      (item) => new Set(item.sessions.map((session) => getWeekStart(session.date))).size > 1,
+    );
+
+    expect(splitSeries).toEqual([]);
+  });
+
   it('ninguna sesión de serie está vacía', () => {
     const emptySessions = seriesItems.flatMap((item) =>
       item.sessions.filter((session) => session.episodes.length === 0),
     );
 
     expect(emptySessions).toEqual([]);
+  });
+});
+
+describe('semanas del timeline', () => {
+  it('el Road ocupa 11 semanas seguidas, todas con contenido', () => {
+    const weeks = groupItemsByWeek(ROAD, ROAD_START_DATE);
+
+    expect(weeks.map((week) => week.number)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
   });
 });
 

@@ -52,3 +52,15 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000;
 export function daysBetween(from: IsoDate, to: IsoDate): number {
   return Math.round((parseIsoDate(to).getTime() - parseIsoDate(from).getTime()) / MS_PER_DAY);
 }
+
+export function addDays(date: IsoDate, days: number): IsoDate {
+  const result = parseIsoDate(date);
+  result.setDate(result.getDate() + days);
+  return toIsoDate(result);
+}
+
+export function getWeekStart(date: IsoDate): IsoDate {
+  const dayOfWeek = parseIsoDate(date).getDay(); // 0 = domingo … 6 = sábado
+  const daysSinceMonday = (dayOfWeek + 6) % 7;
+  return addDays(date, -daysSinceMonday);
+}

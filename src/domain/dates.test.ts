@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { compareIsoDates, daysBetween, isIsoDate, parseIsoDate, toIsoDate } from './dates';
+import {
+  addDays,
+  compareIsoDates,
+  daysBetween,
+  getWeekStart,
+  isIsoDate,
+  parseIsoDate,
+  toIsoDate,
+} from './dates';
 
 describe('entorno', () => {
   it('las pruebas corren en la zona horaria de Ciudad de México', () => {
@@ -83,5 +91,29 @@ describe('daysBetween', () => {
     ['2026-02-28', '2026-03-01', 1],
   ])('de %s a %s hay %i días', (from, to, expected) => {
     expect(daysBetween(from, to)).toBe(expected);
+  });
+});
+
+describe('addDays', () => {
+  it.each([
+    ['2026-09-28', 1, '2026-09-29'],
+    ['2026-09-30', 1, '2026-10-01'],
+    ['2026-12-31', 1, '2027-01-01'],
+    ['2026-10-01', -3, '2026-09-28'],
+    ['2026-10-01', 0, '2026-10-01'],
+  ])('%s + %i días = %s', (date, days, expected) => {
+    expect(addDays(date, days)).toBe(expected);
+  });
+});
+
+describe('getWeekStart', () => {
+  it.each([
+    ['2026-09-28', '2026-09-28'],
+    ['2026-10-01', '2026-09-28'],
+    ['2026-10-04', '2026-09-28'],
+    ['2026-10-05', '2026-10-05'],
+    ['2026-11-01', '2026-10-26'],
+  ])('la semana de %s empieza el lunes %s', (date, expected) => {
+    expect(getWeekStart(date)).toBe(expected);
   });
 });
