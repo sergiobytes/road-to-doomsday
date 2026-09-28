@@ -1,5 +1,5 @@
 import { daysBetween, parseIsoDate } from '../domain/dates';
-import type { IsoDate, RoadItem } from '../domain/types';
+import type { Episode, IsoDate, RoadItem } from '../domain/types';
 
 /** Elige singular o plural según la cantidad: `1 sesión`, `3 sesiones`. */
 export function pluralize(count: number, singular: string, plural: string): string {
@@ -44,4 +44,12 @@ export function getSessionTiming(date: IsoDate, today: IsoDate): SessionTiming {
   if (days === 0) return 'today';
   if (days === 1) return 'tomorrow';
   return 'upcoming';
+}
+
+/** Rango de episodios de un bloque: `Ep. 3` o `Ep. 1–2`. */
+export function formatEpisodeRange(episodes: readonly Episode[]): string {
+  const first = episodes[0]?.number;
+  const last = episodes.at(-1)?.number;
+  if (first === undefined || last === undefined) return '';
+  return first === last ? `Ep. ${first}` : `Ep. ${first}–${last}`;
 }

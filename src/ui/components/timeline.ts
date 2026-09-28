@@ -1,19 +1,19 @@
 import { parseIsoDate } from '../../domain/dates';
-import { getItemSessions } from '../../domain/road';
 import type { TimelineWeek } from '../../domain/timeline';
 import type {
   IsoDate,
   MovieItem,
   RoadItem,
   SeriesItem,
+  SeriesSession,
   WatchedSessionIds,
 } from '../../domain/types';
 import {
   escapeHtml,
+  formatEpisodeRange,
   formatSessionDate,
   getItemDisplayTitle,
   getSessionTiming,
-  pluralize,
 } from '../format';
 import { icons } from '../icons';
 import { renderPoster } from './poster';
@@ -78,19 +78,69 @@ function renderMovieCard(item: MovieItem, context: TimelineContext): string {
   `;
 }
 
-/** Versión provisional: en la tarea 3.5 se mostrarán los bloques de episodios. */
-function renderSeriesCard(item: SeriesItem, { watched }: TimelineContext): string {
-  const sessions = getItemSessions(item);
-  const watchedCount = sessions.filter((session) => watched.has(session.id)).length;
+function renderBlockStatus(session: SeriesSession, { watched, today }: TimelineContext): string {
+  if (watched.has(session.id)) return '<span class="text-xs text-progress">Visto</span>';
+
+  const timing = getSessionTiming(session.date, today);
+  if (timing === 'today') return '<span class="text-xs font-medium text-progress">Hoy</span>';
+  if (timing === 'overdue') return '<span class="text-xs text-status-behind">Pendiente</span>';
+  return '';
+}
+
+function renderEpisodeBlock(session: SeriesSession, context: TimelineContext): string {
+  const isWatched = context.watched.has(session.id);
+  const isToday = getSessionTiming(session.date, context.today) === 'today';
+  const titles = session.episodes.map((episode) => escapeHtml(episode.title)).join(' · ');
 
   return `
-    <article class="flex gap-4 rounded-xl border border-line bg-surface p-3 sm:p-4">
-      ${renderPoster(item)}
-      <div class="flex min-w-0 flex-1 flex-col gap-1">
-        <h4 class="font-semibold leading-snug">${escapeHtml(getItemDisplayTitle(item))}</h4>
-        ${renderMeta(item, `${pluralize(sessions.length, 'sesión', 'sesiones')} · ${watchedCount} vistas`)}
-        <p class="line-clamp-2 text-sm text-ink-muted">${escapeHtml(item.relevance)}</p>
+    <li class="flex items-start gap-3 rounded-lg px-2 py-2 ${isToday ? 'bg-series/10' : ''}">
+      <span class="mt-0.5 ${isWatched ? 'text-progress' : 'text-ink-subtle'}">
+        ${isWatched ? icons.checkCircle('size-5') : icons.circle('size-5')}
+      </span>
+      <div class="min-w-0 flex-1">
+        <p class="text-sm ${isWatched ? 'text-ink-muted' : ''}">
+          <span class="font-medium">${formatEpisodeRange(session.episodes)}</span>
+          <span class="text-ink-subtle">· ${formatSessionDate(session.date)}</span>
+        </p>
+        <p class="truncate text-xs text-ink-subtle">${titles}</p>
       </div>
+      <div class="shrink-0 pt-0.5">${renderBlockStatus(session, context)}</div>
+    </li>
+  `;
+}
+
+function renderSeriesCard(item: SeriesItem, context: TimelineContext): string {
+  const watchedCount = item.sessions.filter((session) => context.watched.has(session.id)).length;
+  const isComplete = watchedCount === item.sessions.length;
+  const [first] = item.sessions;
+  const last = item.sessions.at(-1);
+  const dateRange =
+    first && last
+      ? WEEK_RANGE_FORMAT.formatRange(parseIsoDate(first.date), parseIsoDate(last.date))
+      : '';
+
+  const status = isComplete
+    ? `<span class="flex items-center gap-1 text-xs text-progress">${icons.check('size-4')} Vista</span>`
+    : `<span class="text-xs text-ink-muted tabular-nums">${watchedCount}/${item.sessions.length}</span>`;
+
+  return `
+    <article class="flex flex-col gap-3 rounded-xl border border-line bg-surface p-3 sm:p-4">
+      <div class="flex gap-4">
+        <div class="${isComplete ? 'opacity-50' : ''}">${renderPoster(item)}</div>
+        <div class="flex min-w-0 flex-1 flex-col gap-1">
+          <div class="flex items-start justify-between gap-3">
+            <h4 class="font-semibold leading-snug ${isComplete ? 'text-ink-muted' : ''}">
+              ${escapeHtml(getItemDisplayTitle(item))}
+            </h4>
+            <div class="shrink-0 pt-0.5">${status}</div>
+          </div>
+          ${renderMeta(item, dateRange)}
+          <p class="line-clamp-2 text-sm text-ink-muted">${escapeHtml(item.relevance)}</p>
+        </div>
+      </div>
+      <ol class="flex flex-col border-t border-line pt-2" aria-label="Sesiones de ${escapeHtml(getItemDisplayTitle(item))}">
+        ${item.sessions.map((session) => renderEpisodeBlock(session, context)).join('')}
+      </ol>
     </article>
   `;
 }

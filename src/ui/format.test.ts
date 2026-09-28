@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { MOVIE_A, SERIES_B } from '../domain/test-fixtures';
-import { escapeHtml, getItemDisplayTitle, getSessionTiming, pluralize } from './format';
+import {
+  escapeHtml,
+  formatEpisodeRange,
+  getItemDisplayTitle,
+  getSessionTiming,
+  pluralize,
+} from './format';
 
 describe('pluralize', () => {
   it.each([
@@ -41,5 +47,24 @@ describe('getSessionTiming', () => {
     ['2026-10-10', 'upcoming'],
   ] as const)('una sesión del %s, visto el 2 de octubre, es %s', (date, expected) => {
     expect(getSessionTiming(date, '2026-10-02')).toBe(expected);
+  });
+});
+
+describe('formatEpisodeRange', () => {
+  it('muestra el rango de un bloque de varios episodios', () => {
+    expect(
+      formatEpisodeRange([
+        { number: 1, title: 'Uno' },
+        { number: 2, title: 'Dos' },
+      ]),
+    ).toBe('Ep. 1–2');
+  });
+
+  it('muestra un solo número si el bloque tiene un episodio', () => {
+    expect(formatEpisodeRange([{ number: 5, title: 'Cinco' }])).toBe('Ep. 5');
+  });
+
+  it('devuelve texto vacío si no hay episodios', () => {
+    expect(formatEpisodeRange([])).toBe('');
   });
 });
