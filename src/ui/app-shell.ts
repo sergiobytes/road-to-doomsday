@@ -24,7 +24,7 @@ function renderResetDialog(): string {
       <form method="dialog" class="flex flex-col gap-4">
         <h2 id="reset-dialog-title" class="text-lg font-semibold">¿Reiniciar tu progreso?</h2>
         <p class="text-sm text-ink-muted">
-          Se desmarcarán <span id="${MOUNT_IDS.resetDialogCount}" class="font-medium text-ink"></span>.
+          Vas a desmarcar <span id="${MOUNT_IDS.resetDialogCount}" class="font-medium text-ink"></span>.
           Esta acción no se puede deshacer.
         </p>
         <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
