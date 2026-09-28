@@ -9,6 +9,8 @@ muestra si voy al día, adelantado o atrasado.
 - **Función objetivo:** medianoche del 16 al 17 de diciembre de 2026 (provisional
   hasta confirmar boletos)
 
+**App:** https://sergiobytes.github.io/road-to-doomsday/
+
 ## Stack
 
 - Vite + TypeScript (sin framework)
@@ -19,7 +21,7 @@ muestra si voy al día, adelantado o atrasado.
 
 ## Requisitos
 
-- Node.js 22 o superior
+- Node.js 24
 
 ## Scripts
 
