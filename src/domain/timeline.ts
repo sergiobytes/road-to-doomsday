@@ -1,6 +1,12 @@
 import { addDays, daysBetween, getWeekStart } from './dates';
 import { getItemSessions } from './road';
-import type { IsoDate, RoadItem } from './types';
+import {
+  NO_SESSIONS,
+  type IsoDate,
+  type RoadItem,
+  type SkippedSessionIds,
+  type WatchedSessionIds,
+} from './types';
 
 export interface TimelineWeek {
   /** Número de semana desde el inicio del Road, empezando en 1. */
@@ -41,4 +47,23 @@ export function groupItemsByWeek(
     end: addDays(start, DAYS_PER_WEEK - 1),
     items: weekItems,
   }));
+}
+
+export interface WeekProgress {
+  readonly total: number;
+  readonly resolved: number;
+  readonly isResolved: boolean;
+}
+
+export function getWeekProgress(
+  week: TimelineWeek,
+  watched: WatchedSessionIds,
+  skipped: SkippedSessionIds = NO_SESSIONS,
+): WeekProgress {
+  const sessions = week.items.flatMap(getItemSessions);
+  const resolved = sessions.filter(
+    (session) => watched.has(session.id) || skipped.has(session.id),
+  ).length;
+
+  return { total: sessions.length, resolved, isResolved: resolved === sessions.length };
 }

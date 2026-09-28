@@ -24,6 +24,7 @@ export interface ProgressStore {
   /** Omite una sesión pendiente; no tiene efecto sobre sesiones ya vistas. */
   skipSession(sessionId: string): void;
   unskipSession(sessionId: string): void;
+  toggleSkipped(sessionId: string): void;
   reset(): void;
 }
 
@@ -112,6 +113,11 @@ export function createProgressStore({
     unmarkWatched,
     skipSession,
     unskipSession,
+
+    toggleSkipped(sessionId) {
+      if (state.progress.skipped.has(sessionId)) unskipSession(sessionId);
+      else skipSession(sessionId);
+    },
 
     toggleWatched(sessionId) {
       if (state.progress.watched.has(sessionId)) unmarkWatched(sessionId);

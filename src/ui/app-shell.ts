@@ -73,7 +73,7 @@ export function renderAppShell(): string {
       <div id="${MOUNT_IDS.notices}" aria-live="polite" class="empty:hidden pt-4"></div>
       <p id="${MOUNT_IDS.announcer}" aria-live="polite" class="sr-only"></p>
  
-      <main class="grid flex-1 content-start gap-6 py-6 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-8">
+      <main class="grid flex-1 grid-cols-[minmax(0,1fr)] content-start gap-6 py-6 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-8">
         <section
           aria-labelledby="progress-heading"
           class="flex flex-col gap-4 lg:sticky lg:top-6 lg:self-start"

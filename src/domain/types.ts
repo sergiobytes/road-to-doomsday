@@ -29,6 +29,7 @@ interface BaseRoadItem {
 
 export interface MovieItem extends BaseRoadItem {
   readonly kind: 'movie';
+  readonly isSpecial?: boolean;
   readonly session: Session;
 }
 

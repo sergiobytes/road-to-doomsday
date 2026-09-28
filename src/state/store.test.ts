@@ -166,6 +166,16 @@ describe('omitir sesiones', () => {
     expect(store.getState().progress.skipped.has('ghost-rider')).toBe(false);
   });
 
+  it('toggleSkipped omite y deshace la omisión', () => {
+    const { store } = setup();
+
+    store.toggleSkipped('ghost-rider');
+    expect(store.getState().progress.skipped.has('ghost-rider')).toBe(true);
+
+    store.toggleSkipped('ghost-rider');
+    expect(store.getState().progress.skipped.has('ghost-rider')).toBe(false);
+  });
+
   it('toSkippedIds devuelve los ids omitidos', () => {
     const { store } = setup();
     store.skipSession('ghost-rider');

@@ -4,6 +4,7 @@ import {
   escapeHtml,
   formatEpisodeRange,
   getItemDisplayTitle,
+  getKindLabel,
   getSessionTiming,
   pluralize,
 } from './format';
@@ -66,5 +67,13 @@ describe('formatEpisodeRange', () => {
 
   it('devuelve texto vacío si no hay episodios', () => {
     expect(formatEpisodeRange([])).toBe('');
+  });
+});
+
+describe('getKindLabel', () => {
+  it('distingue película, especial y serie', () => {
+    expect(getKindLabel(MOVIE_A)).toBe('Película');
+    expect(getKindLabel({ ...MOVIE_A, isSpecial: true })).toBe('Especial');
+    expect(getKindLabel(SERIES_B)).toBe('Serie');
   });
 });

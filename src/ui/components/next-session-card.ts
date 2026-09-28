@@ -4,16 +4,18 @@ import {
   formatEpisodeRange,
   formatSessionDate,
   getItemDisplayTitle,
+  getKindLabel,
   getSessionTiming,
   type SessionTiming,
 } from '../format';
-import { FOCUS_RING, toggleSessionAttributes } from '../actions';
+import { FOCUS_RING, toggleSessionAttributes, toggleSkipAttributes } from '../actions';
 
 /**
  * El botón de esta tarjeta siempre conserva el foco al marcar,
  * aunque después muestre otra sesión.
  */
 const NEXT_SESSION_FOCUS_KEY = 'next-session';
+const NEXT_SESSION_SKIP_FOCUS_KEY = 'next-session-skip';
 
 const TIMING_LABELS: Record<SessionTiming, (date: string) => string> = {
   overdue: (date) => `Pendiente desde el ${date}`,
@@ -71,7 +73,7 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
 
   const timing = getSessionTiming(entry.session.date, today);
   const accent = entry.kind === 'movie' ? 'border-movie/40' : 'border-series/40';
-  const kindLabel = entry.kind === 'movie' ? 'Película' : 'Serie';
+  const kindLabel = getKindLabel(entry.item);
 
   return `
     <article class="flex flex-col gap-3 rounded-2xl border ${accent} bg-surface p-5">
@@ -87,13 +89,22 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
       </div>
       ${renderEpisodes(entry)}
 
-      <button
-        type="button"
-        ${toggleSessionAttributes(entry.session.id, NEXT_SESSION_FOCUS_KEY)}
-        class="mt-1 cursor-pointer rounded-lg bg-progress px-4 py-2 text-sm font-semibold text-canvas transition-colors hover:bg-status-on-track ${FOCUS_RING}"
-      >
-        ${entry.kind === 'movie' ? 'Marcar como vista' : 'Marcar episodios como vistos'}
-      </button>
+      <div class="mt-1 flex gap-2">
+        <button
+          type="button"
+          ${toggleSessionAttributes(entry.session.id, NEXT_SESSION_FOCUS_KEY)}
+          class="flex-1 cursor-pointer rounded-lg bg-progress px-4 py-2 text-sm font-semibold text-canvas transition-colors hover:bg-status-on-track ${FOCUS_RING}"
+        >
+          ${entry.kind === 'movie' ? 'Marcar como vista' : 'Marcar episodios como vistos'}
+        </button>
+        <button
+          type="button"
+          ${toggleSkipAttributes(entry.session.id, NEXT_SESSION_SKIP_FOCUS_KEY)}
+          class="cursor-pointer rounded-lg border border-line-strong px-3 py-2 text-sm text-ink-muted transition-colors hover:text-ink ${FOCUS_RING}"
+        >
+          Omitir
+        </button>
+      </div>
     </article>
   `;
 }

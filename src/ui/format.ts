@@ -53,3 +53,8 @@ export function formatEpisodeRange(episodes: readonly Episode[]): string {
   if (first === undefined || last === undefined) return '';
   return first === last ? `Ep. ${first}` : `Ep. ${first}–${last}`;
 }
+
+export function getKindLabel(item: RoadItem): string {
+  if (item.kind === 'series') return 'Serie';
+  return item.isSpecial ? 'Especial' : 'Película';
+}

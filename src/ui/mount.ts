@@ -3,7 +3,7 @@ import { ROAD } from '../data/road';
 import { getCountdown, parseInstant } from '../domain/countdown';
 import { getNextSession, getProgressSummary } from '../domain/progress';
 import { getScheduleReport } from '../domain/schedule';
-import { groupItemsByWeek } from '../domain/timeline';
+import { getWeekProgress, groupItemsByWeek } from '../domain/timeline';
 import type { IsoDate } from '../domain/types';
 import { toSkippedIds, toWatchedIds, type ProgressStore, type StoreState } from '../state/store';
 import { ACTIONS } from './actions';
@@ -60,6 +60,18 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
   // Las semanas dependen solo de los datos estáticos: se calculan una vez.
   const weeks = groupItemsByWeek(ROAD, ROAD_START_DATE);
 
+  let openWeeks: Set<number> | null = null;
+
+  function getInitialOpenWeeks(state: StoreState): Set<number> {
+    const watched = toWatchedIds(state.progress);
+    const skipped = toSkippedIds(state.progress);
+    return new Set(
+      weeks
+        .filter((week) => !getWeekProgress(week, watched, skipped).isResolved)
+        .map((week) => week.number),
+    );
+  }
+
   function render(state: StoreState): void {
     const focusKey = getFocusedKey();
     const watched = toWatchedIds(state.progress);
@@ -78,7 +90,8 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
       today,
     });
 
-    timeline.innerHTML = renderTimeline({ weeks, watched, today });
+    openWeeks ??= getInitialOpenWeeks(state);
+    timeline.innerHTML = renderTimeline({ weeks, watched, skipped, today, openWeeks });
 
     restoreFocus(root, focusKey);
   }
@@ -93,9 +106,20 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
     announcer.textContent = `${action}. Progreso: ${percent} %.`;
   }
 
+  function toggleSkip(sessionId: string): void {
+    store.toggleSkipped(sessionId);
+
+    const isSkipped = store.getState().progress.skipped.has(sessionId);
+    announcer.textContent = isSkipped ? 'Sesión omitida.' : 'Omisión deshecha.';
+  }
+
   function openResetDialog(): void {
-    const watchedCount = store.getState().progress.watched.size;
-    resetDialogCount.textContent = pluralize(watchedCount, 'sesión vista', 'sesiones vistas');
+    const { watched, skipped } = store.getState().progress;
+    const watchedText = pluralize(watched.size, 'sesión vista', 'sesiones vistas');
+    resetDialogCount.textContent =
+      skipped.size > 0
+        ? `${watchedText} y ${pluralize(skipped.size, 'omitida', 'omitidas')}`
+        : watchedText;
     resetDialog.showModal();
   }
 
@@ -110,6 +134,11 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
         if (sessionId) toggleSession(sessionId);
         break;
       }
+      case ACTIONS.toggleSkip: {
+        const sessionId = trigger.dataset.sessionId;
+        if (sessionId) toggleSkip(sessionId);
+        break;
+      }
       case ACTIONS.openResetDialog:
         openResetDialog();
         break;
@@ -119,6 +148,7 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
   // El diálogo se cierra con Cancelar, Esc o Reiniciar; solo el último borra el progreso.
   resetDialog.addEventListener('close', () => {
     if (resetDialog.returnValue === RESET_CONFIRM_VALUE) {
+      openWeeks = null;
       store.reset();
       announcer.textContent = 'Progreso reiniciado.';
     }
@@ -138,6 +168,19 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
       if (renderCountdownNow()) window.clearInterval(timerId);
     }, COUNTDOWN_TICK_MS);
   }
+
+  root.addEventListener(
+    'toggle',
+    (event) => {
+      const details = event.target;
+      if (!(details instanceof HTMLDetailsElement) || !details.dataset.week) return;
+
+      const weekNumber = Number(details.dataset.week);
+      if (details.open) openWeeks?.add(weekNumber);
+      else openWeeks?.delete(weekNumber);
+    },
+    true,
+  );
 
   render(store.getState());
   store.subscribe(render);

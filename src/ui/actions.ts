@@ -3,6 +3,7 @@ import { escapeHtml } from './format';
 /** Acciones que la interfaz declara en el HTML con `data-action`. */
 export const ACTIONS = {
   toggleSession: 'toggle-session',
+  toggleSkip: 'toggle-skip',
   openResetDialog: 'open-reset-dialog',
 } as const;
 
@@ -17,6 +18,14 @@ export const FOCUS_RING =
 export function toggleSessionAttributes(sessionId: string, focusKey: string): string {
   return [
     `data-action="${ACTIONS.toggleSession}"`,
+    `data-session-id="${escapeHtml(sessionId)}"`,
+    `data-focus-key="${escapeHtml(focusKey)}"`,
+  ].join(' ');
+}
+
+export function toggleSkipAttributes(sessionId: string, focusKey: string): string {
+  return [
+    `data-action="${ACTIONS.toggleSkip}"`,
     `data-session-id="${escapeHtml(sessionId)}"`,
     `data-focus-key="${escapeHtml(focusKey)}"`,
   ].join(' ');

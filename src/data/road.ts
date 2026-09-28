@@ -674,6 +674,7 @@ export const ROAD: readonly RoadItem[] = [
   }),
   movie({
     id: 'werewolf-by-night',
+    isSpecial: true,
     title: 'Werewolf by Night',
     releaseDate: '2022-10-07',
     tier: 'extra',
@@ -692,6 +693,7 @@ export const ROAD: readonly RoadItem[] = [
   }),
   movie({
     id: 'guardians-holiday-special',
+    isSpecial: true,
     title: 'The Guardians of the Galaxy Holiday Special',
     releaseDate: '2022-11-25',
     tier: 'extra',
@@ -986,6 +988,7 @@ export const ROAD: readonly RoadItem[] = [
   }),
   movie({
     id: 'the-punisher-one-last-kill',
+    isSpecial: true,
     title: 'The Punisher: One Last Kill',
     releaseDate: '2026-05-12',
     tier: 'extra',
