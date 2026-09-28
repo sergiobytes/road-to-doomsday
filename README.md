@@ -5,11 +5,41 @@ relevantes antes de _Avengers: Doomsday_. Registra el progreso en el navegador y
 muestra si voy al día, adelantado o atrasado.
 
 - **Inicio del Road:** 28 de septiembre de 2026
-- **Última sesión:** 9 de diciembre de 2026 (colchón del 10 al 16)
+- **Última sesión:** 14 de diciembre de 2026 (colchón del 15 al 16)
 - **Función objetivo:** medianoche del 16 al 17 de diciembre de 2026 (provisional
   hasta confirmar boletos)
 
 **App:** https://sergiobytes.github.io/road-to-doomsday/
+
+## Contenido
+
+86 títulos repartidos en 121 sesiones, en orden de estreno:
+
+- MCU completo: 38 películas, series live action, especiales y animación
+  (_What If...?_ T1–T3, _Eyes of Wakanda_, _Marvel Zombies_).
+- Fox: saga X-Men, _Deadpool_ 1 y 2, _Logan_, _Fantastic Four_ (2005, 2007 y 2015),
+  _Daredevil_ y _Elektra_.
+- Sony: trilogías de Spider-Man de Raimi y Webb, _Ghost Rider_ 1 y 2.
+
+Cada título tiene una relevancia para _Doomsday_: **esencial** (16), **recomendado** (12)
+o **extra** (58).
+
+Reglas del calendario:
+
+- Máximo 4 horas por día; si la siguiente sesión no cabe, pasa al día siguiente.
+- Máximo 2 películas por día.
+- Las series se dividen en bloques de episodios por día.
+
+## Funciones
+
+- Marcar sesiones como vistas y ver el porcentaje de avance.
+- Estado del calendario: al día, adelantado o atrasado.
+- Tarjeta con la siguiente sesión pendiente.
+- Omitir sesiones: no cuentan como pendientes ni atrasadas, pero tampoco suman al
+  porcentaje.
+- Semanas colapsables; las ya completas aparecen cerradas al cargar.
+- Cuenta regresiva a la función.
+- Reinicio del progreso con confirmación.
 
 ## Stack
 
@@ -71,6 +101,19 @@ Cada push a `main` ejecuta `npm run check` en GitHub Actions y, si todo pasa, pu
 - Commits con [Conventional Commits](https://www.conventionalcommits.org/es/):
   `feat`, `fix`, `test`, `docs`, `chore`, `build`, `refactor`, `style`.
 - Las pruebas corren con la zona horaria fija `America/Mexico_City`.
+
+## Desarrollo
+
+En modo desarrollo se puede simular la fecha para probar el calendario:
+
+- `?today=2026-10-10` simula el día.
+- `?now=2026-12-16T23:59:50-06:00` simula el instante exacto (útil para la cuenta regresiva).
+
+Estos parámetros se ignoran en producción.
+
+El progreso se guarda en Local Storage con versión. Si cambia la forma de los datos,
+se agrega una migración en `src/state/migrations.ts`; si los datos guardados son
+inválidos, se respaldan antes de reiniciar.
 
 ## Aviso
 
