@@ -26,6 +26,18 @@ describe('groupItemsByWeek', () => {
     ]);
   });
 
+  it('dentro de la semana ordena por la primera sesión de cada título', () => {
+    const late = {
+      ...MOVIE_A,
+      id: 'late',
+      session: { ...MOVIE_A.session, id: 'late', date: '2026-09-30' },
+    };
+
+    expect(
+      groupItemsByWeek([...TEST_ROAD, late], '2026-09-28')[0]?.items.map((item) => item.id),
+    ).toEqual(['late', 'movie-a', 'series-b']);
+  });
+
   it('numera las semanas desde el inicio del Road', () => {
     expect(weeks.map((week) => week.number)).toEqual([1, 2]);
   });

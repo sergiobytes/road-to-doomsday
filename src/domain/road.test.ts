@@ -25,6 +25,22 @@ describe('getAllSessions', () => {
     ]);
   });
 
+  it('ordena por fecha aunque un título aparezca después en la lista', () => {
+    const late = {
+      ...MOVIE_A,
+      id: 'late',
+      session: { ...MOVIE_A.session, id: 'late', date: '2026-10-02' },
+    };
+
+    expect(getAllSessions([...TEST_ROAD, late]).map((session) => session.id)).toEqual([
+      'movie-a',
+      'series-b-e1-2',
+      'late',
+      'series-b-e3-4',
+      'movie-c',
+    ]);
+  });
+
   it('devuelve una lista vacía si no hay títulos', () => {
     expect(getAllSessions([])).toEqual([]);
   });

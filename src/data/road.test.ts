@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { parseInstant } from '../domain/countdown';
 import { compareIsoDates, isIsoDate } from '../domain/dates';
-import { getAllSessions } from '../domain/road';
+import { getAllSessions, getItemSessions } from '../domain/road';
 import {
   DAILY_MINUTES_LIMIT,
   MAX_MOVIES_PER_DAY,
@@ -15,6 +15,10 @@ import { groupItemsByWeek } from '../domain/timeline';
 const ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const sessions = getAllSessions(ROAD);
+
+/** Títulos que se ven conforme se estrenan, fuera del orden y del límite diario del Road. */
+const onRelease = ROAD.filter((item) => item.kind === 'series' && item.watchOnRelease);
+const roadSessions = getAllSessions(ROAD.filter((item) => !onRelease.includes(item)));
 
 function findDuplicates(values: readonly string[]): string[] {
   const seen = new Set<string>();
@@ -44,9 +48,9 @@ function findOutOfOrder(entries: readonly DatedEntry[]): string[] {
 }
 
 describe('contenido acordado', () => {
-  it('contiene 86 títulos y 121 sesiones', () => {
-    expect(ROAD).toHaveLength(86);
-    expect(sessions).toHaveLength(121);
+  it('contiene 87 títulos y 128 sesiones', () => {
+    expect(ROAD).toHaveLength(87);
+    expect(sessions).toHaveLength(128);
   });
 
   it('la lista oficial de Marvel son los 16 títulos esenciales', () => {
@@ -111,7 +115,7 @@ describe('calendario de sesiones', () => {
 
   it(`ningún día supera ${DAILY_MINUTES_LIMIT} minutos`, () => {
     const minutesByDay = new Map<string, number>();
-    for (const session of sessions) {
+    for (const session of roadSessions) {
       minutesByDay.set(session.date, (minutesByDay.get(session.date) ?? 0) + session.minutes);
     }
 
@@ -134,7 +138,17 @@ describe('calendario de sesiones', () => {
   });
 
   it('el orden de visionado coincide con el orden de estreno', () => {
-    expect(findOutOfOrder(sessions)).toEqual([]);
+    expect(findOutOfOrder(roadSessions)).toEqual([]);
+  });
+
+  it('lo que se ve al estrenarse nunca se programa antes de su estreno', () => {
+    const early = onRelease.flatMap((item) =>
+      getItemSessions(item).filter(
+        (session) => compareIsoDates(session.date, item.releaseDate) < 0,
+      ),
+    );
+
+    expect(early).toEqual([]);
   });
 });
 

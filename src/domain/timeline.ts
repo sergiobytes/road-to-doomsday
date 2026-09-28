@@ -1,4 +1,4 @@
-import { addDays, daysBetween, getWeekStart } from './dates';
+import { addDays, compareIsoDates, daysBetween, getWeekStart } from './dates';
 import { getItemSessions } from './road';
 import {
   NO_SESSIONS,
@@ -27,7 +27,8 @@ export function getItemStartDate(item: RoadItem): IsoDate {
 
 /**
  * Agrupa los títulos por la semana (de lunes a domingo) de su primera sesión,
- * conservando el orden de los títulos. Solo incluye semanas con contenido.
+ * ordenados por esa fecha y, el mismo día, en el orden de los títulos.
+ * Solo incluye semanas con contenido.
  */
 export function groupItemsByWeek(
   items: readonly RoadItem[],
@@ -36,7 +37,11 @@ export function groupItemsByWeek(
   const firstWeekStart = getWeekStart(roadStart);
   const weeks = new Map<IsoDate, RoadItem[]>();
 
-  for (const item of items) {
+  const byStartDate = items.toSorted((a, b) =>
+    compareIsoDates(getItemStartDate(a), getItemStartDate(b)),
+  );
+
+  for (const item of byStartDate) {
     const weekStart = getWeekStart(getItemStartDate(item));
     weeks.set(weekStart, [...(weeks.get(weekStart) ?? []), item]);
   }

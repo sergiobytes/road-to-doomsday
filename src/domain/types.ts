@@ -41,6 +41,11 @@ export interface MovieItem extends BaseRoadItem {
 export interface SeriesItem extends BaseRoadItem {
   readonly kind: 'series';
   readonly season: number;
+  /**
+   * Se ve conforme salen los episodios: sus sesiones siguen las fechas de estreno
+   * y no el orden del Road ni el límite diario.
+   */
+  readonly watchOnRelease?: boolean;
   readonly sessions: readonly SeriesSession[];
 }
 

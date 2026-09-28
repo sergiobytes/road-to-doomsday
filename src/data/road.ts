@@ -1098,4 +1098,24 @@ export const ROAD: readonly RoadItem[] = [
     date: '2026-12-14',
     minutes: 130,
   }),
+  series({
+    id: 'visionquest',
+    title: 'VisionQuest',
+    season: 1,
+    releaseDate: '2026-10-14',
+    tier: 'extra',
+    platforms: DISNEY_PLUS,
+    relevance: 'Cierra la trilogía de WandaVision con el regreso de Paul Bettany como Visión.',
+    watchOnRelease: true,
+    // PROVISIONAL: 45 minutos por episodio hasta conocer la duración real.
+    blocks: [
+      { date: '2026-10-14', minutes: 90, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-10-21', minutes: 45, episodes: [{ number: 3 }] },
+      { date: '2026-10-28', minutes: 45, episodes: [{ number: 4 }] },
+      { date: '2026-11-04', minutes: 45, episodes: [{ number: 5 }] },
+      { date: '2026-11-11', minutes: 45, episodes: [{ number: 6 }] },
+      { date: '2026-11-18', minutes: 45, episodes: [{ number: 7 }] },
+      { date: '2026-11-25', minutes: 45, episodes: [{ number: 8 }] },
+    ],
+  }),
 ];

@@ -13,7 +13,7 @@ muestra si voy al día, adelantado o atrasado.
 
 ## Contenido
 
-86 títulos repartidos en 121 sesiones, en orden de estreno:
+87 títulos repartidos en 128 sesiones, en orden de estreno:
 
 - MCU completo: 38 películas, series live action, especiales y animación
   (_What If...?_ T1–T3, _Eyes of Wakanda_, _Marvel Zombies_).
@@ -22,13 +22,15 @@ muestra si voy al día, adelantado o atrasado.
 - Sony: trilogías de Spider-Man de Raimi y Webb, _Ghost Rider_ 1 y 2.
 
 Cada título tiene una relevancia para _Doomsday_: **esencial** (16), **recomendado** (12)
-o **extra** (58).
+o **extra** (59).
 
 Reglas del calendario:
 
 - Máximo 4 horas por día; si la siguiente sesión no cabe, pasa al día siguiente.
 - Máximo 2 películas por día.
 - Las series se dividen en bloques de episodios por día.
+- Excepción: _VisionQuest_ se ve conforme se estrena (del 14 de octubre al 25 de
+  noviembre), fuera del orden de estreno y del límite diario.
 
 ## Funciones
 
