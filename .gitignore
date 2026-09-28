@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Pósters: uso personal, nunca se publican
-public/posters/
+src/assets/posters/
