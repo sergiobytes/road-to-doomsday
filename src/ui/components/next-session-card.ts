@@ -6,6 +6,13 @@ import {
   getSessionTiming,
   type SessionTiming,
 } from '../format';
+import { FOCUS_RING, toggleSessionAttributes } from '../actions';
+
+/**
+ * El botón de esta tarjeta siempre conserva el foco al marcar,
+ * aunque después muestre otra sesión.
+ */
+const NEXT_SESSION_FOCUS_KEY = 'next-session';
 
 const TIMING_LABELS: Record<SessionTiming, (date: string) => string> = {
   overdue: (date) => `Pendiente desde el ${date}`,
@@ -72,6 +79,14 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
         <p class="text-xs text-ink-subtle">${kindLabel} · ${entry.item.releaseDate.slice(0, 4)}</p>
       </div>
       ${renderEpisodes(entry)}
+
+      <button
+        type="button"
+        ${toggleSessionAttributes(entry.session.id, NEXT_SESSION_FOCUS_KEY)}
+        class="mt-1 cursor-pointer rounded-lg bg-progress px-4 py-2 text-sm font-semibold text-canvas transition-colors hover:bg-status-on-track ${FOCUS_RING}"
+      >
+        ${entry.kind === 'movie' ? 'Marcar como vista' : 'Marcar episodios como vistos'}
+      </button>
     </article>
   `;
 }

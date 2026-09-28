@@ -8,6 +8,7 @@ import type {
   SeriesSession,
   WatchedSessionIds,
 } from '../../domain/types';
+import { FOCUS_RING, toggleSessionAttributes } from '../actions';
 import {
   escapeHtml,
   formatEpisodeRange,
@@ -25,8 +26,8 @@ interface TimelineContext {
   readonly today: IsoDate;
 }
 
-function formatWeekRange(week: TimelineWeek): string {
-  return WEEK_RANGE_FORMAT.formatRange(parseIsoDate(week.start), parseIsoDate(week.end));
+function formatDateRange(start: IsoDate, end: IsoDate): string {
+  return WEEK_RANGE_FORMAT.formatRange(parseIsoDate(start), parseIsoDate(end));
 }
 
 function renderTierBadge(item: RoadItem): string {
@@ -38,30 +39,49 @@ function renderTierBadge(item: RoadItem): string {
   `;
 }
 
-function renderMeta(item: RoadItem, detail: string): string {
-  const kind = item.kind === 'movie' ? 'Película' : 'Serie';
-  return `
-    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-subtle">
-      <span>${kind} · ${item.releaseDate.slice(0, 4)} · ${detail}</span>
-      ${renderTierBadge(item)}
-    </p>
-  `;
-}
+/** Etiqueta de "Hoy" o "Pendiente" para una sesión sin ver; vacía en otro caso. */
+function renderTimingLabel(date: IsoDate, isWatched: boolean, today: IsoDate): string {
+  if (isWatched) return '';
 
-function renderMovieStatus(item: MovieItem, { watched, today }: TimelineContext): string {
-  if (watched.has(item.session.id)) {
-    return `<span class="flex items-center gap-1 text-xs text-progress">${icons.check('size-4')} Vista</span>`;
-  }
-
-  const timing = getSessionTiming(item.session.date, today);
+  const timing = getSessionTiming(date, today);
   if (timing === 'today') return '<span class="text-xs font-medium text-progress">Hoy</span>';
   if (timing === 'overdue') return '<span class="text-xs text-status-behind">Pendiente</span>';
   return '';
 }
 
-function renderMovieCard(item: MovieItem, context: TimelineContext): string {
-  const isWatched = context.watched.has(item.session.id);
-  const isToday = getSessionTiming(item.session.date, context.today) === 'today';
+function renderMeta(item: RoadItem, detail: string, extra = ''): string {
+  const kind = item.kind === 'movie' ? 'Película' : 'Serie';
+  return `
+    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-subtle">
+      <span>${kind} · ${item.releaseDate.slice(0, 4)} · ${detail}</span>
+      ${renderTierBadge(item)}
+      ${extra}
+    </p>
+  `;
+}
+
+function renderMovieToggle(item: MovieItem, isWatched: boolean): string {
+  const styles = isWatched
+    ? 'border-progress/40 bg-progress/10 text-progress'
+    : 'border-line-strong text-ink-muted hover:border-progress/60 hover:text-ink';
+  const content = isWatched ? `${icons.check('size-4')} Vista` : `${icons.circle('size-4')} Marcar`;
+
+  return `
+    <button
+      type="button"
+      ${toggleSessionAttributes(item.session.id, `timeline:${item.session.id}`)}
+      aria-pressed="${isWatched}"
+      aria-label="${escapeHtml(`Marcar ${item.title} como vista`)}"
+      class="flex shrink-0 cursor-pointer items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${styles} ${FOCUS_RING}"
+    >
+      ${content}
+    </button>
+  `;
+}
+
+function renderMovieCard(item: MovieItem, { watched, today }: TimelineContext): string {
+  const isWatched = watched.has(item.session.id);
+  const isToday = getSessionTiming(item.session.date, today) === 'today';
 
   return `
     <article class="flex gap-4 rounded-xl border bg-surface p-3 sm:p-4 ${isToday ? 'border-progress/60' : 'border-line'}">
@@ -69,42 +89,53 @@ function renderMovieCard(item: MovieItem, context: TimelineContext): string {
       <div class="flex min-w-0 flex-1 flex-col gap-1">
         <div class="flex items-start justify-between gap-3">
           <h4 class="font-semibold leading-snug ${isWatched ? 'text-ink-muted' : ''}">${escapeHtml(item.title)}</h4>
-          <div class="shrink-0 pt-0.5">${renderMovieStatus(item, context)}</div>
+          ${renderMovieToggle(item, isWatched)}
         </div>
-        ${renderMeta(item, formatSessionDate(item.session.date))}
+        ${renderMeta(
+          item,
+          formatSessionDate(item.session.date),
+          renderTimingLabel(item.session.date, isWatched, today),
+        )}
         <p class="line-clamp-2 text-sm text-ink-muted">${escapeHtml(item.relevance)}</p>
       </div>
     </article>
   `;
 }
 
-function renderBlockStatus(session: SeriesSession, { watched, today }: TimelineContext): string {
-  if (watched.has(session.id)) return '<span class="text-xs text-progress">Visto</span>';
-
-  const timing = getSessionTiming(session.date, today);
-  if (timing === 'today') return '<span class="text-xs font-medium text-progress">Hoy</span>';
-  if (timing === 'overdue') return '<span class="text-xs text-status-behind">Pendiente</span>';
-  return '';
-}
-
-function renderEpisodeBlock(session: SeriesSession, context: TimelineContext): string {
-  const isWatched = context.watched.has(session.id);
-  const isToday = getSessionTiming(session.date, context.today) === 'today';
+function renderEpisodeBlock(
+  item: SeriesItem,
+  session: SeriesSession,
+  { watched, today }: TimelineContext,
+): string {
+  const isWatched = watched.has(session.id);
+  const isToday = getSessionTiming(session.date, today) === 'today';
+  const range = formatEpisodeRange(session.episodes);
   const titles = session.episodes.map((episode) => escapeHtml(episode.title)).join(' · ');
+  const label = `Marcar ${range} de ${getItemDisplayTitle(item)} como vistos`;
 
   return `
-    <li class="flex items-start gap-3 rounded-lg px-2 py-2 ${isToday ? 'bg-series/10' : ''}">
-      <span class="mt-0.5 ${isWatched ? 'text-progress' : 'text-ink-subtle'}">
-        ${isWatched ? icons.checkCircle('size-5') : icons.circle('size-5')}
-      </span>
-      <div class="min-w-0 flex-1">
-        <p class="text-sm ${isWatched ? 'text-ink-muted' : ''}">
-          <span class="font-medium">${formatEpisodeRange(session.episodes)}</span>
-          <span class="text-ink-subtle">· ${formatSessionDate(session.date)}</span>
-        </p>
-        <p class="truncate text-xs text-ink-subtle">${titles}</p>
-      </div>
-      <div class="shrink-0 pt-0.5">${renderBlockStatus(session, context)}</div>
+    <li>
+      <button
+        type="button"
+        ${toggleSessionAttributes(session.id, `timeline:${session.id}`)}
+        aria-pressed="${isWatched}"
+        aria-label="${escapeHtml(label)}"
+        class="flex w-full cursor-pointer items-start gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-surface-raised/60 ${isToday ? 'bg-series/10' : ''} ${FOCUS_RING}"
+      >
+        <span class="mt-0.5 ${isWatched ? 'text-progress' : 'text-ink-subtle'}">
+          ${isWatched ? icons.checkCircle('size-5') : icons.circle('size-5')}
+        </span>
+        <span class="min-w-0 flex-1">
+          <span class="block text-sm ${isWatched ? 'text-ink-muted' : ''}">
+            <span class="font-medium">${range}</span>
+            <span class="text-ink-subtle">· ${formatSessionDate(session.date)}</span>
+          </span>
+          <span class="block truncate text-xs text-ink-subtle">${titles}</span>
+        </span>
+        <span class="shrink-0 pt-0.5">
+          ${isWatched ? '<span class="text-xs text-progress">Visto</span>' : renderTimingLabel(session.date, false, today)}
+        </span>
+      </button>
     </li>
   `;
 }
@@ -114,10 +145,7 @@ function renderSeriesCard(item: SeriesItem, context: TimelineContext): string {
   const isComplete = watchedCount === item.sessions.length;
   const [first] = item.sessions;
   const last = item.sessions.at(-1);
-  const dateRange =
-    first && last
-      ? WEEK_RANGE_FORMAT.formatRange(parseIsoDate(first.date), parseIsoDate(last.date))
-      : '';
+  const dateRange = first && last ? formatDateRange(first.date, last.date) : '';
 
   const status = isComplete
     ? `<span class="flex items-center gap-1 text-xs text-progress">${icons.check('size-4')} Vista</span>`
@@ -139,7 +167,7 @@ function renderSeriesCard(item: SeriesItem, context: TimelineContext): string {
         </div>
       </div>
       <ol class="flex flex-col border-t border-line pt-2" aria-label="Sesiones de ${escapeHtml(getItemDisplayTitle(item))}">
-        ${item.sessions.map((session) => renderEpisodeBlock(session, context)).join('')}
+        ${item.sessions.map((session) => renderEpisodeBlock(item, session, context)).join('')}
       </ol>
     </article>
   `;
@@ -158,7 +186,7 @@ function renderWeek(week: TimelineWeek, context: TimelineContext): string {
       <section aria-labelledby="${headingId}" class="flex flex-col gap-2">
         <h3 id="${headingId}" class="flex items-baseline gap-2 text-xs text-ink-subtle">
           <span class="font-medium uppercase tracking-wider text-ink-muted">Semana ${week.number}</span>
-          <span>${formatWeekRange(week)}</span>
+          <span>${formatDateRange(week.start, week.end)}</span>
         </h3>
         <ol class="flex flex-col gap-2">
           ${week.items.map((item) => renderItem(item, context)).join('')}
