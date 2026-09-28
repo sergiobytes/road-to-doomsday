@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { parseInstant } from '../domain/countdown';
 import { compareIsoDates, getWeekStart, isIsoDate } from '../domain/dates';
 import { getAllSessions } from '../domain/road';
-import { ROAD_DEADLINE, ROAD_START_DATE } from './constants';
+import { PREMIERE_SHOWTIME, ROAD_DEADLINE, ROAD_START_DATE } from './constants';
 import { ROAD } from './road';
 import { groupItemsByWeek } from '../domain/timeline';
 
@@ -141,5 +142,18 @@ describe('textos', () => {
     );
 
     expect(incomplete).toEqual([]);
+  });
+});
+
+describe('función de estreno', () => {
+  it('es un instante válido con zona horaria explícita', () => {
+    expect(PREMIERE_SHOWTIME).toMatch(/(Z|[+-]\d{2}:\d{2})$/);
+    expect(() => parseInstant(PREMIERE_SHOWTIME)).not.toThrow();
+  });
+
+  it('ocurre después de la última sesión posible', () => {
+    const lastSessionEnd = parseInstant(`${ROAD_DEADLINE}T00:00:00-06:00`);
+
+    expect(parseInstant(PREMIERE_SHOWTIME)).toBeGreaterThanOrEqual(lastSessionEnd);
   });
 });
