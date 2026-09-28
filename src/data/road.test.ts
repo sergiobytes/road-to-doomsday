@@ -179,6 +179,20 @@ describe('textos', () => {
   });
 });
 
+describe('plataformas', () => {
+  it('ningún título repite plataforma', () => {
+    const repeated = ROAD.filter((item) => findDuplicates(item.platforms).length > 0);
+
+    expect(repeated.map((item) => item.id)).toEqual([]);
+  });
+
+  it('solo los estrenos que aún no llegan a streaming están en cines', () => {
+    const inCinemas = ROAD.filter((item) => item.platforms.includes('cinema'));
+
+    expect(inCinemas.filter((item) => item.platforms.length > 1)).toEqual([]);
+  });
+});
+
 describe('función de estreno', () => {
   it('es un instante válido con zona horaria explícita', () => {
     expect(PREMIERE_SHOWTIME).toMatch(/(Z|[+-]\d{2}:\d{2})$/);

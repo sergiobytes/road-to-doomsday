@@ -16,6 +16,12 @@
   --color-series: var(--color-cyan-400);
   --color-recommended: var(--color-violet-300);
 
+  --color-platform-disney: var(--color-indigo-300);
+  --color-platform-netflix: var(--color-red-400);
+  --color-platform-prime: var(--color-sky-300);
+  --color-platform-hbo: var(--color-fuchsia-300);
+  --color-platform-vix: var(--color-orange-300);
+
   --color-status-on-track: var(--color-emerald-300);
   --color-status-ahead: var(--color-cyan-300);
   --color-status-behind: var(--color-amber-300);

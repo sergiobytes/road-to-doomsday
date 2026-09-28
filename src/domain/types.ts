@@ -4,6 +4,9 @@ export type ContentKind = 'movie' | 'series';
 
 export type ContentTier = 'essential' | 'recommended' | 'extra';
 
+/** Dónde ver un título en México: servicios de suscripción o, si aún no llega a streaming, el cine. */
+export type Platform = 'disney-plus' | 'netflix' | 'prime-video' | 'hbo-max' | 'vix' | 'cinema';
+
 export interface Episode {
   readonly number: number;
   readonly title?: string;
@@ -25,6 +28,8 @@ interface BaseRoadItem {
   readonly releaseDate: IsoDate;
   readonly tier: ContentTier;
   readonly relevance: string;
+  /** Vacío si en este momento solo se puede rentar, comprar o no está disponible. */
+  readonly platforms: readonly Platform[];
 }
 
 export interface MovieItem extends BaseRoadItem {

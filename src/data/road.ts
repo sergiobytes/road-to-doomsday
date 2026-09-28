@@ -1,4 +1,4 @@
-import type { Episode, IsoDate, MovieItem, RoadItem, SeriesItem } from '../domain/types';
+import type { Episode, IsoDate, MovieItem, Platform, RoadItem, SeriesItem } from '../domain/types';
 
 type MovieInput = Omit<MovieItem, 'kind' | 'session'> & { date: IsoDate; minutes: number };
 
@@ -11,6 +11,12 @@ interface EpisodeBlock {
 type SeriesInput = Omit<SeriesItem, 'kind' | 'sessions'> & {
   blocks: readonly EpisodeBlock[];
 };
+
+/**
+ * Disponibilidad en streaming en México, revisada en JustWatch el 2026-09-28.
+ * Solo cuenta suscripciones directas, no canales de Amazon ni renta o compra.
+ */
+const DISNEY_PLUS: readonly Platform[] = ['disney-plus'];
 
 function movie({ date, minutes, ...item }: MovieInput): MovieItem {
   return { ...item, kind: 'movie', session: { id: item.id, date, minutes } };
@@ -34,6 +40,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X-Men',
     releaseDate: '2000-07-14',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance:
       'Presenta a Xavier, Magneto, Cíclope y Mística: el reparto original de Fox que regresa en Doomsday.',
     date: '2026-09-28',
@@ -44,6 +51,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man',
     releaseDate: '2002-05-03',
     tier: 'extra',
+    platforms: ['prime-video', 'hbo-max'],
     relevance:
       'Inicio de la trilogía de Sam Raimi; su Peter Parker (Tobey Maguire) volvió en No Way Home.',
     date: '2026-09-28',
@@ -54,6 +62,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Daredevil',
     releaseDate: '2003-02-14',
     tier: 'extra',
+    platforms: ['disney-plus', 'netflix'],
     relevance: 'Primera versión en cine de Matt Murdock, antes de la etapa de Charlie Cox.',
     date: '2026-09-29',
     minutes: 103,
@@ -63,6 +72,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X2',
     releaseDate: '2003-05-02',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Debut de Nightcrawler; Alan Cumming forma parte del reparto de Doomsday.',
     date: '2026-09-29',
     minutes: 133,
@@ -72,6 +82,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man 2',
     releaseDate: '2004-06-30',
     tier: 'extra',
+    platforms: ['prime-video', 'hbo-max'],
     relevance:
       'Continúa la trilogía de Raimi y presenta al Doctor Octopus que reaparece en No Way Home.',
     date: '2026-09-30',
@@ -82,6 +93,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Elektra',
     releaseDate: '2005-01-14',
     tier: 'extra',
+    platforms: [],
     relevance: 'Spin-off de Daredevil (2003); cierra esa etapa de Fox.',
     date: '2026-09-30',
     minutes: 97,
@@ -91,6 +103,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Fantastic Four',
     releaseDate: '2005-07-08',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Primera versión moderna en cine de los Cuatro Fantásticos y de Doom.',
     date: '2026-10-01',
     minutes: 106,
@@ -100,6 +113,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X-Men: The Last Stand',
     releaseDate: '2006-05-26',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance: 'Cierra la trilogía original y presenta a Kelsey Grammer como Beast.',
     date: '2026-10-01',
     minutes: 104,
@@ -109,6 +123,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Ghost Rider',
     releaseDate: '2007-02-16',
     tier: 'extra',
+    platforms: ['hbo-max'],
     relevance:
       'El Ghost Rider de Nicolas Cage, fuera del MCU. Sin conexión confirmada con Doomsday.',
     date: '2026-10-02',
@@ -119,6 +134,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man 3',
     releaseDate: '2007-05-04',
     tier: 'extra',
+    platforms: ['prime-video', 'hbo-max'],
     relevance: 'Cierra la trilogía de Raimi; presenta a Sandman, que vuelve en No Way Home.',
     date: '2026-10-03',
     minutes: 139,
@@ -128,6 +144,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Fantastic Four: Rise of the Silver Surfer',
     releaseDate: '2007-06-15',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Continuación de Fantastic Four (2005), con Silver Surfer y Galactus.',
     date: '2026-10-03',
     minutes: 92,
@@ -137,6 +154,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Iron Man',
     releaseDate: '2008-05-02',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance:
       'Origen de Tony Stark e inicio del MCU: el personaje que convirtió a Downey en icono.',
     date: '2026-10-04',
@@ -147,6 +165,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Incredible Hulk',
     releaseDate: '2008-06-13',
     tier: 'extra',
+    platforms: [],
     relevance: 'Bruce Banner y el general Ross, que reaparecen años después en el MCU.',
     date: '2026-10-04',
     minutes: 112,
@@ -156,6 +175,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X-Men Origins: Wolverine',
     releaseDate: '2009-05-01',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Origen de Logan en la saga de Fox.',
     date: '2026-10-05',
     minutes: 107,
@@ -165,6 +185,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Iron Man 2',
     releaseDate: '2010-05-07',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Natasha Romanoff y amplía el papel de S.H.I.E.L.D.',
     date: '2026-10-05',
     minutes: 124,
@@ -174,6 +195,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Thor',
     releaseDate: '2011-05-06',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Origen de Thor y Loki, dos piezas centrales de la saga del Multiverso.',
     date: '2026-10-06',
     minutes: 115,
@@ -183,6 +205,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X-Men: First Class',
     releaseDate: '2011-06-03',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Juventud de Xavier y Magneto; inicia la línea de precuelas de Fox.',
     date: '2026-10-07',
     minutes: 132,
@@ -192,6 +215,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Captain America: The First Avenger',
     releaseDate: '2011-07-22',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance:
       'Origen de Steve Rogers y Peggy Carter; Chris Evans y Hayley Atwell forman parte del reparto.',
     date: '2026-10-08',
@@ -202,6 +226,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Ghost Rider: Spirit of Vengeance',
     releaseDate: '2012-02-17',
     tier: 'extra',
+    platforms: [],
     relevance: 'Secuela de Ghost Rider (2007). Sin conexión confirmada con Doomsday.',
     date: '2026-10-08',
     minutes: 96,
@@ -211,6 +236,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Avengers',
     releaseDate: '2012-05-04',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance:
       'Formación del equipo y primera gran historia de Thor y Loki como personajes centrales.',
     date: '2026-10-09',
@@ -221,6 +247,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Amazing Spider-Man',
     releaseDate: '2012-07-03',
     tier: 'extra',
+    platforms: ['hbo-max', 'vix'],
     relevance: 'El Spider-Man de Andrew Garfield, que regresó en No Way Home.',
     date: '2026-10-10',
     minutes: 136,
@@ -230,6 +257,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Iron Man 3',
     releaseDate: '2013-05-03',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Tony Stark tras la batalla de Nueva York.',
     date: '2026-10-11',
     minutes: 130,
@@ -239,6 +267,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Wolverine',
     releaseDate: '2013-07-26',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Logan en Japón; continúa su historia en la saga de Fox.',
     date: '2026-10-12',
     minutes: 126,
@@ -248,6 +277,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Thor: The Dark World',
     releaseDate: '2013-11-08',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta el Éter, una de las Gemas del Infinito.',
     date: '2026-10-12',
     minutes: 112,
@@ -257,6 +287,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Captain America: The Winter Soldier',
     releaseDate: '2014-04-04',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance:
       'Revela a Bucky como el Soldado del Invierno; Sebastian Stan forma parte del reparto de Doomsday.',
     date: '2026-10-13',
@@ -267,6 +298,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Amazing Spider-Man 2',
     releaseDate: '2014-05-02',
     tier: 'extra',
+    platforms: ['prime-video', 'hbo-max'],
     relevance: 'Cierra la etapa de Garfield y su historia con Gwen Stacy.',
     date: '2026-10-14',
     minutes: 142,
@@ -276,6 +308,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X-Men: Days of Future Past',
     releaseDate: '2014-05-23',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance: 'Une ambos repartos de X-Men y reescribe el final de la trilogía original.',
     date: '2026-10-15',
     minutes: 132,
@@ -285,6 +318,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Guardians of the Galaxy',
     releaseDate: '2014-08-01',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a los Guardianes y el lado cósmico del MCU.',
     date: '2026-10-16',
     minutes: 121,
@@ -294,6 +328,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Avengers: Age of Ultron',
     releaseDate: '2015-05-01',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Nacen Ultron y Vision, y los Avengers empiezan a fracturarse.',
     date: '2026-10-17',
     minutes: 141,
@@ -303,6 +338,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Ant-Man',
     releaseDate: '2015-07-17',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Scott Lang; Paul Rudd forma parte del reparto de Doomsday.',
     date: '2026-10-18',
     minutes: 117,
@@ -312,6 +348,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Fantastic Four (2015)',
     releaseDate: '2015-08-07',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Reinicio de Fox de los Cuatro Fantásticos.',
     date: '2026-10-18',
     minutes: 100,
@@ -321,6 +358,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Deadpool',
     releaseDate: '2016-02-12',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta al Deadpool de Ryan Reynolds: contexto directo de Deadpool & Wolverine.',
     date: '2026-10-19',
     minutes: 108,
@@ -330,6 +368,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Captain America: Civil War',
     releaseDate: '2016-05-06',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance: 'La fractura de los Avengers: contexto emocional de Steve, Bucky y Sam.',
     date: '2026-10-20',
     minutes: 147,
@@ -339,6 +378,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'X-Men: Apocalypse',
     releaseDate: '2016-05-27',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Continúa la línea de precuelas de X-Men.',
     date: '2026-10-21',
     minutes: 144,
@@ -348,6 +388,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Doctor Strange',
     releaseDate: '2016-11-04',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Origen de Stephen Strange y de la magia del MCU.',
     date: '2026-10-22',
     minutes: 115,
@@ -357,6 +398,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Logan',
     releaseDate: '2017-03-03',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Despedida del Wolverine de Hugh Jackman antes de Deadpool & Wolverine.',
     date: '2026-10-23',
     minutes: 137,
@@ -366,6 +408,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Guardians of the Galaxy Vol. 2',
     releaseDate: '2017-05-05',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Continúa la historia de Star-Lord y los Guardianes.',
     date: '2026-10-24',
     minutes: 136,
@@ -375,6 +418,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man: Homecoming',
     releaseDate: '2017-07-07',
     tier: 'extra',
+    platforms: ['hbo-max'],
     relevance: 'Primera película del Peter Parker de Tom Holland en el MCU.',
     date: '2026-10-25',
     minutes: 133,
@@ -384,6 +428,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Thor: Ragnarok',
     releaseDate: '2017-11-03',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance: 'Redefine al Thor actual; Chris Hemsworth forma parte del reparto de Doomsday.',
     date: '2026-10-26',
     minutes: 130,
@@ -393,6 +438,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Black Panther',
     releaseDate: '2018-02-16',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance:
       'Presenta Wakanda, a Shuri y a M’Baku; Letitia Wright y Winston Duke forman parte del reparto de Doomsday.',
     date: '2026-10-27',
@@ -403,6 +449,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Avengers: Infinity War',
     releaseDate: '2018-04-27',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Mismos directores que Doomsday y la plantilla de un crossover masivo.',
     date: '2026-10-28',
     minutes: 149,
@@ -412,6 +459,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Deadpool 2',
     releaseDate: '2018-05-18',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance: 'Continúa la historia de Deadpool: contexto de Deadpool & Wolverine.',
     date: '2026-10-29',
     minutes: 119,
@@ -421,6 +469,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Ant-Man and the Wasp',
     releaseDate: '2018-07-06',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta el reino cuántico, clave para Endgame.',
     date: '2026-10-29',
     minutes: 118,
@@ -430,6 +479,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Captain Marvel',
     releaseDate: '2019-03-08',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Origen de Carol Danvers, en los años noventa.',
     date: '2026-10-30',
     minutes: 123,
@@ -439,6 +489,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Avengers: Endgame',
     releaseDate: '2019-04-26',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance:
       'Cierre de Tony Stark y Steve Rogers; clave para entender a Downey regresando como Doom.',
     date: '2026-10-31',
@@ -449,6 +500,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Dark Phoenix',
     releaseDate: '2019-06-07',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Cierra la línea de precuelas de X-Men de Fox.',
     date: '2026-11-01',
     minutes: 114,
@@ -458,6 +510,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man: Far From Home',
     releaseDate: '2019-07-02',
     tier: 'extra',
+    platforms: ['netflix', 'prime-video'],
     relevance: 'Peter Parker tras Endgame; termina con su identidad revelada.',
     date: '2026-11-02',
     minutes: 129,
@@ -467,6 +520,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The New Mutants',
     releaseDate: '2020-08-28',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Última película de la saga X-Men de Fox.',
     date: '2026-11-02',
     minutes: 94,
@@ -477,6 +531,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2021-01-15',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Wanda y Vision tras Endgame; inicia la etapa del MCU en Disney+.',
     blocks: [
       { date: '2026-11-03', minutes: 105, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -490,6 +545,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2021-03-19',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance:
       'Sam Wilson decide cargar con el escudo; también presenta a John Walker (U.S. Agent).',
     blocks: [
@@ -525,6 +581,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2021-06-09',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Introduce la TVA, las variantes y la amenaza del multiverso.',
     blocks: [
       {
@@ -558,6 +615,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Black Widow',
     releaseDate: '2021-07-09',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance:
       'Presenta a Yelena Belova y Red Guardian; Florence Pugh y David Harbour forman parte del reparto de Doomsday.',
     date: '2026-11-07',
@@ -569,6 +627,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2021-08-11',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Animación del MCU que explora realidades alternativas del Multiverso.',
     blocks: [
       { date: '2026-11-08', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -581,6 +640,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Shang-Chi and the Legend of the Ten Rings',
     releaseDate: '2021-09-03',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Origen de Shang-Chi; Simu Liu forma parte del reparto de Doomsday.',
     date: '2026-11-09',
     minutes: 132,
@@ -590,6 +650,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Eternals',
     releaseDate: '2021-11-05',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a los Eternos y a los Celestiales.',
     date: '2026-11-10',
     minutes: 156,
@@ -600,6 +661,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2021-11-24',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Clint Barton y Kate Bishop; también reaparece Yelena.',
     blocks: [
       { date: '2026-11-11', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
@@ -612,6 +674,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man: No Way Home',
     releaseDate: '2021-12-17',
     tier: 'essential',
+    platforms: [],
     relevance: 'Personajes de otras franquicias llegan al MCU a través del multiverso.',
     date: '2026-11-13',
     minutes: 148,
@@ -622,6 +685,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2022-03-30',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Marc Spector y el lado místico del MCU.',
     blocks: [
       { date: '2026-11-14', minutes: 94, episodes: [{ number: 1 }, { number: 2 }] },
@@ -634,6 +698,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Doctor Strange in the Multiverse of Madness',
     releaseDate: '2022-05-06',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Explica las incursiones y el peligro de cruzar entre universos.',
     date: '2026-11-15',
     minutes: 126,
@@ -644,6 +709,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2022-06-08',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Kamala Khan.',
     blocks: [
       { date: '2026-11-16', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -655,6 +721,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Thor: Love and Thunder',
     releaseDate: '2022-07-08',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'La historia de Thor después de Endgame.',
     date: '2026-11-18',
     minutes: 119,
@@ -665,6 +732,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2022-08-18',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Jennifer Walters y vuelve a traer a Daredevil.',
     blocks: [
       { date: '2026-11-18', minutes: 99, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -678,6 +746,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Werewolf by Night',
     releaseDate: '2022-10-07',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Especial que presenta el lado sobrenatural del MCU.',
     date: '2026-11-20',
     minutes: 53,
@@ -687,6 +756,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Black Panther: Wakanda Forever',
     releaseDate: '2022-11-11',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Shuri, M’Baku y Namor forman parte del reparto de Doomsday.',
     date: '2026-11-20',
     minutes: 161,
@@ -697,6 +767,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Guardians of the Galaxy Holiday Special',
     releaseDate: '2022-11-25',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Especial navideño de los Guardianes, antes de Vol. 3.',
     date: '2026-11-21',
     minutes: 44,
@@ -706,6 +777,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Ant-Man and the Wasp: Quantumania',
     releaseDate: '2023-02-17',
     tier: 'recommended',
+    platforms: DISNEY_PLUS,
     relevance:
       'Presenta a la Cassie Lang adulta; Kathryn Newton forma parte del reparto de Doomsday.',
     date: '2026-11-21',
@@ -716,6 +788,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Guardians of the Galaxy Vol. 3',
     releaseDate: '2023-05-05',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Cierra la historia de los Guardianes.',
     date: '2026-11-22',
     minutes: 150,
@@ -726,6 +799,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2023-06-21',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Nick Fury y la amenaza Skrull en la Tierra.',
     blocks: [
       { date: '2026-11-23', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
@@ -739,6 +813,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 2,
     releaseDate: '2023-10-05',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Define el destino de Loki y el estado del multiverso.',
     blocks: [
       {
@@ -772,6 +847,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Marvels',
     releaseDate: '2023-11-10',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Carol Danvers, Monica Rambeau y Kamala Khan; su escena final muestra a Beast.',
     date: '2026-11-26',
     minutes: 105,
@@ -782,6 +858,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 2,
     releaseDate: '2023-12-22',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Nuevas realidades alternativas del Multiverso, en animación.',
     blocks: [
       { date: '2026-11-26', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -795,6 +872,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2024-01-09',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Maya Lopez en el mundo de Kingpin y Daredevil.',
     blocks: [
       { date: '2026-11-28', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -806,6 +884,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Deadpool & Wolverine',
     releaseDate: '2024-07-26',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Puente entre el universo de Fox y el MCU; presenta al Gambit de Channing Tatum.',
     date: '2026-11-29',
     minutes: 128,
@@ -816,6 +895,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2024-09-18',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Agatha Harkness después de WandaVision.',
     blocks: [
       { date: '2026-11-30', minutes: 120, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
@@ -829,6 +909,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 3,
     releaseDate: '2024-12-22',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Última temporada de la serie animada del Multiverso.',
     blocks: [
       {
@@ -848,6 +929,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Captain America: Brave New World',
     releaseDate: '2025-02-14',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Sam Wilson ya como Capitán América, con Joaquín Torres como el nuevo Falcon.',
     date: '2026-12-02',
     minutes: 118,
@@ -858,6 +940,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2025-03-04',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Matt Murdock y Kingpin en el MCU actual.',
     blocks: [
       { date: '2026-12-03', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
@@ -871,6 +954,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Thunderbolts*',
     releaseDate: '2025-05-02',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Nacen los New Avengers, uno de los equipos centrales de Doomsday.',
     date: '2026-12-06',
     minutes: 127,
@@ -881,6 +965,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2025-06-24',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Riri Williams tras Wakanda Forever.',
     blocks: [
       { date: '2026-12-06', minutes: 96, episodes: [{ number: 1 }, { number: 2 }] },
@@ -893,6 +978,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Fantastic Four: First Steps',
     releaseDate: '2025-07-25',
     tier: 'essential',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta la Tierra-828 y la primera aparición de Doom.',
     date: '2026-12-08',
     minutes: 114,
@@ -903,6 +989,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2025-08-01',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Animación sobre guerreros de Wakanda a lo largo de la historia.',
     blocks: [
       {
@@ -918,6 +1005,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2025-09-24',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Animación ambientada en una realidad alternativa del Multiverso.',
     blocks: [
       { date: '2026-12-09', minutes: 80, episodes: [{ number: 1 }, { number: 2 }] },
@@ -930,6 +1018,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 1,
     releaseDate: '2026-01-27',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Presenta a Simon Williams.',
     blocks: [
       {
@@ -950,6 +1039,7 @@ export const ROAD: readonly RoadItem[] = [
     season: 2,
     releaseDate: '2026-03-24',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Continúa la historia de Matt Murdock y Kingpin.',
     blocks: [
       {
@@ -992,6 +1082,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'The Punisher: One Last Kill',
     releaseDate: '2026-05-12',
     tier: 'extra',
+    platforms: DISNEY_PLUS,
     relevance: 'Especial de Frank Castle tras Daredevil: Born Again.',
     date: '2026-12-13',
     minutes: 50,
@@ -1001,6 +1092,7 @@ export const ROAD: readonly RoadItem[] = [
     title: 'Spider-Man: Brand New Day',
     releaseDate: '2026-07-31',
     tier: 'recommended',
+    platforms: ['cinema'],
     relevance:
       'Ocurre antes de Doomsday y Hulk aparece en ambas (confirmado). Verificar si ya está disponible.',
     date: '2026-12-14',

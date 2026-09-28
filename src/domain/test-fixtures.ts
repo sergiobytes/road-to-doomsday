@@ -6,6 +6,7 @@ export const MOVIE_A: MovieItem = {
   title: 'Movie A',
   releaseDate: '2020-01-01',
   tier: 'essential',
+  platforms: ['disney-plus'],
   relevance: 'Película de prueba.',
   session: { id: 'movie-a', date: '2026-10-01', minutes: 120 },
 };
@@ -17,6 +18,7 @@ export const SERIES_B: SeriesItem = {
   season: 1,
   releaseDate: '2021-01-01',
   tier: 'recommended',
+  platforms: ['disney-plus'],
   relevance: 'Serie de prueba.',
   sessions: [
     {
@@ -46,6 +48,7 @@ export const MOVIE_C: MovieItem = {
   title: 'Movie C',
   releaseDate: '2022-01-01',
   tier: 'essential',
+  platforms: ['disney-plus'],
   relevance: 'Otra película de prueba.',
   session: { id: 'movie-c', date: '2026-10-05', minutes: 130 },
 };

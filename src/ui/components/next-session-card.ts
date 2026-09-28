@@ -9,6 +9,7 @@ import {
   type SessionTiming,
 } from '../format';
 import { FOCUS_RING, toggleSessionAttributes, toggleSkipAttributes } from '../actions';
+import { renderPlatformBadges } from './platform-badges';
 
 /**
  * El botón de esta tarjeta siempre conserva el foco al marcar,
@@ -86,7 +87,10 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
       </header>
       <div>
         <h3 id="${NEXT_SESSION_TITLE_ID}" class="text-lg leading-snug font-semibold">${escapeHtml(getItemDisplayTitle(entry.item))}</h3>
-        <p class="text-xs text-ink-subtle">${kindLabel} · ${entry.item.releaseDate.slice(0, 4)}</p>
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-subtle">
+          <span>${kindLabel} · ${entry.item.releaseDate.slice(0, 4)}</span>
+          ${renderPlatformBadges(entry.item.platforms)}
+        </div>
       </div>
       ${renderEpisodes(entry)}
 

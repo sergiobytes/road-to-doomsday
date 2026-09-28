@@ -20,6 +20,7 @@ import {
   getSessionTiming,
 } from '../format';
 import { icons } from '../icons';
+import { renderPlatformBadges } from './platform-badges';
 import { renderPoster } from './poster';
 
 const WEEK_RANGE_FORMAT = new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'short' });
@@ -64,11 +65,12 @@ function renderSessionLabel(
 
 function renderMeta(item: RoadItem, detail: string, extra = ''): string {
   return `
-    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-subtle">
+    <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-subtle">
       <span>${getKindLabel(item)} · ${item.releaseDate.slice(0, 4)} · ${detail}</span>
       ${renderTierBadge(item)}
+      ${renderPlatformBadges(item.platforms)}
       ${extra}
-    </p>
+    </div>
   `;
 }
 

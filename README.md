@@ -38,6 +38,9 @@ Reglas del calendario:
 - Omitir sesiones: no cuentan como pendientes ni atrasadas, pero tampoco suman al
   porcentaje.
 - Semanas colapsables; las ya completas aparecen cerradas al cargar.
+- Etiquetas con la plataforma donde está cada título en México (Disney+, Netflix,
+  Prime Video, HBO Max, ViX o en cines). Revisadas en JustWatch el 28 de septiembre
+  de 2026; la disponibilidad cambia, se actualizan en `src/data/road.ts`.
 - Cuenta regresiva a la función.
 - Reinicio del progreso con confirmación.
 

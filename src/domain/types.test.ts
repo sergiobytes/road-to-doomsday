@@ -7,6 +7,7 @@ const movie: MovieItem = {
   title: 'X-Men',
   releaseDate: '2000-07-14',
   tier: 'essential',
+  platforms: ['disney-plus'],
   relevance: 'Regresa el reparto original.',
   session: { id: 'x-men', date: '2026-09-29', minutes: 104 },
 };
@@ -18,6 +19,7 @@ const series: SeriesItem = {
   season: 1,
   releaseDate: '2021-06-09',
   tier: 'essential',
+  platforms: ['disney-plus'],
   relevance: 'Multiverso y variantes.',
   sessions: [
     {
