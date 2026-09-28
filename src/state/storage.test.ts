@@ -13,46 +13,69 @@ import type { UserProgress } from './types';
 
 const SAMPLE_PROGRESS: UserProgress = {
   watched: new Map([
-    ['x-men', '2026-09-29'],
-    ['loki-s1-e1-2', '2026-10-27'],
+    ['x-men', '2026-09-28'],
+    ['loki-s1-e1-2', '2026-11-07'],
   ]),
+  skipped: new Map([['ghost-rider', '2026-10-03']]),
 };
 
 describe('parseProgress', () => {
   it('acepta datos válidos', () => {
-    const progress = parseProgress({ version: 1, watched: { 'x-men': '2026-09-29' } });
+    const progress = parseProgress({
+      version: 2,
+      watched: { 'x-men': '2026-09-28' },
+      skipped: { 'ghost-rider': '2026-10-03' },
+    });
 
-    expect(progress?.watched).toEqual(new Map([['x-men', '2026-09-29']]));
+    expect(progress).toEqual({
+      watched: new Map([['x-men', '2026-09-28']]),
+      skipped: new Map([['ghost-rider', '2026-10-03']]),
+    });
   });
 
   it('descarta solo las entradas con fecha inválida', () => {
     const progress = parseProgress({
-      version: 1,
-      watched: { 'x-men': '2026-09-29', x2: 'ayer', 'the-avengers': 42 },
+      version: 2,
+      watched: { 'x-men': '2026-09-28', x2: 'ayer', 'the-avengers': 42 },
+      skipped: { elektra: 'nunca' },
     });
 
-    expect(progress?.watched).toEqual(new Map([['x-men', '2026-09-29']]));
+    expect(progress?.watched).toEqual(new Map([['x-men', '2026-09-28']]));
+    expect(progress?.skipped.size).toBe(0);
+  });
+
+  it('una sesión vista no puede estar también omitida', () => {
+    const progress = parseProgress({
+      version: 2,
+      watched: { 'x-men': '2026-09-28' },
+      skipped: { 'x-men': '2026-09-28' },
+    });
+
+    expect(progress?.skipped.has('x-men')).toBe(false);
   });
 
   it.each([
     ['null', null],
     ['un número', 42],
     ['un arreglo', []],
-    ['sin versión', { watched: {} }],
-    ['versión desconocida', { version: 99, watched: {} }],
-    ['versión como texto', { version: '1', watched: {} }],
-    ['sin watched', { version: 1 }],
-    ['watched como arreglo', { version: 1, watched: ['x-men'] }],
+    ['sin versión', { watched: {}, skipped: {} }],
+    ['versión desconocida', { version: 99, watched: {}, skipped: {} }],
+    ['versión como texto', { version: '2', watched: {}, skipped: {} }],
+    ['la versión 1 sin migrar', { version: 1, watched: {} }],
+    ['sin watched', { version: 2, skipped: {} }],
+    ['sin skipped', { version: 2, watched: {} }],
+    ['watched como arreglo', { version: 2, watched: ['x-men'], skipped: {} }],
   ])('rechaza %s', (_, value) => {
     expect(parseProgress(value)).toBeNull();
   });
 });
 
 describe('serializeProgress', () => {
-  it('guarda la versión y las sesiones vistas', () => {
+  it('guarda la versión, las sesiones vistas y las omitidas', () => {
     expect(JSON.parse(serializeProgress(SAMPLE_PROGRESS))).toEqual({
-      version: 1,
-      watched: { 'x-men': '2026-09-29', 'loki-s1-e1-2': '2026-10-27' },
+      version: 2,
+      watched: { 'x-men': '2026-09-28', 'loki-s1-e1-2': '2026-11-07' },
+      skipped: { 'ghost-rider': '2026-10-03' },
     });
   });
 
@@ -77,10 +100,21 @@ describe('loadProgress', () => {
     expect(loadProgress(storage)).toEqual({ status: 'loaded', progress: SAMPLE_PROGRESS });
   });
 
+  it('migra el progreso guardado en la versión 1', () => {
+    const storage = createMemoryStorage({
+      [STORAGE_KEY]: JSON.stringify({ version: 1, watched: { 'x-men': '2026-09-28' } }),
+    });
+
+    expect(loadProgress(storage)).toEqual({
+      status: 'migrated',
+      progress: { watched: new Map([['x-men', '2026-09-28']]), skipped: new Map() },
+    });
+  });
+
   it.each([
     ['JSON corrupto', '{no es json'],
-    ['estructura inválida', '{"version":1}'],
-    ['una versión futura', '{"version":2,"watched":{}}'],
+    ['estructura inválida', '{"version":2}'],
+    ['una versión futura', '{"version":3,"watched":{},"skipped":{}}'],
   ])('con %s devuelve progreso vacío y guarda un respaldo', (_, raw) => {
     const storage = createMemoryStorage({ [STORAGE_KEY]: raw });
     const result = loadProgress(storage);

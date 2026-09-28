@@ -1,5 +1,5 @@
 import { toIsoDate } from '../domain/dates';
-import type { IsoDate, WatchedSessionIds } from '../domain/types';
+import type { IsoDate, SkippedSessionIds, WatchedSessionIds } from '../domain/types';
 import { clearProgress, loadProgress, saveProgress, type LoadStatus } from './storage';
 import { EMPTY_PROGRESS, type UserProgress } from './types';
 
@@ -21,6 +21,9 @@ export interface ProgressStore {
   unmarkWatched(sessionId: string): void;
   /** Marca la sesión si no estaba vista, o la desmarca si ya lo estaba. */
   toggleWatched(sessionId: string): void;
+  /** Omite una sesión pendiente; no tiene efecto sobre sesiones ya vistas. */
+  skipSession(sessionId: string): void;
+  unskipSession(sessionId: string): void;
   reset(): void;
 }
 
@@ -33,6 +36,10 @@ export interface StoreOptions {
 /** Ids vistos en el formato que espera la lógica del dominio. */
 export function toWatchedIds(progress: UserProgress): WatchedSessionIds {
   return new Set(progress.watched.keys());
+}
+
+export function toSkippedIds(progress: UserProgress): SkippedSessionIds {
+  return new Set(progress.skipped.keys());
 }
 
 export function createProgressStore({
@@ -62,8 +69,10 @@ export function createProgressStore({
     if (state.progress.watched.has(sessionId)) return;
 
     const watched = new Map(state.progress.watched);
+    const skipped = new Map(state.progress.skipped);
     watched.set(sessionId, getToday());
-    commitProgress({ watched });
+    skipped.delete(sessionId);
+    commitProgress({ watched, skipped });
   }
 
   function unmarkWatched(sessionId: string): void {
@@ -71,7 +80,22 @@ export function createProgressStore({
 
     const watched = new Map(state.progress.watched);
     watched.delete(sessionId);
-    commitProgress({ watched });
+    commitProgress({ ...state.progress, watched });
+  }
+
+  function skipSession(sessionId: string): void {
+    const { watched, skipped } = state.progress;
+    if (watched.has(sessionId) || skipped.has(sessionId)) return;
+
+    commitProgress({ watched, skipped: new Map(skipped).set(sessionId, getToday()) });
+  }
+
+  function unskipSession(sessionId: string): void {
+    if (!state.progress.skipped.has(sessionId)) return;
+
+    const skipped = new Map(state.progress.skipped);
+    skipped.delete(sessionId);
+    commitProgress({ ...state.progress, skipped });
   }
 
   return {
@@ -86,6 +110,8 @@ export function createProgressStore({
 
     markWatched,
     unmarkWatched,
+    skipSession,
+    unskipSession,
 
     toggleWatched(sessionId) {
       if (state.progress.watched.has(sessionId)) unmarkWatched(sessionId);

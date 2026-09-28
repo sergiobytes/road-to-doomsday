@@ -1,10 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 import { BACKUP_STORAGE_KEY, loadProgress, STORAGE_KEY } from './storage';
-import { createProgressStore, toWatchedIds } from './store';
+import { createProgressStore, toSkippedIds, toWatchedIds } from './store';
 import { createMemoryStorage, failingStorage } from './test-utils';
 
 const TODAY = '2026-10-01';
-const SAVED_PROGRESS = JSON.stringify({ version: 1, watched: { 'x-men': '2026-09-29' } });
+const SAVED_PROGRESS = JSON.stringify({
+  version: 2,
+  watched: { 'x-men': '2026-09-29' },
+  skipped: {},
+});
 
 function setup(initial: Record<string, string> = {}) {
   const storage = createMemoryStorage(initial);
@@ -19,7 +23,7 @@ describe('carga inicial', () => {
     const { store } = setup();
 
     expect(store.getState()).toEqual({
-      progress: { watched: new Map() },
+      progress: { watched: new Map(), skipped: new Map() },
       loadStatus: 'empty',
       saveFailed: false,
     });
@@ -30,6 +34,19 @@ describe('carga inicial', () => {
 
     expect(store.getState().loadStatus).toBe('loaded');
     expect(store.getState().progress.watched.get('x-men')).toBe('2026-09-29');
+  });
+
+  it('migra el progreso de la versión 1 y lo guarda en el formato actual', () => {
+    const { storage, store } = setup({
+      [STORAGE_KEY]: JSON.stringify({ version: 1, watched: { 'x-men': '2026-09-29' } }),
+    });
+
+    expect(store.getState().loadStatus).toBe('migrated');
+    expect(store.getState().progress.watched.get('x-men')).toBe('2026-09-29');
+    expect(JSON.parse(storage.data.get(STORAGE_KEY) ?? '')).toMatchObject({
+      version: 2,
+      skipped: {},
+    });
   });
 
   it('informa cuando los datos guardados eran inválidos', () => {
@@ -107,6 +124,53 @@ describe('toggleWatched', () => {
 
     expect(store.getState().progress.watched.has('x-men')).toBe(false);
     expect(listener).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('omitir sesiones', () => {
+  it('omite una sesión pendiente, guarda y avisa', () => {
+    const { storage, store, listener } = setup();
+
+    store.skipSession('ghost-rider');
+
+    expect(store.getState().progress.skipped.get('ghost-rider')).toBe(TODAY);
+    expect(loadProgress(storage).progress.skipped.has('ghost-rider')).toBe(true);
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  it('no omite una sesión ya vista', () => {
+    const { store, listener } = setup({ [STORAGE_KEY]: SAVED_PROGRESS });
+
+    store.skipSession('x-men');
+
+    expect(store.getState().progress.skipped.has('x-men')).toBe(false);
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('deshacer la omisión la devuelve a pendiente', () => {
+    const { store } = setup();
+    store.skipSession('ghost-rider');
+
+    store.unskipSession('ghost-rider');
+
+    expect(store.getState().progress.skipped.has('ghost-rider')).toBe(false);
+  });
+
+  it('marcar como vista una sesión omitida quita la omisión', () => {
+    const { store } = setup();
+    store.skipSession('ghost-rider');
+
+    store.markWatched('ghost-rider');
+
+    expect(store.getState().progress.watched.has('ghost-rider')).toBe(true);
+    expect(store.getState().progress.skipped.has('ghost-rider')).toBe(false);
+  });
+
+  it('toSkippedIds devuelve los ids omitidos', () => {
+    const { store } = setup();
+    store.skipSession('ghost-rider');
+
+    expect(toSkippedIds(store.getState().progress)).toEqual(new Set(['ghost-rider']));
   });
 });
 

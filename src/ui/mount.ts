@@ -5,7 +5,7 @@ import { getNextSession, getProgressSummary } from '../domain/progress';
 import { getScheduleReport } from '../domain/schedule';
 import { groupItemsByWeek } from '../domain/timeline';
 import type { IsoDate } from '../domain/types';
-import { toWatchedIds, type ProgressStore, type StoreState } from '../state/store';
+import { toSkippedIds, toWatchedIds, type ProgressStore, type StoreState } from '../state/store';
 import { ACTIONS } from './actions';
 import { MOUNT_IDS, renderAppShell, RESET_CONFIRM_VALUE } from './app-shell';
 import { renderCountdown } from './components/countdown';
@@ -63,17 +63,18 @@ export function mountApp(root: HTMLElement, store: ProgressStore, clock: AppCloc
   function render(state: StoreState): void {
     const focusKey = getFocusedKey();
     const watched = toWatchedIds(state.progress);
+    const skipped = toSkippedIds(state.progress);
     const today = clock.getToday();
 
     notices.innerHTML = renderStorageNotice(getStorageNotice(state));
 
     progressSummary.innerHTML = renderProgressPanel({
-      summary: getProgressSummary(ROAD, watched),
-      schedule: getScheduleReport(ROAD, watched, today),
+      summary: getProgressSummary(ROAD, watched, skipped),
+      schedule: getScheduleReport(ROAD, watched, today, skipped),
     });
 
     nextSession.innerHTML = renderNextSessionCard({
-      entry: getNextSession(ROAD, watched),
+      entry: getNextSession(ROAD, watched, skipped),
       today,
     });
 

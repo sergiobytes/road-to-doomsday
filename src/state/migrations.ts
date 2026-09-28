@@ -2,7 +2,9 @@ export type PersistedData = Readonly<Record<string, unknown>>;
 
 export type Migration = (data: PersistedData) => PersistedData;
 
-export const MIGRATIONS: Readonly<Partial<Record<number, Migration>>> = {};
+export const MIGRATIONS: Readonly<Partial<Record<number, Migration>>> = {
+  1: (data) => ({ ...data, version: 2, skipped: {} }),
+};
 
 export interface MigrationResult {
   readonly data: PersistedData;

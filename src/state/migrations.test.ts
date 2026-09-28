@@ -53,7 +53,10 @@ describe('migrate', () => {
     expect(migrate({ version }, 3, FAKE_MIGRATIONS)).toBeNull();
   });
 
-  it('con las migraciones reales, la versión 1 no necesita migrar', () => {
-    expect(migrate({ version: 1, watched: {} }, 1, MIGRATIONS)?.migrated).toBe(false);
+  it('la migración real de la versión 1 a la 2 añade las sesiones omitidas', () => {
+    expect(migrate({ version: 1, watched: { 'x-men': '2026-09-28' } }, 2, MIGRATIONS)).toEqual({
+      data: { version: 2, watched: { 'x-men': '2026-09-28' }, skipped: {} },
+      migrated: true,
+    });
   });
 });

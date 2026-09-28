@@ -6,11 +6,12 @@ import { EMPTY_PROGRESS, type UserProgress } from './types';
 export const STORAGE_KEY = 'road-to-doomsday:progress';
 /** Copia de datos que no se pudieron leer, para poder recuperarlos a mano. */
 export const BACKUP_STORAGE_KEY = `${STORAGE_KEY}:backup`;
-export const STORAGE_VERSION = 1;
+export const STORAGE_VERSION = 2;
 
 interface PersistedProgress {
   version: typeof STORAGE_VERSION;
   watched: Record<string, IsoDate>;
+  skipped: Record<string, IsoDate>;
 }
 
 export type LoadStatus = 'empty' | 'loaded' | 'migrated' | 'invalid' | 'unavailable';
@@ -24,23 +25,36 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
+function parseDatedIds(record: Record<string, unknown>): Map<string, IsoDate> {
+  const result = new Map<string, IsoDate>();
+  for (const [sessionId, date] of Object.entries(record)) {
+    if (isIsoDate(date)) result.set(sessionId, date);
+  }
+  return result;
+}
+
 export function parseProgress(value: unknown): UserProgress | null {
-  if (!isRecord(value) || value.version !== STORAGE_VERSION || !isRecord(value.watched)) {
+  if (
+    !isRecord(value) ||
+    value.version !== STORAGE_VERSION ||
+    !isRecord(value.watched) ||
+    !isRecord(value.skipped)
+  ) {
     return null;
   }
 
-  const watched = new Map<string, IsoDate>();
-  for (const [sessionId, date] of Object.entries(value.watched)) {
-    if (isIsoDate(date)) watched.set(sessionId, date);
-  }
+  const watched = parseDatedIds(value.watched);
+  const skipped = parseDatedIds(value.skipped);
+  for (const sessionId of watched.keys()) skipped.delete(sessionId);
 
-  return { watched };
+  return { watched, skipped };
 }
 
 export function serializeProgress(progress: UserProgress): string {
   const persisted: PersistedProgress = {
     version: STORAGE_VERSION,
     watched: Object.fromEntries(progress.watched),
+    skipped: Object.fromEntries(progress.skipped),
   };
   return JSON.stringify(persisted);
 }
