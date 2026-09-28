@@ -87,6 +87,10 @@ describe('calendario de sesiones', () => {
     expect(sessions.filter((session) => !isIsoDate(session.date))).toEqual([]);
   });
 
+  it('la primera sesión es el día de inicio del Road', () => {
+    expect(sessions[0]?.date).toBe(ROAD_START_DATE);
+  });
+
   it('todas las sesiones caen entre el inicio del Road y el día de la función', () => {
     const outOfRange = sessions.filter(
       (session) =>

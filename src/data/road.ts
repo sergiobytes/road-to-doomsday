@@ -36,7 +36,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Presenta a Xavier, Magneto, Cíclope y Mística: el reparto original de Fox que regresa en Doomsday.',
-    date: '2026-09-29',
+    date: '2026-09-28',
     minutes: 104,
   }),
   movie({
@@ -46,7 +46,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance:
       'Inicio de la trilogía de Sam Raimi; su Peter Parker (Tobey Maguire) volvió en No Way Home.',
-    date: '2026-09-29',
+    date: '2026-09-28',
     minutes: 121,
   }),
   movie({
@@ -55,7 +55,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2003-02-14',
     tier: 'extra',
     relevance: 'Primera versión en cine de Matt Murdock, antes de la etapa de Charlie Cox.',
-    date: '2026-09-30',
+    date: '2026-09-29',
     minutes: 103,
   }),
   movie({
@@ -64,7 +64,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2003-05-02',
     tier: 'essential',
     relevance: 'Debut de Nightcrawler; Alan Cumming forma parte del reparto de Doomsday.',
-    date: '2026-09-30',
+    date: '2026-09-29',
     minutes: 133,
   }),
   movie({
@@ -74,7 +74,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance:
       'Continúa la trilogía de Raimi y presenta al Doctor Octopus que reaparece en No Way Home.',
-    date: '2026-10-01',
+    date: '2026-09-30',
     minutes: 127,
   }),
   movie({
@@ -83,7 +83,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2005-01-14',
     tier: 'extra',
     relevance: 'Spin-off de Daredevil (2003); cierra esa etapa de Fox.',
-    date: '2026-10-01',
+    date: '2026-09-30',
     minutes: 97,
   }),
   movie({
@@ -92,7 +92,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2005-07-08',
     tier: 'extra',
     relevance: 'Primera versión moderna en cine de los Cuatro Fantásticos y de Doom.',
-    date: '2026-10-02',
+    date: '2026-10-01',
     minutes: 106,
   }),
   movie({
@@ -101,7 +101,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2006-05-26',
     tier: 'recommended',
     relevance: 'Cierra la trilogía original y presenta a Kelsey Grammer como Beast.',
-    date: '2026-10-02',
+    date: '2026-10-01',
     minutes: 104,
   }),
   movie({
@@ -111,7 +111,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance:
       'El Ghost Rider de Nicolas Cage, fuera del MCU. Sin conexión confirmada con Doomsday.',
-    date: '2026-10-03',
+    date: '2026-10-02',
     minutes: 110,
   }),
   movie({
@@ -120,7 +120,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2007-05-04',
     tier: 'extra',
     relevance: 'Cierra la trilogía de Raimi; presenta a Sandman, que vuelve en No Way Home.',
-    date: '2026-10-04',
+    date: '2026-10-03',
     minutes: 139,
   }),
   movie({
@@ -129,7 +129,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2007-06-15',
     tier: 'extra',
     relevance: 'Continuación de Fantastic Four (2005), con Silver Surfer y Galactus.',
-    date: '2026-10-04',
+    date: '2026-10-03',
     minutes: 92,
   }),
   movie({
@@ -139,7 +139,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance:
       'Origen de Tony Stark e inicio del MCU: el personaje que convirtió a Downey en icono.',
-    date: '2026-10-05',
+    date: '2026-10-04',
     minutes: 126,
   }),
   movie({
@@ -148,7 +148,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2008-06-13',
     tier: 'extra',
     relevance: 'Bruce Banner y el general Ross, que reaparecen años después en el MCU.',
-    date: '2026-10-05',
+    date: '2026-10-04',
     minutes: 112,
   }),
   movie({
@@ -157,7 +157,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2009-05-01',
     tier: 'extra',
     relevance: 'Origen de Logan en la saga de Fox.',
-    date: '2026-10-06',
+    date: '2026-10-05',
     minutes: 107,
   }),
   movie({
@@ -166,7 +166,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2010-05-07',
     tier: 'extra',
     relevance: 'Presenta a Natasha Romanoff y amplía el papel de S.H.I.E.L.D.',
-    date: '2026-10-06',
+    date: '2026-10-05',
     minutes: 124,
   }),
   movie({
@@ -175,7 +175,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2011-05-06',
     tier: 'extra',
     relevance: 'Origen de Thor y Loki, dos piezas centrales de la saga del Multiverso.',
-    date: '2026-10-07',
+    date: '2026-10-06',
     minutes: 115,
   }),
   movie({
@@ -184,7 +184,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2011-06-03',
     tier: 'extra',
     relevance: 'Juventud de Xavier y Magneto; inicia la línea de precuelas de Fox.',
-    date: '2026-10-08',
+    date: '2026-10-07',
     minutes: 132,
   }),
   movie({
@@ -194,7 +194,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Origen de Steve Rogers y Peggy Carter; Chris Evans y Hayley Atwell forman parte del reparto.',
-    date: '2026-10-09',
+    date: '2026-10-08',
     minutes: 124,
   }),
   movie({
@@ -203,7 +203,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2012-02-17',
     tier: 'extra',
     relevance: 'Secuela de Ghost Rider (2007). Sin conexión confirmada con Doomsday.',
-    date: '2026-10-09',
+    date: '2026-10-08',
     minutes: 96,
   }),
   movie({
@@ -213,7 +213,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Formación del equipo y primera gran historia de Thor y Loki como personajes centrales.',
-    date: '2026-10-10',
+    date: '2026-10-09',
     minutes: 143,
   }),
   movie({
@@ -222,7 +222,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2012-07-03',
     tier: 'extra',
     relevance: 'El Spider-Man de Andrew Garfield, que regresó en No Way Home.',
-    date: '2026-10-11',
+    date: '2026-10-10',
     minutes: 136,
   }),
   movie({
@@ -231,7 +231,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2013-05-03',
     tier: 'extra',
     relevance: 'Tony Stark tras la batalla de Nueva York.',
-    date: '2026-10-12',
+    date: '2026-10-11',
     minutes: 130,
   }),
   movie({
@@ -240,7 +240,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2013-07-26',
     tier: 'extra',
     relevance: 'Logan en Japón; continúa su historia en la saga de Fox.',
-    date: '2026-10-13',
+    date: '2026-10-12',
     minutes: 126,
   }),
   movie({
@@ -249,7 +249,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2013-11-08',
     tier: 'extra',
     relevance: 'Presenta el Éter, una de las Gemas del Infinito.',
-    date: '2026-10-13',
+    date: '2026-10-12',
     minutes: 112,
   }),
   movie({
@@ -259,7 +259,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'recommended',
     relevance:
       'Revela a Bucky como el Soldado del Invierno; Sebastian Stan forma parte del reparto de Doomsday.',
-    date: '2026-10-14',
+    date: '2026-10-13',
     minutes: 136,
   }),
   movie({
@@ -268,7 +268,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2014-05-02',
     tier: 'extra',
     relevance: 'Cierra la etapa de Garfield y su historia con Gwen Stacy.',
-    date: '2026-10-15',
+    date: '2026-10-14',
     minutes: 142,
   }),
   movie({
@@ -277,7 +277,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2014-05-23',
     tier: 'recommended',
     relevance: 'Une ambos repartos de X-Men y reescribe el final de la trilogía original.',
-    date: '2026-10-16',
+    date: '2026-10-15',
     minutes: 132,
   }),
   movie({
@@ -286,7 +286,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2014-08-01',
     tier: 'extra',
     relevance: 'Presenta a los Guardianes y el lado cósmico del MCU.',
-    date: '2026-10-17',
+    date: '2026-10-16',
     minutes: 121,
   }),
   movie({
@@ -295,7 +295,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2015-05-01',
     tier: 'extra',
     relevance: 'Nacen Ultron y Vision, y los Avengers empiezan a fracturarse.',
-    date: '2026-10-18',
+    date: '2026-10-17',
     minutes: 141,
   }),
   movie({
@@ -304,7 +304,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2015-07-17',
     tier: 'extra',
     relevance: 'Presenta a Scott Lang; Paul Rudd forma parte del reparto de Doomsday.',
-    date: '2026-10-19',
+    date: '2026-10-18',
     minutes: 117,
   }),
   movie({
@@ -313,7 +313,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2015-08-07',
     tier: 'extra',
     relevance: 'Reinicio de Fox de los Cuatro Fantásticos.',
-    date: '2026-10-19',
+    date: '2026-10-18',
     minutes: 100,
   }),
   movie({
@@ -322,7 +322,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2016-02-12',
     tier: 'recommended',
     relevance: 'Presenta al Deadpool de Ryan Reynolds: contexto directo de Deadpool & Wolverine.',
-    date: '2026-10-20',
+    date: '2026-10-19',
     minutes: 108,
   }),
   movie({
@@ -331,7 +331,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2016-05-06',
     tier: 'recommended',
     relevance: 'La fractura de los Avengers: contexto emocional de Steve, Bucky y Sam.',
-    date: '2026-10-21',
+    date: '2026-10-20',
     minutes: 147,
   }),
   movie({
@@ -340,7 +340,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2016-05-27',
     tier: 'extra',
     relevance: 'Continúa la línea de precuelas de X-Men.',
-    date: '2026-10-22',
+    date: '2026-10-21',
     minutes: 144,
   }),
   movie({
@@ -349,7 +349,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2016-11-04',
     tier: 'extra',
     relevance: 'Origen de Stephen Strange y de la magia del MCU.',
-    date: '2026-10-23',
+    date: '2026-10-22',
     minutes: 115,
   }),
   movie({
@@ -358,7 +358,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2017-03-03',
     tier: 'extra',
     relevance: 'Despedida del Wolverine de Hugh Jackman antes de Deadpool & Wolverine.',
-    date: '2026-10-24',
+    date: '2026-10-23',
     minutes: 137,
   }),
   movie({
@@ -367,7 +367,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2017-05-05',
     tier: 'extra',
     relevance: 'Continúa la historia de Star-Lord y los Guardianes.',
-    date: '2026-10-25',
+    date: '2026-10-24',
     minutes: 136,
   }),
   movie({
@@ -376,7 +376,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2017-07-07',
     tier: 'extra',
     relevance: 'Primera película del Peter Parker de Tom Holland en el MCU.',
-    date: '2026-10-26',
+    date: '2026-10-25',
     minutes: 133,
   }),
   movie({
@@ -385,7 +385,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2017-11-03',
     tier: 'recommended',
     relevance: 'Redefine al Thor actual; Chris Hemsworth forma parte del reparto de Doomsday.',
-    date: '2026-10-27',
+    date: '2026-10-26',
     minutes: 130,
   }),
   movie({
@@ -395,7 +395,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'recommended',
     relevance:
       'Presenta Wakanda, a Shuri y a M’Baku; Letitia Wright y Winston Duke forman parte del reparto de Doomsday.',
-    date: '2026-10-28',
+    date: '2026-10-27',
     minutes: 134,
   }),
   movie({
@@ -404,7 +404,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2018-04-27',
     tier: 'essential',
     relevance: 'Mismos directores que Doomsday y la plantilla de un crossover masivo.',
-    date: '2026-10-29',
+    date: '2026-10-28',
     minutes: 149,
   }),
   movie({
@@ -413,7 +413,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2018-05-18',
     tier: 'recommended',
     relevance: 'Continúa la historia de Deadpool: contexto de Deadpool & Wolverine.',
-    date: '2026-10-30',
+    date: '2026-10-29',
     minutes: 119,
   }),
   movie({
@@ -422,7 +422,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2018-07-06',
     tier: 'extra',
     relevance: 'Presenta el reino cuántico, clave para Endgame.',
-    date: '2026-10-30',
+    date: '2026-10-29',
     minutes: 118,
   }),
   movie({
@@ -431,7 +431,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2019-03-08',
     tier: 'extra',
     relevance: 'Origen de Carol Danvers, en los años noventa.',
-    date: '2026-10-31',
+    date: '2026-10-30',
     minutes: 123,
   }),
   movie({
@@ -441,7 +441,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Cierre de Tony Stark y Steve Rogers; clave para entender a Downey regresando como Doom.',
-    date: '2026-11-01',
+    date: '2026-10-31',
     minutes: 181,
   }),
   movie({
@@ -450,7 +450,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2019-06-07',
     tier: 'extra',
     relevance: 'Cierra la línea de precuelas de X-Men de Fox.',
-    date: '2026-11-02',
+    date: '2026-11-01',
     minutes: 114,
   }),
   movie({
@@ -459,7 +459,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2019-07-02',
     tier: 'extra',
     relevance: 'Peter Parker tras Endgame; termina con su identidad revelada.',
-    date: '2026-11-03',
+    date: '2026-11-02',
     minutes: 129,
   }),
   movie({
@@ -468,7 +468,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2020-08-28',
     tier: 'extra',
     relevance: 'Última película de la saga X-Men de Fox.',
-    date: '2026-11-03',
+    date: '2026-11-02',
     minutes: 94,
   }),
   series({
@@ -479,9 +479,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Wanda y Vision tras Endgame; inicia la etapa del MCU en Disney+.',
     blocks: [
-      { date: '2026-11-04', minutes: 105, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-11-04', minutes: 105, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
-      { date: '2026-11-05', minutes: 105, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+      { date: '2026-11-03', minutes: 105, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-03', minutes: 105, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-04', minutes: 105, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
     ],
   }),
   series({
@@ -494,7 +494,7 @@ export const ROAD: readonly RoadItem[] = [
       'Sam Wilson decide cargar con el escudo; también presenta a John Walker (U.S. Agent).',
     blocks: [
       {
-        date: '2026-11-05',
+        date: '2026-11-04',
         minutes: 100,
         episodes: [
           { number: 1, title: 'New World Order' },
@@ -502,7 +502,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-11-06',
+        date: '2026-11-05',
         minutes: 100,
         episodes: [
           { number: 3, title: 'Power Broker' },
@@ -510,7 +510,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-11-06',
+        date: '2026-11-05',
         minutes: 100,
         episodes: [
           { number: 5, title: 'Truth' },
@@ -528,7 +528,7 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Introduce la TVA, las variantes y la amenaza del multiverso.',
     blocks: [
       {
-        date: '2026-11-07',
+        date: '2026-11-06',
         minutes: 96,
         episodes: [
           { number: 1, title: 'Glorious Purpose' },
@@ -536,7 +536,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-11-07',
+        date: '2026-11-06',
         minutes: 96,
         episodes: [
           { number: 3, title: 'Lamentis' },
@@ -544,7 +544,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-11-08',
+        date: '2026-11-07',
         minutes: 96,
         episodes: [
           { number: 5, title: 'Journey into Mystery' },
@@ -560,7 +560,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'recommended',
     relevance:
       'Presenta a Yelena Belova y Red Guardian; Florence Pugh y David Harbour forman parte del reparto de Doomsday.',
-    date: '2026-11-08',
+    date: '2026-11-07',
     minutes: 134,
   }),
   series({
@@ -571,9 +571,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Animación del MCU que explora realidades alternativas del Multiverso.',
     blocks: [
-      { date: '2026-11-09', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-11-09', minutes: 96, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
-      { date: '2026-11-10', minutes: 96, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+      { date: '2026-11-08', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-08', minutes: 96, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-09', minutes: 96, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
     ],
   }),
   movie({
@@ -582,7 +582,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2021-09-03',
     tier: 'essential',
     relevance: 'Origen de Shang-Chi; Simu Liu forma parte del reparto de Doomsday.',
-    date: '2026-11-10',
+    date: '2026-11-09',
     minutes: 132,
   }),
   movie({
@@ -591,7 +591,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2021-11-05',
     tier: 'extra',
     relevance: 'Presenta a los Eternos y a los Celestiales.',
-    date: '2026-11-11',
+    date: '2026-11-10',
     minutes: 156,
   }),
   series({
@@ -602,9 +602,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Clint Barton y Kate Bishop; también reaparece Yelena.',
     blocks: [
-      { date: '2026-11-12', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
-      { date: '2026-11-12', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
-      { date: '2026-11-13', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
+      { date: '2026-11-11', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-11-11', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-11-12', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
     ],
   }),
   movie({
@@ -613,7 +613,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2021-12-17',
     tier: 'essential',
     relevance: 'Personajes de otras franquicias llegan al MCU a través del multiverso.',
-    date: '2026-11-14',
+    date: '2026-11-13',
     minutes: 148,
   }),
   series({
@@ -624,9 +624,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Presenta a Marc Spector y el lado místico del MCU.',
     blocks: [
-      { date: '2026-11-15', minutes: 94, episodes: [{ number: 1 }, { number: 2 }] },
-      { date: '2026-11-15', minutes: 94, episodes: [{ number: 3 }, { number: 4 }] },
-      { date: '2026-11-16', minutes: 94, episodes: [{ number: 5 }, { number: 6 }] },
+      { date: '2026-11-14', minutes: 94, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-11-14', minutes: 94, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-11-15', minutes: 94, episodes: [{ number: 5 }, { number: 6 }] },
     ],
   }),
   movie({
@@ -635,7 +635,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-05-06',
     tier: 'essential',
     relevance: 'Explica las incursiones y el peligro de cruzar entre universos.',
-    date: '2026-11-16',
+    date: '2026-11-15',
     minutes: 126,
   }),
   series({
@@ -646,8 +646,8 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Presenta a Kamala Khan.',
     blocks: [
-      { date: '2026-11-17', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-11-18', minutes: 135, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-16', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-17', minutes: 135, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
     ],
   }),
   movie({
@@ -656,7 +656,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-07-08',
     tier: 'extra',
     relevance: 'La historia de Thor después de Endgame.',
-    date: '2026-11-19',
+    date: '2026-11-18',
     minutes: 119,
   }),
   series({
@@ -667,9 +667,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Presenta a Jennifer Walters y vuelve a traer a Daredevil.',
     blocks: [
-      { date: '2026-11-19', minutes: 99, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-11-20', minutes: 99, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
-      { date: '2026-11-20', minutes: 99, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+      { date: '2026-11-18', minutes: 99, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-19', minutes: 99, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-19', minutes: 99, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
     ],
   }),
   movie({
@@ -678,7 +678,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-10-07',
     tier: 'extra',
     relevance: 'Especial que presenta el lado sobrenatural del MCU.',
-    date: '2026-11-21',
+    date: '2026-11-20',
     minutes: 53,
   }),
   movie({
@@ -687,7 +687,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-11-11',
     tier: 'essential',
     relevance: 'Shuri, M’Baku y Namor forman parte del reparto de Doomsday.',
-    date: '2026-11-21',
+    date: '2026-11-20',
     minutes: 161,
   }),
   movie({
@@ -696,7 +696,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-11-25',
     tier: 'extra',
     relevance: 'Especial navideño de los Guardianes, antes de Vol. 3.',
-    date: '2026-11-22',
+    date: '2026-11-21',
     minutes: 44,
   }),
   movie({
@@ -706,7 +706,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'recommended',
     relevance:
       'Presenta a la Cassie Lang adulta; Kathryn Newton forma parte del reparto de Doomsday.',
-    date: '2026-11-22',
+    date: '2026-11-21',
     minutes: 125,
   }),
   movie({
@@ -715,7 +715,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2023-05-05',
     tier: 'extra',
     relevance: 'Cierra la historia de los Guardianes.',
-    date: '2026-11-23',
+    date: '2026-11-22',
     minutes: 150,
   }),
   series({
@@ -726,9 +726,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Nick Fury y la amenaza Skrull en la Tierra.',
     blocks: [
-      { date: '2026-11-24', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
-      { date: '2026-11-24', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
-      { date: '2026-11-25', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
+      { date: '2026-11-23', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-11-23', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-11-24', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
     ],
   }),
   series({
@@ -740,7 +740,7 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Define el destino de Loki y el estado del multiverso.',
     blocks: [
       {
-        date: '2026-11-25',
+        date: '2026-11-24',
         minutes: 100,
         episodes: [
           { number: 1, title: 'Ouroboros' },
@@ -748,7 +748,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-11-26',
+        date: '2026-11-25',
         minutes: 100,
         episodes: [
           { number: 3, title: '1893' },
@@ -756,7 +756,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-11-26',
+        date: '2026-11-25',
         minutes: 100,
         episodes: [
           { number: 5, title: 'Science/Fiction' },
@@ -771,7 +771,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2023-11-10',
     tier: 'extra',
     relevance: 'Carol Danvers, Monica Rambeau y Kamala Khan; su escena final muestra a Beast.',
-    date: '2026-11-27',
+    date: '2026-11-26',
     minutes: 105,
   }),
   series({
@@ -782,9 +782,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Nuevas realidades alternativas del Multiverso, en animación.',
     blocks: [
-      { date: '2026-11-27', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-11-28', minutes: 96, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
-      { date: '2026-11-28', minutes: 96, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+      { date: '2026-11-26', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-27', minutes: 96, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-27', minutes: 96, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
     ],
   }),
   series({
@@ -795,8 +795,8 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Maya Lopez en el mundo de Kingpin y Daredevil.',
     blocks: [
-      { date: '2026-11-29', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-11-29', minutes: 90, episodes: [{ number: 4 }, { number: 5 }] },
+      { date: '2026-11-28', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-28', minutes: 90, episodes: [{ number: 4 }, { number: 5 }] },
     ],
   }),
   movie({
@@ -805,7 +805,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2024-07-26',
     tier: 'essential',
     relevance: 'Puente entre el universo de Fox y el MCU; presenta al Gambit de Channing Tatum.',
-    date: '2026-11-30',
+    date: '2026-11-29',
     minutes: 128,
   }),
   series({
@@ -816,9 +816,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Agatha Harkness después de WandaVision.',
     blocks: [
-      { date: '2026-12-01', minutes: 120, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
-      { date: '2026-12-01', minutes: 120, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
-      { date: '2026-12-02', minutes: 120, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+      { date: '2026-11-30', minutes: 120, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-30', minutes: 120, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-12-01', minutes: 120, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
     ],
   }),
   series({
@@ -830,12 +830,12 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Última temporada de la serie animada del Multiverso.',
     blocks: [
       {
-        date: '2026-12-02',
+        date: '2026-12-01',
         minutes: 120,
         episodes: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
       },
       {
-        date: '2026-12-03',
+        date: '2026-12-02',
         minutes: 120,
         episodes: [{ number: 5 }, { number: 6 }, { number: 7 }, { number: 8 }],
       },
@@ -847,7 +847,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2025-02-14',
     tier: 'essential',
     relevance: 'Sam Wilson ya como Capitán América, con Joaquín Torres como el nuevo Falcon.',
-    date: '2026-12-03',
+    date: '2026-12-02',
     minutes: 118,
   }),
   series({
@@ -858,10 +858,10 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Matt Murdock y Kingpin en el MCU actual.',
     blocks: [
-      { date: '2026-12-04', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
-      { date: '2026-12-04', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
-      { date: '2026-12-05', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
-      { date: '2026-12-06', minutes: 150, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+      { date: '2026-12-03', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-12-03', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-12-04', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
+      { date: '2026-12-05', minutes: 150, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
     ],
   }),
   movie({
@@ -870,7 +870,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2025-05-02',
     tier: 'essential',
     relevance: 'Nacen los New Avengers, uno de los equipos centrales de Doomsday.',
-    date: '2026-12-07',
+    date: '2026-12-06',
     minutes: 127,
   }),
   series({
@@ -881,9 +881,9 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Presenta a Riri Williams tras Wakanda Forever.',
     blocks: [
-      { date: '2026-12-07', minutes: 96, episodes: [{ number: 1 }, { number: 2 }] },
-      { date: '2026-12-08', minutes: 96, episodes: [{ number: 3 }, { number: 4 }] },
-      { date: '2026-12-08', minutes: 96, episodes: [{ number: 5 }, { number: 6 }] },
+      { date: '2026-12-06', minutes: 96, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-12-07', minutes: 96, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-12-07', minutes: 96, episodes: [{ number: 5 }, { number: 6 }] },
     ],
   }),
   movie({
@@ -892,7 +892,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2025-07-25',
     tier: 'essential',
     relevance: 'Presenta la Tierra-828 y la primera aparición de Doom.',
-    date: '2026-12-09',
+    date: '2026-12-08',
     minutes: 114,
   }),
   series({
@@ -904,7 +904,7 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Animación sobre guerreros de Wakanda a lo largo de la historia.',
     blocks: [
       {
-        date: '2026-12-09',
+        date: '2026-12-08',
         minutes: 112,
         episodes: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
       },
@@ -918,8 +918,8 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'extra',
     relevance: 'Animación ambientada en una realidad alternativa del Multiverso.',
     blocks: [
-      { date: '2026-12-10', minutes: 80, episodes: [{ number: 1 }, { number: 2 }] },
-      { date: '2026-12-10', minutes: 80, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-12-09', minutes: 80, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-12-09', minutes: 80, episodes: [{ number: 3 }, { number: 4 }] },
     ],
   }),
   series({
@@ -931,12 +931,12 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Presenta a Simon Williams.',
     blocks: [
       {
-        date: '2026-12-11',
+        date: '2026-12-10',
         minutes: 132,
         episodes: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
       },
       {
-        date: '2026-12-12',
+        date: '2026-12-11',
         minutes: 132,
         episodes: [{ number: 5 }, { number: 6 }, { number: 7 }, { number: 8 }],
       },
@@ -951,7 +951,7 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Continúa la historia de Matt Murdock y Kingpin.',
     blocks: [
       {
-        date: '2026-12-12',
+        date: '2026-12-11',
         minutes: 100,
         episodes: [
           { number: 1, title: 'The Northern Star' },
@@ -959,7 +959,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-12-13',
+        date: '2026-12-12',
         minutes: 100,
         episodes: [
           { number: 3, title: 'The Scales & the Sword' },
@@ -967,7 +967,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-12-13',
+        date: '2026-12-12',
         minutes: 100,
         episodes: [
           { number: 5, title: 'The Grand Design' },
@@ -975,7 +975,7 @@ export const ROAD: readonly RoadItem[] = [
         ],
       },
       {
-        date: '2026-12-14',
+        date: '2026-12-13',
         minutes: 100,
         episodes: [
           { number: 7, title: 'The Hateful Darkness' },
@@ -990,7 +990,7 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2026-05-12',
     tier: 'extra',
     relevance: 'Especial de Frank Castle tras Daredevil: Born Again.',
-    date: '2026-12-14',
+    date: '2026-12-13',
     minutes: 50,
   }),
   movie({
@@ -1000,7 +1000,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'recommended',
     relevance:
       'Ocurre antes de Doomsday y Hulk aparece en ambas (confirmado). Verificar si ya está disponible.',
-    date: '2026-12-15',
+    date: '2026-12-14',
     minutes: 130,
   }),
 ];
