@@ -86,15 +86,18 @@ src/
 - Local Storage guarda solo el progreso y las preferencias, nunca datos estáticos.
 - Las fechas se manejan como `YYYY-MM-DD` en hora local; nunca con `new Date("YYYY-MM-DD")`.
 
-## Pósters (opcional, solo local)
+## Pósters
 
-Coloca imágenes en `src/assets/posters/` con el id del título como nombre de archivo
-(por ejemplo, `x-men.jpg` o `loki-s1.webp`). Formatos: jpg, jpeg, png y webp.
-Los ids están en `src/data/road.ts`.
+Cada título muestra su póster de [TMDB](https://www.themoviedb.org/) (versión es-MX),
+servido desde su CDN. Las rutas están en `src/data/posters.ts` junto con la ficha de
+origen de cada una.
 
-- Los títulos sin póster muestran una portada generada.
-- La carpeta está en `.gitignore`: los pósters nunca se suben al repositorio ni se publican.
-- Recomendado: unos 300 px de ancho y formato webp para que la app cargue rápido.
+Para usar una imagen propia, colócala en `src/assets/posters/` con el id del título
+como nombre de archivo (por ejemplo, `x-men.jpg` o `loki-s1.webp`); tiene prioridad
+sobre la de TMDB. Formatos: jpg, jpeg, png y webp.
+
+- Si un título no tiene póster, se muestra una portada generada.
+- La carpeta local está en `.gitignore`: esas imágenes no se suben ni se publican.
 
 ## Despliegue
 
@@ -122,4 +125,5 @@ inválidos, se respaldan antes de reiniciar.
 
 ## Aviso
 
-Proyecto personal sin afiliación con Marvel Studios ni Disney. No usa material oficial.
+Proyecto personal sin afiliación con Marvel Studios ni Disney. Los pósters provienen de
+TMDB. Este producto usa la API de TMDB pero no está avalado ni certificado por TMDB.

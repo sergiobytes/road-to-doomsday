@@ -9,6 +9,7 @@ import {
   ROAD_DEADLINE,
   ROAD_START_DATE,
 } from './constants';
+import { TMDB_POSTERS } from './posters';
 import { ROAD } from './road';
 import { groupItemsByWeek } from '../domain/timeline';
 
@@ -204,6 +205,26 @@ describe('plataformas', () => {
     const inCinemas = ROAD.filter((item) => item.platforms.includes('cinema'));
 
     expect(inCinemas.filter((item) => item.platforms.length > 1)).toEqual([]);
+  });
+});
+
+describe('pósters de TMDB', () => {
+  const ids = ROAD.map((item) => item.id);
+
+  it('todos los títulos tienen póster', () => {
+    expect(ids.filter((id) => !TMDB_POSTERS[id])).toEqual([]);
+  });
+
+  it('no hay pósters de títulos que no existen', () => {
+    expect(Object.keys(TMDB_POSTERS).filter((id) => !ids.includes(id))).toEqual([]);
+  });
+
+  it('las rutas son archivos de imagen en la raíz del CDN', () => {
+    const invalid = Object.entries(TMDB_POSTERS).filter(
+      ([, poster]) => !/^\/[A-Za-z0-9]+\.(jpg|png)$/.test(poster.path),
+    );
+
+    expect(invalid).toEqual([]);
   });
 });
 

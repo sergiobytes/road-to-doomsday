@@ -1,0 +1,142 @@
+/** Póster de TMDB: la ficha de origen y la ruta de la imagen en su CDN. */
+export interface TmdbPoster {
+  /** Ficha en TMDB, por ejemplo `movie/36657` o `tv/84958/season/2`. */
+  readonly tmdb: string;
+  readonly path: string;
+}
+
+/**
+ * Pósters remotos por id de título, tomados de TMDB (versión es-MX) el 2026-09-28.
+ * Si cambia uno, busca su ficha en https://www.themoviedb.org/<tmdb> y copia la ruta.
+ */
+export const TMDB_POSTERS: Readonly<Record<string, TmdbPoster>> = {
+  'x-men': { tmdb: 'movie/36657', path: '/16QnGS3jL2w9SsZXZ0lHoXHVQyv.jpg' },
+  'spider-man-2002': { tmdb: 'movie/557', path: '/8eTbNzpjK9VJGu1g60j268MmXzm.jpg' },
+  'daredevil-2003': { tmdb: 'movie/9480', path: '/x1l1vC446IM89iD3wBaQc3erp9Z.jpg' },
+  x2: { tmdb: 'movie/36658', path: '/qSg21BrjdUXOpHzHkHxvRhiqHTQ.jpg' },
+  'spider-man-2': { tmdb: 'movie/558', path: '/wLoeWsuSEZ4ci0zJHD8hhtsAAkn.jpg' },
+  elektra: { tmdb: 'movie/9947', path: '/o7zyXvZOOc3ECTCjtPKGNxPsZQ1.jpg' },
+  'fantastic-four-2005': { tmdb: 'movie/9738', path: '/l3Yk65bVdgiMOMeK6O8aZxEBt5J.jpg' },
+  'x-men-the-last-stand': { tmdb: 'movie/36668', path: '/sXMQnenqZTgbE32Ji8u5RtdX23u.jpg' },
+  'ghost-rider': { tmdb: 'movie/1250', path: '/zpIL93pCQJz7gT17EnSHOkcMBOF.jpg' },
+  'spider-man-3': { tmdb: 'movie/559', path: '/etRvHz9ElAP0TMwltAZV1ufyfnW.jpg' },
+  'fantastic-four-rise-of-the-silver-surfer': {
+    tmdb: 'movie/1979',
+    path: '/pRXgCDTRKEIUy5cySYA4zC5to5B.jpg',
+  },
+  'iron-man': { tmdb: 'movie/1726', path: '/tFCTNx7foAsUQpgu2x1KjAJD1wT.jpg' },
+  'the-incredible-hulk': { tmdb: 'movie/1724', path: '/p4NYZXVtgKf6aiH65QzzkUVJcsd.jpg' },
+  'x-men-origins-wolverine': { tmdb: 'movie/2080', path: '/lQAiASSFzY5SMud5f0Gu0C0jLlJ.jpg' },
+  'iron-man-2': { tmdb: 'movie/10138', path: '/ayyJVOV5I4MGjti7nIHC3mVCagR.jpg' },
+  thor: { tmdb: 'movie/10195', path: '/qFAVW4XJaxhj7PcpiUI5hhO9bOX.jpg' },
+  'x-men-first-class': { tmdb: 'movie/49538', path: '/6ED3G0lpBXRZtEDJD2xVYsqIwxI.jpg' },
+  'captain-america-the-first-avenger': {
+    tmdb: 'movie/1771',
+    path: '/82ucHZ4ioVGiweT1XMl1mUZaodq.jpg',
+  },
+  'ghost-rider-spirit-of-vengeance': {
+    tmdb: 'movie/71676',
+    path: '/nMPCSYPyeBbfwHUCvyAJUEUiLBU.jpg',
+  },
+  'the-avengers': { tmdb: 'movie/24428', path: '/cWNIua1iPA4kGyQxJGvnx7UIzoT.jpg' },
+  'the-amazing-spider-man': { tmdb: 'movie/1930', path: '/9MsCANWyLJmz2MAEqiy9vKMpyc8.jpg' },
+  'iron-man-3': { tmdb: 'movie/68721', path: '/cW0fOIZONkgeiMJDYzqUcgl4MUn.jpg' },
+  'the-wolverine': { tmdb: 'movie/76170', path: '/3rFznNACWXvSUHXVnEtLEzHAVRy.jpg' },
+  'thor-the-dark-world': { tmdb: 'movie/76338', path: '/cs5YLwGBCJBold74avD3NecO5Zc.jpg' },
+  'captain-america-the-winter-soldier': {
+    tmdb: 'movie/100402',
+    path: '/3Zv12uAqBxj4xAdeHeVySEQzY1o.jpg',
+  },
+  'the-amazing-spider-man-2': { tmdb: 'movie/102382', path: '/z07KnqwHWDY3q5utu0xBLKo3UWo.jpg' },
+  'x-men-days-of-future-past': { tmdb: 'movie/127585', path: '/ggb9nmS5alJuA0ll0iU5YHiGbb0.jpg' },
+  'guardians-of-the-galaxy': { tmdb: 'movie/118340', path: '/zqZNnuMtrmK99Xux91KiCdnZxgb.jpg' },
+  'avengers-age-of-ultron': { tmdb: 'movie/99861', path: '/fXi6HGIJXi7Z8YWZRcRI56dfY4p.jpg' },
+  'ant-man': { tmdb: 'movie/102899', path: '/tMJ0FBFrYZjo6BNHiYbgqiy8Tf5.jpg' },
+  'fantastic-four-2015': { tmdb: 'movie/166424', path: '/auXAR5jfSNOWWtuEYFWcNadfzWX.jpg' },
+  deadpool: { tmdb: 'movie/293660', path: '/3TUYy0XvhPQBhrXJwRIaOoYFOBO.jpg' },
+  'captain-america-civil-war': { tmdb: 'movie/271110', path: '/jPPy7tCfglppQo6J9nGwU6UmJ8X.jpg' },
+  'x-men-apocalypse': { tmdb: 'movie/246655', path: '/i5ET4lACwrb97sdPzmIThieasOk.jpg' },
+  'doctor-strange': { tmdb: 'movie/284052', path: '/sOsvKTJS0XwtfLsNMO3C0CVWJ4u.jpg' },
+  logan: { tmdb: 'movie/263115', path: '/d0ktjN9eKww26HhM8or8iUB1I68.jpg' },
+  'guardians-of-the-galaxy-vol-2': {
+    tmdb: 'movie/283995',
+    path: '/kdg6Y06jfq9FV7qknWNcKLYtBJn.jpg',
+  },
+  'spider-man-homecoming': { tmdb: 'movie/315635', path: '/h1Iq6WfE4RWc9klGvN8sdi5aR6V.jpg' },
+  'thor-ragnarok': { tmdb: 'movie/284053', path: '/rGaayCxGkHZLUyDDB3QQnDg2MHQ.jpg' },
+  'black-panther': { tmdb: 'movie/284054', path: '/lAPzezdc5E6DFnttJwCWXZ9A9C6.jpg' },
+  'avengers-infinity-war': { tmdb: 'movie/299536', path: '/ksBQ4oHQDdJwND8H90ay8CbMihU.jpg' },
+  'deadpool-2': { tmdb: 'movie/383498', path: '/84NUrv5kuMUDDlOPqi97KGJMdLm.jpg' },
+  'ant-man-and-the-wasp': { tmdb: 'movie/363088', path: '/bvYI6i9lQ3bsup9PgnMF3YYr8ZR.jpg' },
+  'captain-marvel': { tmdb: 'movie/299537', path: '/5SPa7dZ85p54xa7E9tHRmfKq5ce.jpg' },
+  'avengers-endgame': { tmdb: 'movie/299534', path: '/ycvuLbEuMG88UPuwuAYJWY0ZI8v.jpg' },
+  'dark-phoenix': { tmdb: 'movie/320288', path: '/rdByKDkfyVuVSrkllzxKYXiZmTd.jpg' },
+  'spider-man-far-from-home': { tmdb: 'movie/429617', path: '/x4Ldcddhk8jzn3nqeODA8lHNw9M.jpg' },
+  'the-new-mutants': { tmdb: 'movie/340102', path: '/cNEIc6SbgsNWkzwfw4EuYLqE9Gt.jpg' },
+  wandavision: { tmdb: 'tv/85271/season/1', path: '/iW6MRBgTGeV0rI8jrGBxPRw7ptm.jpg' },
+  'the-falcon-and-the-winter-soldier': {
+    tmdb: 'tv/88396/season/1',
+    path: '/zSqRaKEjHCb5OdLma1zBGoxJl6R.jpg',
+  },
+  'loki-s1': { tmdb: 'tv/84958/season/1', path: '/xKGQ3FLoXObqQ46RgdxMVJvExjO.jpg' },
+  'black-widow': { tmdb: 'movie/497698', path: '/rjnciyF6Rj2fwZ7mtrj88RB0z8u.jpg' },
+  'what-if-s1': { tmdb: 'tv/91363/season/1', path: '/mTUd7Hl85FTq7Y7J0pGVIxNx9xr.jpg' },
+  'shang-chi': { tmdb: 'movie/566525', path: '/2ctCl1XhcC6r3MP7A3oFSe6iTCD.jpg' },
+  eternals: { tmdb: 'movie/524434', path: '/wPZ5n5LlzFFdO5lFJbi2qmaE6w7.jpg' },
+  hawkeye: { tmdb: 'tv/88329/season/1', path: '/ivpqcLhXuh0BTxvzdo4hgZHb0qR.jpg' },
+  'spider-man-no-way-home': { tmdb: 'movie/634649', path: '/9OGkKMnYgSc0TzSIErcOOiKllrK.jpg' },
+  'moon-knight': { tmdb: 'tv/92749/season/1', path: '/wMGpoDsCOGBMCeZq8OeYepJOGMN.jpg' },
+  'doctor-strange-multiverse-of-madness': {
+    tmdb: 'movie/453395',
+    path: '/PnF6nvTRGLWOiLpUYnJSYGOZHx.jpg',
+  },
+  'ms-marvel': { tmdb: 'tv/92782/season/1', path: '/woZiAKaWDb3mm5JwNXcQ3MExWU0.jpg' },
+  'thor-love-and-thunder': { tmdb: 'movie/616037', path: '/4gHWDa9hngo4RJy4BImChkMHooi.jpg' },
+  'she-hulk': { tmdb: 'tv/92783/season/1', path: '/9SxENWoiu01BqM1dchkWfCbgTJN.jpg' },
+  'werewolf-by-night': { tmdb: 'movie/894205', path: '/5mtz4aRCixqKFDpUOo975frQjbn.jpg' },
+  'black-panther-wakanda-forever': {
+    tmdb: 'movie/505642',
+    path: '/iQ4ydo7nSxIlFyq8sZcu0rCK6AN.jpg',
+  },
+  'guardians-holiday-special': { tmdb: 'movie/774752', path: '/9D6hFa4TGdqCVE7x9Zec9VdaF2X.jpg' },
+  'ant-man-and-the-wasp-quantumania': {
+    tmdb: 'movie/640146',
+    path: '/lKHy0ntGPdQeFwvNq8gK1D0anEr.jpg',
+  },
+  'guardians-of-the-galaxy-vol-3': {
+    tmdb: 'movie/447365',
+    path: '/6GkKzdNosVAL7UGgwTtCHSxLQ67.jpg',
+  },
+  'secret-invasion': { tmdb: 'tv/114472/season/1', path: '/ktrKPOA4qJJvKbaTWpW41TM0QGz.jpg' },
+  'loki-s2': { tmdb: 'tv/84958/season/2', path: '/ksz8uiWczvz1TX28YOYE9WnS9RR.jpg' },
+  'the-marvels': { tmdb: 'movie/609681', path: '/vpuuFM032yiX8tox4L84Wl9MGjG.jpg' },
+  'what-if-s2': { tmdb: 'tv/91363/season/2', path: '/jI7Yddy1ii1xtCnVwinOhJEGD91.jpg' },
+  echo: { tmdb: 'tv/122226/season/1', path: '/1RFLMSnFng8G23zZ1G5Q6lFVRfY.jpg' },
+  'deadpool-and-wolverine': { tmdb: 'movie/533535', path: '/6aY3OzCIdxoBMYdiH5s17rWFFFA.jpg' },
+  'agatha-all-along': { tmdb: 'tv/138501/season/1', path: '/7i9Jw9dWPzlGDqxKyubiPVZpTJg.jpg' },
+  'what-if-s3': { tmdb: 'tv/91363/season/3', path: '/jU5papp3tRvk8tHVugMHQC6uVyX.jpg' },
+  'captain-america-brave-new-world': {
+    tmdb: 'movie/822119',
+    path: '/pVMSRyAiye7gZ8NtuCt1qgbspY9.jpg',
+  },
+  'daredevil-born-again-s1': {
+    tmdb: 'tv/202555/season/1',
+    path: '/gbNoR5RnVlcZd4OBK3Q5aZfXjKG.jpg',
+  },
+  thunderbolts: { tmdb: 'movie/986056', path: '/yDWU8YyFkPnlVY627QXPvct8bz9.jpg' },
+  ironheart: { tmdb: 'tv/114471/season/1', path: '/lVrXKVn6n0TRRUBQI8mPWkfY6Eo.jpg' },
+  'the-fantastic-four-first-steps': {
+    tmdb: 'movie/617126',
+    path: '/lESwYExnRVCDscOmdvklWxZgWUp.jpg',
+  },
+  'eyes-of-wakanda': { tmdb: 'tv/241388/season/1', path: '/rp3oUwY6K9mwz9VPFIDZzGyP66h.jpg' },
+  'marvel-zombies': { tmdb: 'tv/138505/season/1', path: '/wofiHMsXxmp0lTafcBrgciSxBVx.jpg' },
+  'wonder-man': { tmdb: 'tv/198178/season/1', path: '/mZMkEpjQNirCfPwuDfShgoa3bIM.jpg' },
+  'daredevil-born-again-s2': {
+    tmdb: 'tv/202555/season/2',
+    path: '/1jcGofudw0M2B9lqNy3GyeOf5uh.jpg',
+  },
+  'the-punisher-one-last-kill': { tmdb: 'movie/1439930', path: '/ehzOlaPVTyHnGNhcvfzgXPFNY31.jpg' },
+  'spider-man-brand-new-day': { tmdb: 'movie/969681', path: '/fBFjaDWfNslvrs6bJjknmG27wOS.jpg' },
+  visionquest: { tmdb: 'tv/213375/season/1', path: '/xK27l5uwaVyZSlENWnmLlWwDQNS.jpg' },
+};

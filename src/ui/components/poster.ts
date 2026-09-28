@@ -22,5 +22,5 @@ export function renderPoster(item: RoadItem): string {
   const url = getPosterUrl(item.id);
   if (!url) return renderGeneratedCover(item);
 
-  return `<img src="${escapeHtml(url)}" alt="" loading="lazy" decoding="async" class="${POSTER_FRAME} border-line bg-canvas object-cover" />`;
+  return `<img src="${escapeHtml(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="${POSTER_FRAME} border-line bg-canvas object-cover" />`;
 }

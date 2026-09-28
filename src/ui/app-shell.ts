@@ -96,7 +96,12 @@ export function renderAppShell(): string {
       </main>
  
       <footer class="border-t border-line py-4 text-xs text-ink-subtle">
-        Proyecto personal sin afiliación con Marvel Studios ni Disney.
+        <p>Proyecto personal sin afiliación con Marvel Studios ni Disney.</p>
+        <p class="mt-1">
+          Pósters de
+          <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-ink ${FOCUS_RING}">TMDB</a>.
+          Este producto usa la API de TMDB pero no está avalado ni certificado por TMDB.
+        </p>
       </footer>
     </div>
     ${renderResetDialog()}
