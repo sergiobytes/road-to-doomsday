@@ -51,6 +51,21 @@ src/
 - Local Storage guarda solo el progreso y las preferencias, nunca datos estáticos.
 - Las fechas se manejan como `YYYY-MM-DD` en hora local; nunca con `new Date("YYYY-MM-DD")`.
 
+## Pósters (opcional, solo local)
+
+Coloca imágenes en `src/assets/posters/` con el id del título como nombre de archivo
+(por ejemplo, `x-men.jpg` o `loki-s1.webp`). Formatos: jpg, jpeg, png y webp.
+Los ids están en `src/data/road.ts`.
+
+- Los títulos sin póster muestran una portada generada.
+- La carpeta está en `.gitignore`: los pósters nunca se suben al repositorio ni se publican.
+- Recomendado: unos 300 px de ancho y formato webp para que la app cargue rápido.
+
+## Despliegue
+
+Cada push a `main` ejecuta `npm run check` en GitHub Actions y, si todo pasa, publica
+`dist/` en GitHub Pages. Si alguna verificación falla, la versión publicada no cambia.
+
 ## Convenciones
 
 - Commits con [Conventional Commits](https://www.conventionalcommits.org/es/):
