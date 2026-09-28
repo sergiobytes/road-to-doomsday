@@ -11,6 +11,7 @@ import { renderNextSessionCard } from './components/next-session-card';
 import { renderProgressPanel } from './components/progress-panel';
 import { renderTimeline } from './components/timeline';
 import { pluralize } from './format';
+import { getStorageNotice, renderStorageNotice } from './components/storage-notice';
 
 function getMountPoint(id: string): HTMLElement {
   const element = document.getElementById(id);
@@ -38,6 +39,8 @@ function restoreFocus(root: HTMLElement, focusKey: string | undefined): void {
 /** Dibuja la app y la vuelve a dibujar cada vez que cambia el estado. */
 export function mountApp(root: HTMLElement, store: ProgressStore, getToday: () => IsoDate): void {
   root.innerHTML = renderAppShell();
+  const notices = getMountPoint(MOUNT_IDS.notices);
+  const announcer = getMountPoint(MOUNT_IDS.announcer);
   const progressSummary = getMountPoint(MOUNT_IDS.progressSummary);
   const nextSession = getMountPoint(MOUNT_IDS.nextSession);
   const timeline = getMountPoint(MOUNT_IDS.timeline);
@@ -51,6 +54,8 @@ export function mountApp(root: HTMLElement, store: ProgressStore, getToday: () =
     const focusKey = getFocusedKey();
     const watched = toWatchedIds(state.progress);
     const today = getToday();
+
+    notices.innerHTML = renderStorageNotice(getStorageNotice(state));
 
     progressSummary.innerHTML = renderProgressPanel({
       summary: getProgressSummary(ROAD, watched),
@@ -67,6 +72,16 @@ export function mountApp(root: HTMLElement, store: ProgressStore, getToday: () =
     restoreFocus(root, focusKey);
   }
 
+  /** Marca o desmarca y lo anuncia a los lectores de pantalla, con el progreso nuevo. */
+  function toggleSession(sessionId: string): void {
+    store.toggleWatched(sessionId);
+
+    const { progress } = store.getState();
+    const { percent } = getProgressSummary(ROAD, toWatchedIds(progress));
+    const action = progress.watched.has(sessionId) ? 'Marcada como vista' : 'Desmarcada';
+    announcer.textContent = `${action}. Progreso: ${percent} %.`;
+  }
+
   function openResetDialog(): void {
     const watchedCount = store.getState().progress.watched.size;
     resetDialogCount.textContent = pluralize(watchedCount, 'sesión vista', 'sesiones vistas');
@@ -81,7 +96,7 @@ export function mountApp(root: HTMLElement, store: ProgressStore, getToday: () =
     switch (trigger?.dataset.action) {
       case ACTIONS.toggleSession: {
         const sessionId = trigger.dataset.sessionId;
-        if (sessionId) store.toggleWatched(sessionId);
+        if (sessionId) toggleSession(sessionId);
         break;
       }
       case ACTIONS.openResetDialog:
@@ -92,7 +107,10 @@ export function mountApp(root: HTMLElement, store: ProgressStore, getToday: () =
 
   // El diálogo se cierra con Cancelar, Esc o Reiniciar; solo el último borra el progreso.
   resetDialog.addEventListener('close', () => {
-    if (resetDialog.returnValue === RESET_CONFIRM_VALUE) store.reset();
+    if (resetDialog.returnValue === RESET_CONFIRM_VALUE) {
+      store.reset();
+      announcer.textContent = 'Progreso reiniciado.';
+    }
     resetDialog.returnValue = '';
   });
 

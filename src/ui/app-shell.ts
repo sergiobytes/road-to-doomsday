@@ -2,6 +2,8 @@ import { ACTIONS, FOCUS_RING } from './actions';
 
 /** Ids de los contenedores donde se montará cada sección de la interfaz. */
 export const MOUNT_IDS = {
+  notices: 'notices',
+  announcer: 'announcer',
   progressSummary: 'progress-summary',
   nextSession: 'next-session',
   timeline: 'timeline',
@@ -56,6 +58,12 @@ function placeholder(label: string): string {
 /** Estructura fija de la página: cabecera, panel de progreso, timeline y pie. */
 export function renderAppShell(): string {
   return `
+    <a
+      href="#calendar"
+      class="sr-only rounded-lg bg-progress text-sm font-semibold text-canvas focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-10 focus:px-4 focus:py-2"
+    >
+      Saltar al calendario
+    </a>
     <div class="mx-auto flex min-h-dvh max-w-6xl flex-col px-4 sm:px-6 lg:px-8">
       <header class="flex items-center justify-between gap-4 border-b border-line py-4">
         <h1 class="text-lg font-semibold tracking-tight sm:text-xl">
@@ -69,7 +77,10 @@ export function renderAppShell(): string {
           Reiniciar
         </button>
       </header>
-
+ 
+      <div id="${MOUNT_IDS.notices}" aria-live="polite" class="empty:hidden pt-4"></div>
+      <p id="${MOUNT_IDS.announcer}" aria-live="polite" class="sr-only"></p>
+ 
       <main class="grid flex-1 content-start gap-6 py-6 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-8">
         <section
           aria-labelledby="progress-heading"
@@ -80,13 +91,18 @@ export function renderAppShell(): string {
           <div id="${MOUNT_IDS.nextSession}"></div>
           ${placeholder('Cuenta regresiva')}
         </section>
-
-        <section aria-labelledby="timeline-heading" class="flex flex-col gap-4">
+ 
+        <section
+          id="calendar"
+          tabindex="-1"
+          aria-labelledby="timeline-heading"
+          class="flex scroll-mt-4 flex-col gap-4 focus:outline-none"
+        >
           <h2 id="timeline-heading" class="text-sm font-medium text-ink-muted">Calendario</h2>
           <div id="${MOUNT_IDS.timeline}"></div>
         </section>
       </main>
-
+ 
       <footer class="border-t border-line py-4 text-xs text-ink-subtle">
         Proyecto personal sin afiliación con Marvel Studios ni Disney.
       </footer>
