@@ -6,13 +6,13 @@ export const ROAD_START_DATE: IsoDate = '2026-09-28';
 /** Todas las sesiones deben quedar antes de este día (el de la función). */
 export const ROAD_DEADLINE: IsoDate = '2026-12-16';
 
+export const DAILY_MINUTES_LIMIT = 240;
+
+export const MAX_MOVIES_PER_DAY = 2;
+
 /**
  * Instante de la función de estreno, con zona horaria explícita.
  * PROVISIONAL: medianoche del miércoles 16 al jueves 17 de diciembre.
  * Actualizar cuando se compren los boletos.
  */
-export const DAILY_MINUTES_LIMIT = 240;
-
-export const MAX_MOVIES_PER_DAY = 2;
-
 export const PREMIERE_SHOWTIME = '2026-12-17T00:00:00-06:00';
