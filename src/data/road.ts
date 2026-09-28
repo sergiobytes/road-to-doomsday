@@ -1,9 +1,10 @@
 import type { Episode, IsoDate, MovieItem, RoadItem, SeriesItem } from '../domain/types';
 
-type MovieInput = Omit<MovieItem, 'kind' | 'session'> & { date: IsoDate };
+type MovieInput = Omit<MovieItem, 'kind' | 'session'> & { date: IsoDate; minutes: number };
 
 interface EpisodeBlock {
   readonly date: IsoDate;
+  readonly minutes: number;
   readonly episodes: readonly Episode[];
 }
 
@@ -11,18 +12,18 @@ type SeriesInput = Omit<SeriesItem, 'kind' | 'sessions'> & {
   blocks: readonly EpisodeBlock[];
 };
 
-function movie({ date, ...item }: MovieInput): MovieItem {
-  return { ...item, kind: 'movie', session: { id: item.id, date } };
+function movie({ date, minutes, ...item }: MovieInput): MovieItem {
+  return { ...item, kind: 'movie', session: { id: item.id, date, minutes } };
 }
 
 function series({ blocks, ...item }: SeriesInput): SeriesItem {
   return {
     ...item,
     kind: 'series',
-    sessions: blocks.map(({ date, episodes }) => {
+    sessions: blocks.map(({ date, minutes, episodes }) => {
       const first = episodes[0]?.number;
       const last = episodes.at(-1)?.number;
-      return { id: `${item.id}-e${first}-${last}`, date, episodes };
+      return { id: `${item.id}-e${first}-${last}`, date, minutes, episodes };
     }),
   };
 }
@@ -36,6 +37,26 @@ export const ROAD: readonly RoadItem[] = [
     relevance:
       'Presenta a Xavier, Magneto, Cíclope y Mística: el reparto original de Fox que regresa en Doomsday.',
     date: '2026-09-29',
+    minutes: 104,
+  }),
+  movie({
+    id: 'spider-man-2002',
+    title: 'Spider-Man',
+    releaseDate: '2002-05-03',
+    tier: 'extra',
+    relevance:
+      'Inicio de la trilogía de Sam Raimi; su Peter Parker (Tobey Maguire) volvió en No Way Home.',
+    date: '2026-09-29',
+    minutes: 121,
+  }),
+  movie({
+    id: 'daredevil-2003',
+    title: 'Daredevil',
+    releaseDate: '2003-02-14',
+    tier: 'extra',
+    relevance: 'Primera versión en cine de Matt Murdock, antes de la etapa de Charlie Cox.',
+    date: '2026-09-30',
+    minutes: 103,
   }),
   movie({
     id: 'x2',
@@ -43,7 +64,36 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2003-05-02',
     tier: 'essential',
     relevance: 'Debut de Nightcrawler; Alan Cumming forma parte del reparto de Doomsday.',
+    date: '2026-09-30',
+    minutes: 133,
+  }),
+  movie({
+    id: 'spider-man-2',
+    title: 'Spider-Man 2',
+    releaseDate: '2004-06-30',
+    tier: 'extra',
+    relevance:
+      'Continúa la trilogía de Raimi y presenta al Doctor Octopus que reaparece en No Way Home.',
     date: '2026-10-01',
+    minutes: 127,
+  }),
+  movie({
+    id: 'elektra',
+    title: 'Elektra',
+    releaseDate: '2005-01-14',
+    tier: 'extra',
+    relevance: 'Spin-off de Daredevil (2003); cierra esa etapa de Fox.',
+    date: '2026-10-01',
+    minutes: 97,
+  }),
+  movie({
+    id: 'fantastic-four-2005',
+    title: 'Fantastic Four',
+    releaseDate: '2005-07-08',
+    tier: 'extra',
+    relevance: 'Primera versión moderna en cine de los Cuatro Fantásticos y de Doom.',
+    date: '2026-10-02',
+    minutes: 106,
   }),
   movie({
     id: 'x-men-the-last-stand',
@@ -51,7 +101,91 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2006-05-26',
     tier: 'recommended',
     relevance: 'Cierra la trilogía original y presenta a Kelsey Grammer como Beast.',
+    date: '2026-10-02',
+    minutes: 104,
+  }),
+  movie({
+    id: 'ghost-rider',
+    title: 'Ghost Rider',
+    releaseDate: '2007-02-16',
+    tier: 'extra',
+    relevance:
+      'El Ghost Rider de Nicolas Cage, fuera del MCU. Sin conexión confirmada con Doomsday.',
     date: '2026-10-03',
+    minutes: 110,
+  }),
+  movie({
+    id: 'spider-man-3',
+    title: 'Spider-Man 3',
+    releaseDate: '2007-05-04',
+    tier: 'extra',
+    relevance: 'Cierra la trilogía de Raimi; presenta a Sandman, que vuelve en No Way Home.',
+    date: '2026-10-04',
+    minutes: 139,
+  }),
+  movie({
+    id: 'fantastic-four-rise-of-the-silver-surfer',
+    title: 'Fantastic Four: Rise of the Silver Surfer',
+    releaseDate: '2007-06-15',
+    tier: 'extra',
+    relevance: 'Continuación de Fantastic Four (2005), con Silver Surfer y Galactus.',
+    date: '2026-10-04',
+    minutes: 92,
+  }),
+  movie({
+    id: 'iron-man',
+    title: 'Iron Man',
+    releaseDate: '2008-05-02',
+    tier: 'extra',
+    relevance:
+      'Origen de Tony Stark e inicio del MCU: el personaje que convirtió a Downey en icono.',
+    date: '2026-10-05',
+    minutes: 126,
+  }),
+  movie({
+    id: 'the-incredible-hulk',
+    title: 'The Incredible Hulk',
+    releaseDate: '2008-06-13',
+    tier: 'extra',
+    relevance: 'Bruce Banner y el general Ross, que reaparecen años después en el MCU.',
+    date: '2026-10-05',
+    minutes: 112,
+  }),
+  movie({
+    id: 'x-men-origins-wolverine',
+    title: 'X-Men Origins: Wolverine',
+    releaseDate: '2009-05-01',
+    tier: 'extra',
+    relevance: 'Origen de Logan en la saga de Fox.',
+    date: '2026-10-06',
+    minutes: 107,
+  }),
+  movie({
+    id: 'iron-man-2',
+    title: 'Iron Man 2',
+    releaseDate: '2010-05-07',
+    tier: 'extra',
+    relevance: 'Presenta a Natasha Romanoff y amplía el papel de S.H.I.E.L.D.',
+    date: '2026-10-06',
+    minutes: 124,
+  }),
+  movie({
+    id: 'thor',
+    title: 'Thor',
+    releaseDate: '2011-05-06',
+    tier: 'extra',
+    relevance: 'Origen de Thor y Loki, dos piezas centrales de la saga del Multiverso.',
+    date: '2026-10-07',
+    minutes: 115,
+  }),
+  movie({
+    id: 'x-men-first-class',
+    title: 'X-Men: First Class',
+    releaseDate: '2011-06-03',
+    tier: 'extra',
+    relevance: 'Juventud de Xavier y Magneto; inicia la línea de precuelas de Fox.',
+    date: '2026-10-08',
+    minutes: 132,
   }),
   movie({
     id: 'captain-america-the-first-avenger',
@@ -60,7 +194,17 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Origen de Steve Rogers y Peggy Carter; Chris Evans y Hayley Atwell forman parte del reparto.',
-    date: '2026-10-06',
+    date: '2026-10-09',
+    minutes: 124,
+  }),
+  movie({
+    id: 'ghost-rider-spirit-of-vengeance',
+    title: 'Ghost Rider: Spirit of Vengeance',
+    releaseDate: '2012-02-17',
+    tier: 'extra',
+    relevance: 'Secuela de Ghost Rider (2007). Sin conexión confirmada con Doomsday.',
+    date: '2026-10-09',
+    minutes: 96,
   }),
   movie({
     id: 'the-avengers',
@@ -69,7 +213,63 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Formación del equipo y primera gran historia de Thor y Loki como personajes centrales.',
-    date: '2026-10-08',
+    date: '2026-10-10',
+    minutes: 143,
+  }),
+  movie({
+    id: 'the-amazing-spider-man',
+    title: 'The Amazing Spider-Man',
+    releaseDate: '2012-07-03',
+    tier: 'extra',
+    relevance: 'El Spider-Man de Andrew Garfield, que regresó en No Way Home.',
+    date: '2026-10-11',
+    minutes: 136,
+  }),
+  movie({
+    id: 'iron-man-3',
+    title: 'Iron Man 3',
+    releaseDate: '2013-05-03',
+    tier: 'extra',
+    relevance: 'Tony Stark tras la batalla de Nueva York.',
+    date: '2026-10-12',
+    minutes: 130,
+  }),
+  movie({
+    id: 'the-wolverine',
+    title: 'The Wolverine',
+    releaseDate: '2013-07-26',
+    tier: 'extra',
+    relevance: 'Logan en Japón; continúa su historia en la saga de Fox.',
+    date: '2026-10-13',
+    minutes: 126,
+  }),
+  movie({
+    id: 'thor-the-dark-world',
+    title: 'Thor: The Dark World',
+    releaseDate: '2013-11-08',
+    tier: 'extra',
+    relevance: 'Presenta el Éter, una de las Gemas del Infinito.',
+    date: '2026-10-13',
+    minutes: 112,
+  }),
+  movie({
+    id: 'captain-america-the-winter-soldier',
+    title: 'Captain America: The Winter Soldier',
+    releaseDate: '2014-04-04',
+    tier: 'recommended',
+    relevance:
+      'Revela a Bucky como el Soldado del Invierno; Sebastian Stan forma parte del reparto de Doomsday.',
+    date: '2026-10-14',
+    minutes: 136,
+  }),
+  movie({
+    id: 'the-amazing-spider-man-2',
+    title: 'The Amazing Spider-Man 2',
+    releaseDate: '2014-05-02',
+    tier: 'extra',
+    relevance: 'Cierra la etapa de Garfield y su historia con Gwen Stacy.',
+    date: '2026-10-15',
+    minutes: 142,
   }),
   movie({
     id: 'x-men-days-of-future-past',
@@ -77,7 +277,53 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2014-05-23',
     tier: 'recommended',
     relevance: 'Une ambos repartos de X-Men y reescribe el final de la trilogía original.',
-    date: '2026-10-10',
+    date: '2026-10-16',
+    minutes: 132,
+  }),
+  movie({
+    id: 'guardians-of-the-galaxy',
+    title: 'Guardians of the Galaxy',
+    releaseDate: '2014-08-01',
+    tier: 'extra',
+    relevance: 'Presenta a los Guardianes y el lado cósmico del MCU.',
+    date: '2026-10-17',
+    minutes: 121,
+  }),
+  movie({
+    id: 'avengers-age-of-ultron',
+    title: 'Avengers: Age of Ultron',
+    releaseDate: '2015-05-01',
+    tier: 'extra',
+    relevance: 'Nacen Ultron y Vision, y los Avengers empiezan a fracturarse.',
+    date: '2026-10-18',
+    minutes: 141,
+  }),
+  movie({
+    id: 'ant-man',
+    title: 'Ant-Man',
+    releaseDate: '2015-07-17',
+    tier: 'extra',
+    relevance: 'Presenta a Scott Lang; Paul Rudd forma parte del reparto de Doomsday.',
+    date: '2026-10-19',
+    minutes: 117,
+  }),
+  movie({
+    id: 'fantastic-four-2015',
+    title: 'Fantastic Four (2015)',
+    releaseDate: '2015-08-07',
+    tier: 'extra',
+    relevance: 'Reinicio de Fox de los Cuatro Fantásticos.',
+    date: '2026-10-19',
+    minutes: 100,
+  }),
+  movie({
+    id: 'deadpool',
+    title: 'Deadpool',
+    releaseDate: '2016-02-12',
+    tier: 'recommended',
+    relevance: 'Presenta al Deadpool de Ryan Reynolds: contexto directo de Deadpool & Wolverine.',
+    date: '2026-10-20',
+    minutes: 108,
   }),
   movie({
     id: 'captain-america-civil-war',
@@ -85,7 +331,72 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2016-05-06',
     tier: 'recommended',
     relevance: 'La fractura de los Avengers: contexto emocional de Steve, Bucky y Sam.',
-    date: '2026-10-13',
+    date: '2026-10-21',
+    minutes: 147,
+  }),
+  movie({
+    id: 'x-men-apocalypse',
+    title: 'X-Men: Apocalypse',
+    releaseDate: '2016-05-27',
+    tier: 'extra',
+    relevance: 'Continúa la línea de precuelas de X-Men.',
+    date: '2026-10-22',
+    minutes: 144,
+  }),
+  movie({
+    id: 'doctor-strange',
+    title: 'Doctor Strange',
+    releaseDate: '2016-11-04',
+    tier: 'extra',
+    relevance: 'Origen de Stephen Strange y de la magia del MCU.',
+    date: '2026-10-23',
+    minutes: 115,
+  }),
+  movie({
+    id: 'logan',
+    title: 'Logan',
+    releaseDate: '2017-03-03',
+    tier: 'extra',
+    relevance: 'Despedida del Wolverine de Hugh Jackman antes de Deadpool & Wolverine.',
+    date: '2026-10-24',
+    minutes: 137,
+  }),
+  movie({
+    id: 'guardians-of-the-galaxy-vol-2',
+    title: 'Guardians of the Galaxy Vol. 2',
+    releaseDate: '2017-05-05',
+    tier: 'extra',
+    relevance: 'Continúa la historia de Star-Lord y los Guardianes.',
+    date: '2026-10-25',
+    minutes: 136,
+  }),
+  movie({
+    id: 'spider-man-homecoming',
+    title: 'Spider-Man: Homecoming',
+    releaseDate: '2017-07-07',
+    tier: 'extra',
+    relevance: 'Primera película del Peter Parker de Tom Holland en el MCU.',
+    date: '2026-10-26',
+    minutes: 133,
+  }),
+  movie({
+    id: 'thor-ragnarok',
+    title: 'Thor: Ragnarok',
+    releaseDate: '2017-11-03',
+    tier: 'recommended',
+    relevance: 'Redefine al Thor actual; Chris Hemsworth forma parte del reparto de Doomsday.',
+    date: '2026-10-27',
+    minutes: 130,
+  }),
+  movie({
+    id: 'black-panther',
+    title: 'Black Panther',
+    releaseDate: '2018-02-16',
+    tier: 'recommended',
+    relevance:
+      'Presenta Wakanda, a Shuri y a M’Baku; Letitia Wright y Winston Duke forman parte del reparto de Doomsday.',
+    date: '2026-10-28',
+    minutes: 134,
   }),
   movie({
     id: 'avengers-infinity-war',
@@ -93,7 +404,35 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2018-04-27',
     tier: 'essential',
     relevance: 'Mismos directores que Doomsday y la plantilla de un crossover masivo.',
-    date: '2026-10-17',
+    date: '2026-10-29',
+    minutes: 149,
+  }),
+  movie({
+    id: 'deadpool-2',
+    title: 'Deadpool 2',
+    releaseDate: '2018-05-18',
+    tier: 'recommended',
+    relevance: 'Continúa la historia de Deadpool: contexto de Deadpool & Wolverine.',
+    date: '2026-10-30',
+    minutes: 119,
+  }),
+  movie({
+    id: 'ant-man-and-the-wasp',
+    title: 'Ant-Man and the Wasp',
+    releaseDate: '2018-07-06',
+    tier: 'extra',
+    relevance: 'Presenta el reino cuántico, clave para Endgame.',
+    date: '2026-10-30',
+    minutes: 118,
+  }),
+  movie({
+    id: 'captain-marvel',
+    title: 'Captain Marvel',
+    releaseDate: '2019-03-08',
+    tier: 'extra',
+    relevance: 'Origen de Carol Danvers, en los años noventa.',
+    date: '2026-10-31',
+    minutes: 123,
   }),
   movie({
     id: 'avengers-endgame',
@@ -102,7 +441,48 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'essential',
     relevance:
       'Cierre de Tony Stark y Steve Rogers; clave para entender a Downey regresando como Doom.',
-    date: '2026-10-18',
+    date: '2026-11-01',
+    minutes: 181,
+  }),
+  movie({
+    id: 'dark-phoenix',
+    title: 'Dark Phoenix',
+    releaseDate: '2019-06-07',
+    tier: 'extra',
+    relevance: 'Cierra la línea de precuelas de X-Men de Fox.',
+    date: '2026-11-02',
+    minutes: 114,
+  }),
+  movie({
+    id: 'spider-man-far-from-home',
+    title: 'Spider-Man: Far From Home',
+    releaseDate: '2019-07-02',
+    tier: 'extra',
+    relevance: 'Peter Parker tras Endgame; termina con su identidad revelada.',
+    date: '2026-11-03',
+    minutes: 129,
+  }),
+  movie({
+    id: 'the-new-mutants',
+    title: 'The New Mutants',
+    releaseDate: '2020-08-28',
+    tier: 'extra',
+    relevance: 'Última película de la saga X-Men de Fox.',
+    date: '2026-11-03',
+    minutes: 94,
+  }),
+  series({
+    id: 'wandavision',
+    title: 'WandaVision',
+    season: 1,
+    releaseDate: '2021-01-15',
+    tier: 'extra',
+    relevance: 'Wanda y Vision tras Endgame; inicia la etapa del MCU en Disney+.',
+    blocks: [
+      { date: '2026-11-04', minutes: 105, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-04', minutes: 105, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-05', minutes: 105, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+    ],
   }),
   series({
     id: 'the-falcon-and-the-winter-soldier',
@@ -114,21 +494,24 @@ export const ROAD: readonly RoadItem[] = [
       'Sam Wilson decide cargar con el escudo; también presenta a John Walker (U.S. Agent).',
     blocks: [
       {
-        date: '2026-10-20',
+        date: '2026-11-05',
+        minutes: 100,
         episodes: [
           { number: 1, title: 'New World Order' },
           { number: 2, title: 'The Star-Spangled Man' },
         ],
       },
       {
-        date: '2026-10-22',
+        date: '2026-11-06',
+        minutes: 100,
         episodes: [
           { number: 3, title: 'Power Broker' },
           { number: 4, title: 'The Whole World Is Watching' },
         ],
       },
       {
-        date: '2026-10-24',
+        date: '2026-11-06',
+        minutes: 100,
         episodes: [
           { number: 5, title: 'Truth' },
           { number: 6, title: 'One World, One People' },
@@ -145,21 +528,24 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Introduce la TVA, las variantes y la amenaza del multiverso.',
     blocks: [
       {
-        date: '2026-10-27',
+        date: '2026-11-07',
+        minutes: 96,
         episodes: [
           { number: 1, title: 'Glorious Purpose' },
           { number: 2, title: 'The Variant' },
         ],
       },
       {
-        date: '2026-10-29',
+        date: '2026-11-07',
+        minutes: 96,
         episodes: [
           { number: 3, title: 'Lamentis' },
           { number: 4, title: 'The Nexus Event' },
         ],
       },
       {
-        date: '2026-10-31',
+        date: '2026-11-08',
+        minutes: 96,
         episodes: [
           { number: 5, title: 'Journey into Mystery' },
           { number: 6, title: 'For All Time. Always.' },
@@ -168,12 +554,58 @@ export const ROAD: readonly RoadItem[] = [
     ],
   }),
   movie({
+    id: 'black-widow',
+    title: 'Black Widow',
+    releaseDate: '2021-07-09',
+    tier: 'recommended',
+    relevance:
+      'Presenta a Yelena Belova y Red Guardian; Florence Pugh y David Harbour forman parte del reparto de Doomsday.',
+    date: '2026-11-08',
+    minutes: 134,
+  }),
+  series({
+    id: 'what-if-s1',
+    title: 'What If...?',
+    season: 1,
+    releaseDate: '2021-08-11',
+    tier: 'extra',
+    relevance: 'Animación del MCU que explora realidades alternativas del Multiverso.',
+    blocks: [
+      { date: '2026-11-09', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-09', minutes: 96, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-10', minutes: 96, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+    ],
+  }),
+  movie({
     id: 'shang-chi',
     title: 'Shang-Chi and the Legend of the Ten Rings',
     releaseDate: '2021-09-03',
     tier: 'essential',
     relevance: 'Origen de Shang-Chi; Simu Liu forma parte del reparto de Doomsday.',
-    date: '2026-11-04',
+    date: '2026-11-10',
+    minutes: 132,
+  }),
+  movie({
+    id: 'eternals',
+    title: 'Eternals',
+    releaseDate: '2021-11-05',
+    tier: 'extra',
+    relevance: 'Presenta a los Eternos y a los Celestiales.',
+    date: '2026-11-11',
+    minutes: 156,
+  }),
+  series({
+    id: 'hawkeye',
+    title: 'Hawkeye',
+    season: 1,
+    releaseDate: '2021-11-24',
+    tier: 'extra',
+    relevance: 'Clint Barton y Kate Bishop; también reaparece Yelena.',
+    blocks: [
+      { date: '2026-11-12', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-11-12', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-11-13', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
+    ],
   }),
   movie({
     id: 'spider-man-no-way-home',
@@ -181,7 +613,21 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2021-12-17',
     tier: 'essential',
     relevance: 'Personajes de otras franquicias llegan al MCU a través del multiverso.',
-    date: '2026-11-07',
+    date: '2026-11-14',
+    minutes: 148,
+  }),
+  series({
+    id: 'moon-knight',
+    title: 'Moon Knight',
+    season: 1,
+    releaseDate: '2022-03-30',
+    tier: 'extra',
+    relevance: 'Presenta a Marc Spector y el lado místico del MCU.',
+    blocks: [
+      { date: '2026-11-15', minutes: 94, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-11-15', minutes: 94, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-11-16', minutes: 94, episodes: [{ number: 5 }, { number: 6 }] },
+    ],
   }),
   movie({
     id: 'doctor-strange-multiverse-of-madness',
@@ -189,7 +635,51 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-05-06',
     tier: 'essential',
     relevance: 'Explica las incursiones y el peligro de cruzar entre universos.',
-    date: '2026-11-11',
+    date: '2026-11-16',
+    minutes: 126,
+  }),
+  series({
+    id: 'ms-marvel',
+    title: 'Ms. Marvel',
+    season: 1,
+    releaseDate: '2022-06-08',
+    tier: 'extra',
+    relevance: 'Presenta a Kamala Khan.',
+    blocks: [
+      { date: '2026-11-17', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-18', minutes: 135, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+    ],
+  }),
+  movie({
+    id: 'thor-love-and-thunder',
+    title: 'Thor: Love and Thunder',
+    releaseDate: '2022-07-08',
+    tier: 'extra',
+    relevance: 'La historia de Thor después de Endgame.',
+    date: '2026-11-19',
+    minutes: 119,
+  }),
+  series({
+    id: 'she-hulk',
+    title: 'She-Hulk: Attorney at Law',
+    season: 1,
+    releaseDate: '2022-08-18',
+    tier: 'extra',
+    relevance: 'Presenta a Jennifer Walters y vuelve a traer a Daredevil.',
+    blocks: [
+      { date: '2026-11-19', minutes: 99, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-20', minutes: 99, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-20', minutes: 99, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+    ],
+  }),
+  movie({
+    id: 'werewolf-by-night',
+    title: 'Werewolf by Night',
+    releaseDate: '2022-10-07',
+    tier: 'extra',
+    relevance: 'Especial que presenta el lado sobrenatural del MCU.',
+    date: '2026-11-21',
+    minutes: 53,
   }),
   movie({
     id: 'black-panther-wakanda-forever',
@@ -197,7 +687,49 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2022-11-11',
     tier: 'essential',
     relevance: 'Shuri, M’Baku y Namor forman parte del reparto de Doomsday.',
-    date: '2026-11-14',
+    date: '2026-11-21',
+    minutes: 161,
+  }),
+  movie({
+    id: 'guardians-holiday-special',
+    title: 'The Guardians of the Galaxy Holiday Special',
+    releaseDate: '2022-11-25',
+    tier: 'extra',
+    relevance: 'Especial navideño de los Guardianes, antes de Vol. 3.',
+    date: '2026-11-22',
+    minutes: 44,
+  }),
+  movie({
+    id: 'ant-man-and-the-wasp-quantumania',
+    title: 'Ant-Man and the Wasp: Quantumania',
+    releaseDate: '2023-02-17',
+    tier: 'recommended',
+    relevance:
+      'Presenta a la Cassie Lang adulta; Kathryn Newton forma parte del reparto de Doomsday.',
+    date: '2026-11-22',
+    minutes: 125,
+  }),
+  movie({
+    id: 'guardians-of-the-galaxy-vol-3',
+    title: 'Guardians of the Galaxy Vol. 3',
+    releaseDate: '2023-05-05',
+    tier: 'extra',
+    relevance: 'Cierra la historia de los Guardianes.',
+    date: '2026-11-23',
+    minutes: 150,
+  }),
+  series({
+    id: 'secret-invasion',
+    title: 'Secret Invasion',
+    season: 1,
+    releaseDate: '2023-06-21',
+    tier: 'extra',
+    relevance: 'Nick Fury y la amenaza Skrull en la Tierra.',
+    blocks: [
+      { date: '2026-11-24', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-11-24', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-11-25', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
+    ],
   }),
   series({
     id: 'loki-s2',
@@ -208,21 +740,24 @@ export const ROAD: readonly RoadItem[] = [
     relevance: 'Define el destino de Loki y el estado del multiverso.',
     blocks: [
       {
-        date: '2026-11-17',
+        date: '2026-11-25',
+        minutes: 100,
         episodes: [
           { number: 1, title: 'Ouroboros' },
           { number: 2, title: 'Breaking Brad' },
         ],
       },
       {
-        date: '2026-11-19',
+        date: '2026-11-26',
+        minutes: 100,
         episodes: [
           { number: 3, title: '1893' },
           { number: 4, title: 'Heart of the TVA' },
         ],
       },
       {
-        date: '2026-11-21',
+        date: '2026-11-26',
+        minutes: 100,
         episodes: [
           { number: 5, title: 'Science/Fiction' },
           { number: 6, title: 'Glorious Purpose' },
@@ -231,12 +766,80 @@ export const ROAD: readonly RoadItem[] = [
     ],
   }),
   movie({
+    id: 'the-marvels',
+    title: 'The Marvels',
+    releaseDate: '2023-11-10',
+    tier: 'extra',
+    relevance: 'Carol Danvers, Monica Rambeau y Kamala Khan; su escena final muestra a Beast.',
+    date: '2026-11-27',
+    minutes: 105,
+  }),
+  series({
+    id: 'what-if-s2',
+    title: 'What If...?',
+    season: 2,
+    releaseDate: '2023-12-22',
+    tier: 'extra',
+    relevance: 'Nuevas realidades alternativas del Multiverso, en animación.',
+    blocks: [
+      { date: '2026-11-27', minutes: 96, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-28', minutes: 96, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-11-28', minutes: 96, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+    ],
+  }),
+  series({
+    id: 'echo',
+    title: 'Echo',
+    season: 1,
+    releaseDate: '2024-01-09',
+    tier: 'extra',
+    relevance: 'Maya Lopez en el mundo de Kingpin y Daredevil.',
+    blocks: [
+      { date: '2026-11-29', minutes: 135, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-11-29', minutes: 90, episodes: [{ number: 4 }, { number: 5 }] },
+    ],
+  }),
+  movie({
     id: 'deadpool-and-wolverine',
     title: 'Deadpool & Wolverine',
     releaseDate: '2024-07-26',
     tier: 'essential',
     relevance: 'Puente entre el universo de Fox y el MCU; presenta al Gambit de Channing Tatum.',
-    date: '2026-11-25',
+    date: '2026-11-30',
+    minutes: 128,
+  }),
+  series({
+    id: 'agatha-all-along',
+    title: 'Agatha All Along',
+    season: 1,
+    releaseDate: '2024-09-18',
+    tier: 'extra',
+    relevance: 'Agatha Harkness después de WandaVision.',
+    blocks: [
+      { date: '2026-12-01', minutes: 120, episodes: [{ number: 1 }, { number: 2 }, { number: 3 }] },
+      { date: '2026-12-01', minutes: 120, episodes: [{ number: 4 }, { number: 5 }, { number: 6 }] },
+      { date: '2026-12-02', minutes: 120, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+    ],
+  }),
+  series({
+    id: 'what-if-s3',
+    title: 'What If...?',
+    season: 3,
+    releaseDate: '2024-12-22',
+    tier: 'extra',
+    relevance: 'Última temporada de la serie animada del Multiverso.',
+    blocks: [
+      {
+        date: '2026-12-02',
+        minutes: 120,
+        episodes: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
+      },
+      {
+        date: '2026-12-03',
+        minutes: 120,
+        episodes: [{ number: 5 }, { number: 6 }, { number: 7 }, { number: 8 }],
+      },
+    ],
   }),
   movie({
     id: 'captain-america-brave-new-world',
@@ -244,7 +847,22 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2025-02-14',
     tier: 'essential',
     relevance: 'Sam Wilson ya como Capitán América, con Joaquín Torres como el nuevo Falcon.',
-    date: '2026-11-28',
+    date: '2026-12-03',
+    minutes: 118,
+  }),
+  series({
+    id: 'daredevil-born-again-s1',
+    title: 'Daredevil: Born Again',
+    season: 1,
+    releaseDate: '2025-03-04',
+    tier: 'extra',
+    relevance: 'Matt Murdock y Kingpin en el MCU actual.',
+    blocks: [
+      { date: '2026-12-04', minutes: 100, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-12-04', minutes: 100, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-12-05', minutes: 100, episodes: [{ number: 5 }, { number: 6 }] },
+      { date: '2026-12-06', minutes: 150, episodes: [{ number: 7 }, { number: 8 }, { number: 9 }] },
+    ],
   }),
   movie({
     id: 'thunderbolts',
@@ -252,7 +870,21 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2025-05-02',
     tier: 'essential',
     relevance: 'Nacen los New Avengers, uno de los equipos centrales de Doomsday.',
-    date: '2026-12-02',
+    date: '2026-12-07',
+    minutes: 127,
+  }),
+  series({
+    id: 'ironheart',
+    title: 'Ironheart',
+    season: 1,
+    releaseDate: '2025-06-24',
+    tier: 'extra',
+    relevance: 'Presenta a Riri Williams tras Wakanda Forever.',
+    blocks: [
+      { date: '2026-12-07', minutes: 96, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-12-08', minutes: 96, episodes: [{ number: 3 }, { number: 4 }] },
+      { date: '2026-12-08', minutes: 96, episodes: [{ number: 5 }, { number: 6 }] },
+    ],
   }),
   movie({
     id: 'the-fantastic-four-first-steps',
@@ -260,7 +892,106 @@ export const ROAD: readonly RoadItem[] = [
     releaseDate: '2025-07-25',
     tier: 'essential',
     relevance: 'Presenta la Tierra-828 y la primera aparición de Doom.',
-    date: '2026-12-05',
+    date: '2026-12-09',
+    minutes: 114,
+  }),
+  series({
+    id: 'eyes-of-wakanda',
+    title: 'Eyes of Wakanda',
+    season: 1,
+    releaseDate: '2025-08-01',
+    tier: 'extra',
+    relevance: 'Animación sobre guerreros de Wakanda a lo largo de la historia.',
+    blocks: [
+      {
+        date: '2026-12-09',
+        minutes: 112,
+        episodes: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
+      },
+    ],
+  }),
+  series({
+    id: 'marvel-zombies',
+    title: 'Marvel Zombies',
+    season: 1,
+    releaseDate: '2025-09-24',
+    tier: 'extra',
+    relevance: 'Animación ambientada en una realidad alternativa del Multiverso.',
+    blocks: [
+      { date: '2026-12-10', minutes: 80, episodes: [{ number: 1 }, { number: 2 }] },
+      { date: '2026-12-10', minutes: 80, episodes: [{ number: 3 }, { number: 4 }] },
+    ],
+  }),
+  series({
+    id: 'wonder-man',
+    title: 'Wonder Man',
+    season: 1,
+    releaseDate: '2026-01-27',
+    tier: 'extra',
+    relevance: 'Presenta a Simon Williams.',
+    blocks: [
+      {
+        date: '2026-12-11',
+        minutes: 132,
+        episodes: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
+      },
+      {
+        date: '2026-12-12',
+        minutes: 132,
+        episodes: [{ number: 5 }, { number: 6 }, { number: 7 }, { number: 8 }],
+      },
+    ],
+  }),
+  series({
+    id: 'daredevil-born-again-s2',
+    title: 'Daredevil: Born Again',
+    season: 2,
+    releaseDate: '2026-03-24',
+    tier: 'extra',
+    relevance: 'Continúa la historia de Matt Murdock y Kingpin.',
+    blocks: [
+      {
+        date: '2026-12-12',
+        minutes: 100,
+        episodes: [
+          { number: 1, title: 'The Northern Star' },
+          { number: 2, title: 'Shoot the Moon' },
+        ],
+      },
+      {
+        date: '2026-12-13',
+        minutes: 100,
+        episodes: [
+          { number: 3, title: 'The Scales & the Sword' },
+          { number: 4, title: 'Gloves Off' },
+        ],
+      },
+      {
+        date: '2026-12-13',
+        minutes: 100,
+        episodes: [
+          { number: 5, title: 'The Grand Design' },
+          { number: 6, title: 'Requiem' },
+        ],
+      },
+      {
+        date: '2026-12-14',
+        minutes: 100,
+        episodes: [
+          { number: 7, title: 'The Hateful Darkness' },
+          { number: 8, title: 'The Southern Cross' },
+        ],
+      },
+    ],
+  }),
+  movie({
+    id: 'the-punisher-one-last-kill',
+    title: 'The Punisher: One Last Kill',
+    releaseDate: '2026-05-12',
+    tier: 'extra',
+    relevance: 'Especial de Frank Castle tras Daredevil: Born Again.',
+    date: '2026-12-14',
+    minutes: 50,
   }),
   movie({
     id: 'spider-man-brand-new-day',
@@ -269,6 +1000,7 @@ export const ROAD: readonly RoadItem[] = [
     tier: 'recommended',
     relevance:
       'Ocurre antes de Doomsday y Hulk aparece en ambas (confirmado). Verificar si ya está disponible.',
-    date: '2026-12-09',
+    date: '2026-12-15',
+    minutes: 130,
   }),
 ];

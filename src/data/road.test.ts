@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { parseInstant } from '../domain/countdown';
-import { compareIsoDates, getWeekStart, isIsoDate } from '../domain/dates';
+import { compareIsoDates, isIsoDate } from '../domain/dates';
 import { getAllSessions } from '../domain/road';
-import { PREMIERE_SHOWTIME, ROAD_DEADLINE, ROAD_START_DATE } from './constants';
+import {
+  DAILY_MINUTES_LIMIT,
+  MAX_MOVIES_PER_DAY,
+  PREMIERE_SHOWTIME,
+  ROAD_DEADLINE,
+  ROAD_START_DATE,
+} from './constants';
 import { ROAD } from './road';
 import { groupItemsByWeek } from '../domain/timeline';
 
@@ -38,9 +44,13 @@ function findOutOfOrder(entries: readonly DatedEntry[]): string[] {
 }
 
 describe('contenido acordado', () => {
-  it('contiene 21 títulos y 27 sesiones', () => {
-    expect(ROAD).toHaveLength(21);
-    expect(sessions).toHaveLength(27);
+  it('contiene 86 títulos y 121 sesiones', () => {
+    expect(ROAD).toHaveLength(86);
+    expect(sessions).toHaveLength(121);
+  });
+
+  it('la lista oficial de Marvel son los 16 títulos esenciales', () => {
+    expect(ROAD.filter((item) => item.tier === 'essential')).toHaveLength(16);
   });
 });
 
@@ -87,8 +97,36 @@ describe('calendario de sesiones', () => {
     expect(outOfRange).toEqual([]);
   });
 
-  it('no hay dos sesiones el mismo día', () => {
-    expect(findDuplicates(sessions.map((session) => session.date))).toEqual([]);
+  it('toda sesión dura un número entero y positivo de minutos', () => {
+    const invalid = sessions.filter(
+      (session) => !Number.isInteger(session.minutes) || session.minutes <= 0,
+    );
+
+    expect(invalid).toEqual([]);
+  });
+
+  it(`ningún día supera ${DAILY_MINUTES_LIMIT} minutos`, () => {
+    const minutesByDay = new Map<string, number>();
+    for (const session of sessions) {
+      minutesByDay.set(session.date, (minutesByDay.get(session.date) ?? 0) + session.minutes);
+    }
+
+    const overLimit = [...minutesByDay].filter(([, minutes]) => minutes > DAILY_MINUTES_LIMIT);
+
+    expect(overLimit).toEqual([]);
+  });
+
+  it(`ningún día tiene más de ${MAX_MOVIES_PER_DAY} películas`, () => {
+    const moviesByDay = new Map<string, number>();
+    for (const item of ROAD) {
+      if (item.kind !== 'movie') continue;
+      const { date } = item.session;
+      moviesByDay.set(date, (moviesByDay.get(date) ?? 0) + 1);
+    }
+
+    const tooMany = [...moviesByDay].filter(([, count]) => count > MAX_MOVIES_PER_DAY);
+
+    expect(tooMany).toEqual([]);
   });
 
   it('el orden de visionado coincide con el orden de estreno', () => {
@@ -110,14 +148,6 @@ describe('series', () => {
     },
   );
 
-  it('cada serie se ve dentro de una misma semana', () => {
-    const splitSeries = seriesItems.filter(
-      (item) => new Set(item.sessions.map((session) => getWeekStart(session.date))).size > 1,
-    );
-
-    expect(splitSeries).toEqual([]);
-  });
-
   it('ninguna sesión de serie está vacía', () => {
     const emptySessions = seriesItems.flatMap((item) =>
       item.sessions.filter((session) => session.episodes.length === 0),
@@ -128,10 +158,10 @@ describe('series', () => {
 });
 
 describe('semanas del timeline', () => {
-  it('el Road ocupa 11 semanas seguidas, todas con contenido', () => {
+  it('el Road ocupa 12 semanas seguidas, todas con contenido', () => {
     const weeks = groupItemsByWeek(ROAD, ROAD_START_DATE);
 
-    expect(weeks.map((week) => week.number)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    expect(weeks.map((week) => week.number)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
   });
 });
 
