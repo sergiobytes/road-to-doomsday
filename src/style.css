@@ -8,8 +8,8 @@
   --color-line-strong: var(--color-slate-700);
 
   --color-ink: var(--color-slate-50);
-  --color-ink-muted: var(--color-slate-400);
-  --color-ink-subtle: var(--color-slate-500);
+  --color-ink-muted: var(--color-slate-300);
+  --color-ink-subtle: var(--color-slate-400);
 
   --color-progress: var(--color-emerald-400);
   --color-movie: var(--color-amber-400);

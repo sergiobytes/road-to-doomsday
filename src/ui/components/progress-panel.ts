@@ -40,7 +40,7 @@ function renderRing(percent: number): string {
       <circle cx="60" cy="60" r="${RING_RADIUS}" fill="none" stroke-width="10"
         class="stroke-line" />
       <circle cx="60" cy="60" r="${RING_RADIUS}" fill="none" stroke-width="10"
-        stroke-linecap="round" class="stroke-progress transition-[stroke-dashoffset] duration-700"
+        stroke-linecap="round" class="stroke-progress transition-[stroke-dashoffset] duration-700 motion-reduce:transition-none"
         stroke-dasharray="${RING_CIRCUMFERENCE}" stroke-dashoffset="${getRingOffset(percent)}" />
     </svg>
   `;
