@@ -91,6 +91,25 @@ describe('unmarkWatched', () => {
   });
 });
 
+describe('toggleWatched', () => {
+  it('marca una sesión que no estaba vista', () => {
+    const { store } = setup();
+
+    store.toggleWatched('x2');
+
+    expect(store.getState().progress.watched.get('x2')).toBe(TODAY);
+  });
+
+  it('desmarca una sesión que ya estaba vista', () => {
+    const { store, listener } = setup({ [STORAGE_KEY]: SAVED_PROGRESS });
+
+    store.toggleWatched('x-men');
+
+    expect(store.getState().progress.watched.has('x-men')).toBe(false);
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('reset', () => {
   it('borra el progreso guardado y el de memoria, y avisa', () => {
     const { storage, store, listener } = setup({ [STORAGE_KEY]: SAVED_PROGRESS });

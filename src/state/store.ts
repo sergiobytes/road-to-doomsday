@@ -19,6 +19,8 @@ export interface ProgressStore {
   subscribe(listener: StoreListener): () => void;
   markWatched(sessionId: string): void;
   unmarkWatched(sessionId: string): void;
+  /** Marca la sesión si no estaba vista, o la desmarca si ya lo estaba. */
+  toggleWatched(sessionId: string): void;
   reset(): void;
 }
 
@@ -56,6 +58,22 @@ export function createProgressStore({
     setState({ ...state, progress, saveFailed: !saveProgress(storage, progress) });
   }
 
+  function markWatched(sessionId: string): void {
+    if (state.progress.watched.has(sessionId)) return;
+
+    const watched = new Map(state.progress.watched);
+    watched.set(sessionId, getToday());
+    commitProgress({ watched });
+  }
+
+  function unmarkWatched(sessionId: string): void {
+    if (!state.progress.watched.has(sessionId)) return;
+
+    const watched = new Map(state.progress.watched);
+    watched.delete(sessionId);
+    commitProgress({ watched });
+  }
+
   return {
     getState: () => state,
 
@@ -66,20 +84,12 @@ export function createProgressStore({
       };
     },
 
-    markWatched(sessionId) {
-      if (state.progress.watched.has(sessionId)) return;
+    markWatched,
+    unmarkWatched,
 
-      const watched = new Map(state.progress.watched);
-      watched.set(sessionId, getToday());
-      commitProgress({ watched });
-    },
-
-    unmarkWatched(sessionId) {
-      if (!state.progress.watched.has(sessionId)) return;
-
-      const watched = new Map(state.progress.watched);
-      watched.delete(sessionId);
-      commitProgress({ watched });
+    toggleWatched(sessionId) {
+      if (state.progress.watched.has(sessionId)) unmarkWatched(sessionId);
+      else markWatched(sessionId);
     },
 
     reset() {
