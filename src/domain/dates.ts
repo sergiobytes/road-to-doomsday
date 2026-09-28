@@ -46,3 +46,9 @@ export function compareIsoDates(a: IsoDate, b: IsoDate): number {
   if (a > b) return 1;
   return 0;
 }
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+export function daysBetween(from: IsoDate, to: IsoDate): number {
+  return Math.round((parseIsoDate(to).getTime() - parseIsoDate(from).getTime()) / MS_PER_DAY);
+}

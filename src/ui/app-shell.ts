@@ -1,5 +1,6 @@
 export const MOUNT_IDS = {
   progressSummary: 'progress-summary',
+  nextSession: 'next-session',
   timeline: 'timeline',
 } as const;
 
@@ -27,7 +28,7 @@ export function renderAppShell(): string {
         >
           <h2 id="progress-heading" class="sr-only">Tu progreso</h2>
           <div id="${MOUNT_IDS.progressSummary}"></div>
-          ${placeholder('Cuenta regresiva')}
+          <div id="${MOUNT_IDS.nextSession}"></div>
           ${placeholder('Siguiente sesión')}
         </section>
 

@@ -1,9 +1,10 @@
 import { ROAD } from '../data/road';
-import { getProgressSummary } from '../domain/progress';
+import { getNextSession, getProgressSummary } from '../domain/progress';
 import { getScheduleReport } from '../domain/schedule';
 import type { IsoDate } from '../domain/types';
 import { toWatchedIds, type ProgressStore, type StoreState } from '../state/store';
 import { MOUNT_IDS, renderAppShell } from './app-shell';
+import { renderNextSessionCard } from './components/next-session-card';
 import { renderProgressPanel } from './components/progress-panel';
 
 function getMountPoint(id: string): HTMLElement {
@@ -16,13 +17,20 @@ function getMountPoint(id: string): HTMLElement {
 export function mountApp(root: HTMLElement, store: ProgressStore, getToday: () => IsoDate): void {
   root.innerHTML = renderAppShell();
   const progressSummary = getMountPoint(MOUNT_IDS.progressSummary);
+  const nextSession = getMountPoint(MOUNT_IDS.nextSession);
 
   function render(state: StoreState): void {
     const watched = toWatchedIds(state.progress);
+    const today = getToday();
 
     progressSummary.innerHTML = renderProgressPanel({
       summary: getProgressSummary(ROAD, watched),
-      schedule: getScheduleReport(ROAD, watched, getToday()),
+      schedule: getScheduleReport(ROAD, watched, today),
+    });
+
+    nextSession.innerHTML = renderNextSessionCard({
+      entry: getNextSession(ROAD, watched),
+      today,
     });
   }
 

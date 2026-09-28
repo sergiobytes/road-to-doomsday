@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compareIsoDates, isIsoDate, parseIsoDate, toIsoDate } from './dates';
+import { compareIsoDates, daysBetween, isIsoDate, parseIsoDate, toIsoDate } from './dates';
 
 describe('entorno', () => {
   it('las pruebas corren en la zona horaria de Ciudad de México', () => {
@@ -71,5 +71,17 @@ describe('compareIsoDates', () => {
 
   it('devuelve 0 para fechas iguales', () => {
     expect(compareIsoDates('2026-10-01', '2026-10-01')).toBe(0);
+  });
+});
+
+describe('daysBetween', () => {
+  it.each([
+    ['2026-09-28', '2026-09-28', 0],
+    ['2026-09-28', '2026-09-29', 1],
+    ['2026-09-29', '2026-09-28', -1],
+    ['2026-09-28', '2026-12-16', 79],
+    ['2026-02-28', '2026-03-01', 1],
+  ])('de %s a %s hay %i días', (from, to, expected) => {
+    expect(daysBetween(from, to)).toBe(expected);
   });
 });
