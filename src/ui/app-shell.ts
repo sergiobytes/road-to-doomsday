@@ -29,15 +29,15 @@ export function renderAppShell(): string {
           <h2 id="progress-heading" class="sr-only">Tu progreso</h2>
           <div id="${MOUNT_IDS.progressSummary}"></div>
           <div id="${MOUNT_IDS.nextSession}"></div>
-          ${placeholder('Siguiente sesión')}
+          ${placeholder('Cuenta regresiva')}
         </section>
 
         <section aria-labelledby="timeline-heading" class="flex flex-col gap-4">
           <h2 id="timeline-heading" class="text-sm font-medium text-ink-muted">Calendario</h2>
           <div id="${MOUNT_IDS.timeline}" class="flex flex-col gap-3">
-            ${placeholder('Semana 1')}
-            ${placeholder('Semana 2')}
-            ${placeholder('Semana 3')}
+            <div id="${MOUNT_IDS.timeline}"></div>
+            <div id="${MOUNT_IDS.timeline}"></div>
+            <div id="${MOUNT_IDS.timeline}"></div>
           </div>
         </section>
       </main>
