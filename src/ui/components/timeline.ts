@@ -118,7 +118,7 @@ function renderMovieCard(item: MovieItem, { watched, skipped, today }: TimelineC
 
   return `
     <article class="flex gap-4 rounded-xl border bg-surface p-3 sm:p-4 ${isToday ? 'border-progress/60' : 'border-line'}">
-      <div class="${isDimmed ? 'opacity-50' : ''}">${renderPoster(item)}</div>
+      <div class="${isDimmed ? 'opacity-75' : ''}">${renderPoster(item)}</div>
       <div class="flex min-w-0 flex-1 flex-col gap-1">
         <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
           <h4 class="font-semibold leading-snug ${isDimmed ? 'text-ink-muted' : ''} ${isSkipped ? 'line-through' : ''}">${escapeHtml(item.title)}</h4>
@@ -190,7 +190,7 @@ function renderSeriesCard(item: SeriesItem, context: TimelineContext): string {
   return `
     <article class="flex flex-col gap-3 rounded-xl border border-line bg-surface p-3 sm:p-4">
       <div class="flex gap-4">
-        <div class="${isComplete ? 'opacity-50' : ''}">${renderPoster(item)}</div>
+        <div class="${isComplete ? 'opacity-75' : ''}">${renderPoster(item)}</div>
         <div class="flex min-w-0 flex-1 flex-col gap-1">
           <div class="flex items-start justify-between gap-3">
             <h4 class="font-semibold leading-snug ${isComplete ? 'text-ink-muted' : ''}">

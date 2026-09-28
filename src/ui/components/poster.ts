@@ -11,7 +11,7 @@ function renderGeneratedCover(item: RoadItem): string {
   const icon = isMovie ? icons.movie('size-5') : icons.series('size-5');
 
   return `
-    <div class="${POSTER_FRAME} flex flex-col items-center justify-center gap-1 bg-canvas ${accent}">
+    <div aria-hidden="true" class="${POSTER_FRAME} flex flex-col items-center justify-center gap-1 bg-canvas ${accent}">
       ${icon}
       <span class="text-xs font-medium tabular-nums">${item.releaseDate.slice(0, 4)}</span>
     </div>

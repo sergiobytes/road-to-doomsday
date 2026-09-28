@@ -16,6 +16,7 @@ import { FOCUS_RING, toggleSessionAttributes, toggleSkipAttributes } from '../ac
  */
 const NEXT_SESSION_FOCUS_KEY = 'next-session';
 const NEXT_SESSION_SKIP_FOCUS_KEY = 'next-session-skip';
+const NEXT_SESSION_TITLE_ID = 'next-session-title';
 
 const TIMING_LABELS: Record<SessionTiming, (date: string) => string> = {
   overdue: (date) => `Pendiente desde el ${date}`,
@@ -84,7 +85,7 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
         </span>
       </header>
       <div>
-        <h3 class="text-lg leading-snug font-semibold">${escapeHtml(getItemDisplayTitle(entry.item))}</h3>
+        <h3 id="${NEXT_SESSION_TITLE_ID}" class="text-lg leading-snug font-semibold">${escapeHtml(getItemDisplayTitle(entry.item))}</h3>
         <p class="text-xs text-ink-subtle">${kindLabel} · ${entry.item.releaseDate.slice(0, 4)}</p>
       </div>
       ${renderEpisodes(entry)}
@@ -93,6 +94,7 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
         <button
           type="button"
           ${toggleSessionAttributes(entry.session.id, NEXT_SESSION_FOCUS_KEY)}
+          aria-describedby="${NEXT_SESSION_TITLE_ID}"
           class="flex-1 cursor-pointer rounded-lg bg-progress px-4 py-2 text-sm font-semibold text-canvas transition-colors hover:bg-status-on-track ${FOCUS_RING}"
         >
           ${entry.kind === 'movie' ? 'Marcar como vista' : 'Marcar episodios como vistos'}
@@ -100,6 +102,7 @@ export function renderNextSessionCard({ entry, today }: NextSessionCardProps): s
         <button
           type="button"
           ${toggleSkipAttributes(entry.session.id, NEXT_SESSION_SKIP_FOCUS_KEY)}
+          aria-describedby="${NEXT_SESSION_TITLE_ID}"
           class="cursor-pointer rounded-lg border border-line-strong px-3 py-2 text-sm text-ink-muted transition-colors hover:text-ink ${FOCUS_RING}"
         >
           Omitir
