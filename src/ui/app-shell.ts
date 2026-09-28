@@ -1,5 +1,5 @@
 export const MOUNT_IDS = {
-  progress: 'progress-panel',
+  progressSummary: 'progress-summary',
   timeline: 'timeline',
 } as const;
 
@@ -26,10 +26,9 @@ export function renderAppShell(): string {
           class="flex flex-col gap-4 lg:sticky lg:top-6 lg:self-start"
         >
           <h2 id="progress-heading" class="sr-only">Tu progreso</h2>
-          <div id="${MOUNT_IDS.progress}" class="flex flex-col gap-4">
-            ${placeholder('Progreso, estado y cuenta regresiva')}
-            ${placeholder('Siguiente sesión')}
-          </div>
+          <div id="${MOUNT_IDS.progressSummary}"></div>
+          ${placeholder('Cuenta regresiva')}
+          ${placeholder('Siguiente sesión')}
         </section>
 
         <section aria-labelledby="timeline-heading" class="flex flex-col gap-4">
