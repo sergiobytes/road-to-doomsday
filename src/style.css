@@ -1,1 +1,22 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-canvas: var(--color-slate-950);
+  --color-surface: var(--color-slate-900);
+  --color-surface-raised: var(--color-slate-800);
+  --color-line: var(--color-slate-800);
+  --color-line-strong: var(--color-slate-700);
+
+  --color-ink: var(--color-slate-50);
+  --color-ink-muted: var(--color-slate-400);
+  --color-ink-subtle: var(--color-slate-500);
+
+  --color-progress: var(--color-emerald-400);
+  --color-movie: var(--color-amber-400);
+  --color-series: var(--color-cyan-400);
+  --color-recommended: var(--color-violet-300);
+
+  --color-status-on-track: var(--color-emerald-300);
+  --color-status-ahead: var(--color-cyan-300);
+  --color-status-behind: var(--color-amber-300);
+}
