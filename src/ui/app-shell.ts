@@ -6,6 +6,7 @@ export const MOUNT_IDS = {
   announcer: 'announcer',
   progressSummary: 'progress-summary',
   nextSession: 'next-session',
+  countdown: 'countdown',
   timeline: 'timeline',
   resetDialog: 'reset-dialog',
   resetDialogCount: 'reset-dialog-count',
@@ -47,15 +48,6 @@ function renderResetDialog(): string {
   `;
 }
 
-function placeholder(label: string): string {
-  return `
-    <div class="rounded-xl border border-dashed border-line-strong p-6 text-sm text-ink-subtle">
-      ${label}
-    </div>
-  `;
-}
-
-/** Estructura fija de la página: cabecera, panel de progreso, timeline y pie. */
 export function renderAppShell(): string {
   return `
     <a
@@ -89,7 +81,7 @@ export function renderAppShell(): string {
           <h2 id="progress-heading" class="sr-only">Tu progreso</h2>
           <div id="${MOUNT_IDS.progressSummary}"></div>
           <div id="${MOUNT_IDS.nextSession}"></div>
-          ${placeholder('Cuenta regresiva')}
+          <div id="${MOUNT_IDS.countdown}"></div>
         </section>
  
         <section

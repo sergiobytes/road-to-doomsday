@@ -5,15 +5,26 @@ import { createProgressStore } from './state/store';
 import { mountApp } from './ui/mount';
 
 /**
- * Día actual. En desarrollo se puede simular otro con `?today=YYYY-MM-DD`
- * para revisar la interfaz en cualquier punto del Road.
+ * En desarrollo se puede simular la fecha con `?today=YYYY-MM-DD`
+ * o el instante exacto con `?now=2026-12-16T23:59:50-06:00`.
  */
+const devParams = import.meta.env.DEV ? new URLSearchParams(window.location.search) : null;
+
+function getSimulatedOffsetMs(): number {
+  const simulatedNow = Date.parse(devParams?.get('now') ?? '');
+  return Number.isNaN(simulatedNow) ? 0 : simulatedNow - Date.now();
+}
+
+const simulatedOffsetMs = getSimulatedOffsetMs();
+
+function getNow(): number {
+  return Date.now() + simulatedOffsetMs;
+}
+
 function getToday(): IsoDate {
-  if (import.meta.env.DEV) {
-    const simulated = new URLSearchParams(window.location.search).get('today');
-    if (isIsoDate(simulated)) return simulated;
-  }
-  return toIsoDate(new Date());
+  const simulatedToday = devParams?.get('today');
+  if (isIsoDate(simulatedToday)) return simulatedToday;
+  return toIsoDate(new Date(getNow()));
 }
 
 /** Algunos navegadores lanzan un error con solo acceder a `localStorage` si está bloqueado. */
@@ -42,4 +53,4 @@ const store = createProgressStore({
   },
   getToday,
 });
-mountApp(app, store, getToday);
+mountApp(app, store, { getToday, getNow });
