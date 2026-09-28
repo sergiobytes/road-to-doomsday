@@ -3,6 +3,7 @@ import { escapeHtml } from './format';
 /** Acciones que la interfaz declara en el HTML con `data-action`. */
 export const ACTIONS = {
   toggleSession: 'toggle-session',
+  openResetDialog: 'open-reset-dialog',
 } as const;
 
 /** Estilo de foco visible compartido por todos los controles. */

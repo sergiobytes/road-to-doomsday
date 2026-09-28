@@ -19,4 +19,6 @@
   --color-status-on-track: var(--color-emerald-300);
   --color-status-ahead: var(--color-cyan-300);
   --color-status-behind: var(--color-amber-300);
+
+  --color-danger: var(--color-rose-400);
 }
