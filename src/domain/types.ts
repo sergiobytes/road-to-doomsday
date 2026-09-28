@@ -45,3 +45,7 @@ export type SessionEntry =
   | { readonly kind: 'series'; readonly item: SeriesItem; readonly session: SeriesSession };
 
 export type WatchedSessionIds = ReadonlySet<string>;
+
+export type SkippedSessionIds = ReadonlySet<string>;
+
+export const NO_SESSIONS: ReadonlySet<string> = new Set();

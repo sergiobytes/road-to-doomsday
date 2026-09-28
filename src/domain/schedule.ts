@@ -1,6 +1,12 @@
 import { compareIsoDates } from './dates';
 import { getAllSessions } from './road';
-import type { IsoDate, RoadItem, WatchedSessionIds } from './types';
+import {
+  NO_SESSIONS,
+  type IsoDate,
+  type RoadItem,
+  type SkippedSessionIds,
+  type WatchedSessionIds,
+} from './types';
 
 export type ScheduleStatus = 'behind' | 'on-track' | 'ahead';
 
@@ -20,11 +26,15 @@ export function getScheduleReport(
   items: readonly RoadItem[],
   watched: WatchedSessionIds,
   today: IsoDate,
+  skipped: SkippedSessionIds = NO_SESSIONS,
 ): ScheduleReport {
   const sessions = getAllSessions(items);
 
   const overdueSessions = sessions.filter(
-    (session) => compareIsoDates(session.date, today) < 0 && !watched.has(session.id),
+    (session) =>
+      compareIsoDates(session.date, today) < 0 &&
+      !watched.has(session.id) &&
+      !skipped.has(session.id),
   ).length;
 
   const sessionsAhead = sessions.filter(

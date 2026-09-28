@@ -83,3 +83,17 @@ describe('getScheduleReport', () => {
     expect(report(['sesion-eliminada'], '2026-09-30').status).toBe('on-track');
   });
 });
+
+describe('sesiones omitidas', () => {
+  it('una sesión pasada y omitida no cuenta como atrasada', () => {
+    const result = getScheduleReport(TEST_ROAD, new Set(), '2026-10-02', new Set(['movie-a']));
+
+    expect(result).toEqual({ status: 'on-track', overdueSessions: 0, sessionsAhead: 0 });
+  });
+
+  it('omitir una sesión futura no cuenta como ir adelantado', () => {
+    const result = getScheduleReport(TEST_ROAD, new Set(), '2026-09-30', new Set(['movie-c']));
+
+    expect(result.status).toBe('on-track');
+  });
+});

@@ -1,9 +1,16 @@
 import { getItemSessions, getSessionEntries } from './road';
-import type { RoadItem, SessionEntry, WatchedSessionIds } from './types';
+import {
+  NO_SESSIONS,
+  type RoadItem,
+  type SessionEntry,
+  type SkippedSessionIds,
+  type WatchedSessionIds,
+} from './types';
 
 export interface ProgressSummary {
   readonly totalSessions: number;
   readonly watchedSessions: number;
+  readonly skippedSessions: number;
   readonly pendingSessions: number;
   readonly percent: number;
   readonly totalItems: number;
@@ -22,14 +29,19 @@ export function isItemComplete(item: RoadItem, watched: WatchedSessionIds): bool
 export function getProgressSummary(
   items: readonly RoadItem[],
   watched: WatchedSessionIds,
+  skipped: SkippedSessionIds = NO_SESSIONS,
 ): ProgressSummary {
   const entries = getSessionEntries(items);
   const watchedSessions = entries.filter((entry) => watched.has(entry.session.id)).length;
+  const skippedSessions = entries.filter(
+    (entry) => skipped.has(entry.session.id) && !watched.has(entry.session.id),
+  ).length;
 
   return {
     totalSessions: entries.length,
     watchedSessions,
-    pendingSessions: entries.length - watchedSessions,
+    skippedSessions,
+    pendingSessions: entries.length - watchedSessions - skippedSessions,
     percent: calculatePercent(watchedSessions, entries.length),
     totalItems: items.length,
     completedItems: items.filter((item) => isItemComplete(item, watched)).length,
@@ -39,6 +51,11 @@ export function getProgressSummary(
 export function getNextSession(
   items: readonly RoadItem[],
   watched: WatchedSessionIds,
+  skipped: SkippedSessionIds = NO_SESSIONS,
 ): SessionEntry | null {
-  return getSessionEntries(items).find((entry) => !watched.has(entry.session.id)) ?? null;
+  return (
+    getSessionEntries(items).find(
+      (entry) => !watched.has(entry.session.id) && !skipped.has(entry.session.id),
+    ) ?? null
+  );
 }

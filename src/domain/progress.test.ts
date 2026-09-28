@@ -35,6 +35,7 @@ describe('getProgressSummary', () => {
     expect(getProgressSummary(TEST_ROAD, new Set())).toEqual({
       totalSessions: 4,
       watchedSessions: 0,
+      skippedSessions: 0,
       pendingSessions: 4,
       percent: 0,
       totalItems: 3,
@@ -97,5 +98,43 @@ describe('getNextSession', () => {
     } else {
       expect.fail('La siguiente sesión debía ser de una serie');
     }
+  });
+});
+
+describe('sesiones omitidas', () => {
+  const skipped = new Set(['series-b-e1-2']);
+
+  it('no cuentan para el porcentaje ni se restan del total', () => {
+    expect(getProgressSummary(TEST_ROAD, new Set(['movie-a']), skipped)).toMatchObject({
+      totalSessions: 4,
+      watchedSessions: 1,
+      skippedSessions: 1,
+      pendingSessions: 2,
+      percent: 25,
+    });
+  });
+
+  it('una sesión vista no cuenta además como omitida', () => {
+    const summary = getProgressSummary(TEST_ROAD, new Set(['movie-a']), new Set(['movie-a']));
+
+    expect(summary).toMatchObject({ watchedSessions: 1, skippedSessions: 0, pendingSessions: 3 });
+  });
+
+  it('una serie con un bloque omitido no queda completa', () => {
+    const watched = new Set(['series-b-e3-4']);
+
+    expect(getProgressSummary(TEST_ROAD, watched, skipped).completedItems).toBe(0);
+  });
+
+  it('la siguiente sesión se salta las omitidas', () => {
+    expect(getNextSession(TEST_ROAD, new Set(['movie-a']), skipped)?.session.id).toBe(
+      'series-b-e3-4',
+    );
+  });
+
+  it('si todo lo pendiente está omitido, no hay siguiente sesión', () => {
+    const all = new Set(['movie-a', 'series-b-e1-2', 'series-b-e3-4', 'movie-c']);
+
+    expect(getNextSession(TEST_ROAD, new Set(), all)).toBeNull();
   });
 });
